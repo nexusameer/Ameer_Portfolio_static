@@ -1,4 +1,5 @@
 Ameer Portfolio (Static)
+
 Welcome to my static portfolio website, showcasing my journey as a DevOps Engineer and Django Developer. This site highlights my projects, technical skills, and professional experience.
 
 🌐 Live Site
