@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>Ameer's Portfolio</title>
+  <title>Projects | Muhammad Ameer Hamza</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" />
   <link rel="stylesheet" href="css/animate.css" />
@@ -21,13 +22,78 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <style>
-    .scrollable {
-      width: 300px;
-      height: 200px;
-      overflow: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
+    /* ===== AWS DevOps Dark Theme Overrides ===== */
+    :root {
+      --aws-orange: #FF9900;
+      --bg-dark: #0d1117;
+      --card-bg: #161b22;
+      --border-subtle: #21262d;
+      --text-main: #e6edf3;
+      --text-muted: #9aa4b2;
     }
+
+    body {
+      background-color: var(--bg-dark) !important;
+      color: var(--text-main) !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    }
+
+    /* Navbar */
+    #ftco-navbar,
+    .ftco_navbar {
+      background: rgba(13, 17, 23, 0.92) !important;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .navbar-brand,
+    .navbar-brand:hover,
+    .navbar-brand:focus { color: #fff !important; font-weight: 700; }
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link { color: rgba(230, 237, 243, 0.85) !important; }
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover,
+    .ftco-navbar-light .navbar-nav > .nav-item .nav-link.active { color: var(--aws-orange) !important; }
+
+    /* Section heading */
+    .section-title { color: #fff !important; font-weight: 700; }
+    .section-description { color: var(--text-muted) !important; }
+
+    /* Project cards */
+    .project-card {
+      background: var(--card-bg) !important;
+      border: 1px solid var(--border-subtle) !important;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+      transition: transform .3s ease, box-shadow .3s ease !important;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5) !important;
+    }
+    .project-title { color: #fff !important; }
+    .project-type { color: var(--aws-orange) !important; font-style: normal !important; font-weight: 600; }
+    .project-desc { color: var(--text-muted); font-size: .9rem; line-height: 1.55; margin-bottom: 12px; }
+    .project-actions a {
+      background-color: var(--aws-orange) !important;
+      color: #0d1117 !important;
+      font-weight: 600;
+    }
+    .project-actions a:hover { background-color: #ffad33 !important; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .project-tags span {
+      font-size: 11px;
+      background: rgba(255, 153, 0, 0.1);
+      color: var(--aws-orange);
+      border: 1px solid rgba(255, 153, 0, 0.28);
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+
+    /* Footer */
+    .ftco-footer { background: #0a0d12 !important; border-top: 1px solid var(--border-subtle); }
+    .footer-social-links a {
+      color: var(--text-muted);
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color .25s ease;
+    }
+    .footer-social-links a:hover { color: var(--aws-orange); }
   </style>
 </head>
 
@@ -42,6 +108,7 @@
     <ul class="navbar-nav nav ml-auto">
       <li class="nav-item"><a href="index.html" class="nav-link"><span>Home</span></a></li>
       <li class="nav-item"><a href="index.html#services-section" class="nav-link"><span>Tools</span></a></li>
+      <li class="nav-item"><a href="index.html#certifications-section" class="nav-link"><span>Certifications</span></a></li>
       <li class="nav-item"><a href="index.html#skills-section" class="nav-link"><span>Tech Stack</span></a></li>
       <li class="nav-item"><a href="index.html#projects-section" class="nav-link"><span>Projects</span></a></li>
       <li class="nav-item"><a href="index.html#resume-section" class="nav-link"><span>Resume</span></a></li>
@@ -60,6 +127,69 @@
       </div>
       <div class="projects-grid"
         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+
+        <!-- AWS Cloud Migration Project -->
+        <div class="project-card"
+          style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            <div class="project-image"
+               style="height: 200px; background-size: cover; background-position: center; position: relative; background-image: url('images/terraform.webp');">
+              <div class="project-overlay"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
+              </div>
+            </div>
+            <div class="project-details" style="padding: 20px;">
+              <h3 class="project-title" style="font-size: 1.4em; margin-bottom: 5px;">AWS Cloud Migration &amp; Infrastructure Modernization</h3>
+              <p class="project-type" style="margin-bottom: 10px;">AWS · Terraform · IaC</p>
+              <p class="project-desc">Zero-downtime migration of 25 production workloads from DigitalOcean to AWS using
+                Terraform. Provisioned VPCs, EC2 Auto Scaling, RDS, and full dev/stage/prod environment parity. Set up
+                multi-account AWS Organizations with least-privilege IAM and OIDC-based Bitbucket-AWS authentication.</p>
+              <div class="project-tags">
+                <span>AWS</span><span>Terraform</span><span>EC2</span><span>RDS</span><span>IAM</span><span>OIDC</span><span>Organizations</span>
+              </div>
+            </div>
+        </div>
+
+        <!-- AWS Containerized Deployment Project -->
+        <div class="project-card"
+          style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            <div class="project-image"
+               style="height: 200px; background-size: cover; background-position: center; position: relative; background-image: url('images/kubernetes.webp');">
+              <div class="project-overlay"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
+              </div>
+            </div>
+            <div class="project-details" style="padding: 20px;">
+              <h3 class="project-title" style="font-size: 1.4em; margin-bottom: 5px;">AWS Containerized Application Deployment</h3>
+              <p class="project-type" style="margin-bottom: 10px;">Docker · ECS · ECR</p>
+              <p class="project-desc">Containerized production Rails/Node.js/Django apps with Docker, pushed to Amazon ECR,
+                and deployed on ECS with ALB traffic routing and Route 53 DNS. Integrated AWS Secrets Manager for secure
+                credential injection. Frontend deployed via AWS Amplify with end-to-end validation against ECS and RDS.</p>
+              <div class="project-tags">
+                <span>Docker</span><span>ECS</span><span>ECR</span><span>ALB</span><span>Amplify</span><span>Secrets Manager</span>
+              </div>
+            </div>
+        </div>
+
+        <!-- Automated CI/CD Pipeline Project -->
+        <div class="project-card"
+          style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            <div class="project-image"
+               style="height: 200px; background-size: cover; background-position: center; position: relative; background-image: url('images/pipeline.webp');">
+              <div class="project-overlay"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
+              </div>
+            </div>
+            <div class="project-details" style="padding: 20px;">
+              <h3 class="project-title" style="font-size: 1.4em; margin-bottom: 5px;">Automated CI/CD Pipeline — Commit to Live</h3>
+              <p class="project-type" style="margin-bottom: 10px;">Bitbucket Pipelines · GitHub Actions</p>
+              <p class="project-desc">Engineered a fully automated Bitbucket Pipelines workflow that self-provisions EC2,
+                scans code, installs dependencies, handles git operations, configures DNS, provisions SSL, and
+                authenticates — zero manual steps from commit to production across 30+ environments.</p>
+              <div class="project-tags">
+                <span>CI/CD</span><span>Bitbucket</span><span>GitHub Actions</span><span>EC2</span><span>SSL</span><span>DNS</span>
+              </div>
+            </div>
+        </div>
 
         <!-- PolyKubeNexus Project -->
         <div class="project-card"
@@ -579,10 +709,13 @@
       <!-- Copyright -->
       <div class="row">
         <div class="col-12 text-center">
-          <p class="text-muted mb-0">&copy;
-            <script>document.write(new Date().getFullYear());</script> All rights reserved | Muhammad Ameer Hamza |
-            DevOps Engineer
-          </p>
+          <div class="footer-social-links mb-3">
+            <a href="https://www.linkedin.com/in/nexusameer" target="_blank">LinkedIn</a>·
+            <a href="https://github.com/nexusameer" target="_blank">GitHub</a>·
+            <a href="mailto:nexusameer@gmail.com">nexusameer@gmail.com</a>
+          </div>
+          <p class="text-muted mb-0">&copy; 2025 Muhammad Ameer Hamza · DevOps Engineer · AWS Certified SysOps
+            Administrator</p>
         </div>
       </div>
     </div>
