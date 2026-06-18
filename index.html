@@ -2,864 +2,416 @@
 <html lang="en">
 
 <head>
-  <title>Muhammad Ameer Hamza | DevOps Engineer</title>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" />
-  <link rel="stylesheet" href="css/animate.css" />
-  <link rel="stylesheet" href="css/owl.carousel.min.css" />
-  <link rel="stylesheet" href="css/owl.theme.default.min.css" />
-  <link rel="stylesheet" href="css/magnific-popup.css" />
-  <link rel="stylesheet" href="css/aos.css" />
-  <link rel="stylesheet" href="css/ionicons.min.css" />
-  <link rel="stylesheet" href="css/flaticon.css" />
-  <link rel="stylesheet" href="css/icomoon.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Muhammad Ameer Hamza | DevOps Engineer</title>
+  <meta name="description"
+    content="Muhammad Ameer Hamza — DevOps Engineer & AWS Certified SysOps Administrator. Cloud migrations, CI/CD automation, container orchestration, and observability on AWS." />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-  <style>
-    /* ===== Clean Light Theme (AWS DevOps) ===== */
-    :root {
-      --bg: #F8F9FA;
-      --surface: #FFFFFF;
-      --border: #E2E8F0;
-      --text: #1A202C;
-      --text-2: #4A5568;
-      --accent: #2563EB;
-      --accent-hover: #1D4ED8;
-      --pill-bg: #EFF6FF;
-      --pill-text: #2563EB;
-      --pill-border: #DBEAFE;
-    }
-
-    body {
-      background-color: var(--bg) !important;
-      color: var(--text) !important;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    }
-
-    /* Navbar — white, sticky-on-scroll with subtle shadow */
-    #ftco-navbar,
-    .ftco_navbar {
-      background: var(--surface) !important;
-      border-bottom: 1px solid var(--border);
-    }
-    .navbar-brand,
-    .navbar-brand:hover,
-    .navbar-brand:focus { color: var(--text) !important; font-weight: 700; }
-    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link { color: var(--text-2) !important; }
-    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover,
-    .ftco-navbar-light .navbar-nav > .nav-item .nav-link.active { color: var(--accent) !important; }
-    .navbar-toggler { color: var(--text) !important; }
-    /* Override template's black scrolled bar -> white with shadow */
-    .ftco-navbar-light.scrolled {
-      background: var(--surface) !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-      border-bottom: 1px solid var(--border);
-    }
-    .ftco-navbar-light.scrolled .navbar-brand { color: var(--text) !important; }
-    .ftco-navbar-light.scrolled .nav-item > .nav-link,
-    .ftco-navbar-light.scrolled .nav-link { color: var(--text-2) !important; }
-    .ftco-navbar-light.scrolled .nav-link:hover,
-    .ftco-navbar-light.scrolled .nav-link.active,
-    .ftco-navbar-light.scrolled .nav-item.active > a { color: var(--accent) !important; }
-    .ftco-navbar-light.scrolled .navbar-toggler { color: var(--text) !important; }
-
-    /* Hero */
-    #home-section .subheading {
-      color: var(--accent) !important;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-weight: 600;
-    }
-    #home-section h1 { color: var(--text); }
-    #home-section h1 span { color: var(--accent); }
-    #home-section h2 { color: var(--text); font-weight: 600; }
-    #home-section p { color: var(--text-2); }
-    .social-links a {
-      background-color: var(--surface) !important;
-      border: 1px solid var(--border);
-      transition: color .25s ease, border-color .25s ease, transform .25s ease;
-    }
-    .social-links a:hover {
-      color: var(--accent) !important;
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    /* Section headings */
-    .heading-section h2,
-    .section-title { color: var(--text) !important; font-weight: 700; }
-    .heading-section h2:after {
-      content: '';
-      display: block;
-      width: 64px;
-      height: 3px;
-      background: var(--accent);
-      margin: 16px auto 0;
-    }
-    .heading-section .subheading,
-    .heading-section p,
-    .section-description { color: var(--text-2) !important; }
-
-    /* Tools — pill groups */
-    .tech-group { margin-bottom: 44px; }
-    .group-label {
-      display: inline-flex;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      border-left: 3px solid var(--accent);
-      padding-left: 12px;
-      margin-bottom: 22px;
-    }
-    .tech-pills { display: flex; flex-wrap: wrap; gap: 12px; }
-    .tech-pill {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-    }
-    .tech-pill:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    /* Certifications */
-    #certifications-section .cert-card {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 10px;
-      padding: 26px;
-      height: 100%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-    #certifications-section .cert-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-    #certifications-section .cert-badge {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      color: var(--accent);
-    }
-    #certifications-section .cert-card h3 {
-      font-size: 1.2rem;
-      margin: 0 0 4px;
-      color: var(--text);
-      font-weight: 700;
-    }
-    #certifications-section .cert-org { color: var(--text-2); margin: 0 0 6px; font-size: .95rem; }
-    #certifications-section .cert-year {
-      display: inline-block;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: .8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    /* Tech Stack — tag grid */
-    .skill-cat { margin-bottom: 24px; }
-    .skill-cat h4 {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-2);
-      margin-bottom: 12px;
-    }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-    .skill-tag {
-      background: var(--pill-bg);
-      border: 1px solid var(--pill-border);
-      color: var(--pill-text);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-    }
-
-    /* Projects — uniform cards */
-    .project-card {
-      background: var(--surface) !important;
-      border: 1px solid var(--border) !important;
-      border-radius: 10px !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
-      overflow: hidden;
-      transition: transform .3s ease, box-shadow .3s ease !important;
-    }
-    .project-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
-    }
-    .project-details {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .project-badge {
-      align-self: flex-start;
-      background: var(--pill-bg);
-      color: var(--pill-text);
-      border: 1px solid var(--pill-border);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-    }
-    .project-title {
-      color: var(--text) !important;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .project-desc {
-      color: var(--text-2);
-      font-size: .92rem;
-      line-height: 1.55;
-      margin-bottom: 16px;
-    }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-    .project-tags span {
-      font-size: 11px;
-      background: var(--pill-bg);
-      color: var(--pill-text);
-      border: 1px solid var(--pill-border);
-      padding: 3px 9px;
-      border-radius: 12px;
-    }
-    .project-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; align-items: center; }
-    .project-actions a {
-      background-color: var(--accent);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: .9rem;
-      font-weight: 600;
-      transition: background-color .25s ease;
-    }
-    .project-actions a:hover { background-color: var(--accent-hover); }
-    .project-actions .internal-note { color: var(--text-2); font-size: .85rem; font-style: italic; }
-    .view-more-btn { background-color: var(--accent) !important; color: #fff !important; font-weight: 600; }
-    .view-more-btn:hover { background-color: var(--accent-hover) !important; }
-
-    /* Resume */
-    .resume-wrap {
-      background: var(--surface) !important;
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 10px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-    .resume-wrap:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); }
-    .resume-wrap .date { color: var(--accent) !important; font-weight: 700; }
-    .resume-wrap h2 { color: var(--text); }
-    .resume-wrap .position { color: var(--text-2); }
-    .resume-wrap p, .resume-wrap li { color: var(--text-2); }
-
-    /* Footer — dark on light site */
-    .ftco-footer { background: #1A202C !important; border-top: 1px solid var(--border); }
-    .ftco-footer h2,
-    .ftco-footer p,
-    .ftco-footer .text-muted,
-    .ftco-footer li span { color: #CBD5E0 !important; }
-    .ftco-footer .text-white { color: #fff !important; }
-    .footer-social-links a {
-      color: #CBD5E0;
-      margin: 0 10px;
-      text-decoration: none;
-      transition: color .25s ease;
-    }
-    .footer-social-links a:hover { color: #fff; }
-
-    /* Responsive */
-    @media (max-width: 767.98px) {
-      #certifications-section .cert-card { flex-direction: column; text-align: center; align-items: center; }
-    }
-  </style>
 </head>
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" class="scrollbar">
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+<body>
 
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" id="navbar">
     <div class="container">
-      <a class="navbar-brand" href="#home-section">Muhammad Ameer Hamza</a>
-      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
-        data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
+      <a href="#hero" class="nav-brand">Ameer Hamza</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
       </button>
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav nav ml-auto">
-          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
-          <li class="nav-item"><a href="#services-section" class="nav-link"><span>Tools</span></a></li>
-          <li class="nav-item"><a href="#certifications-section" class="nav-link"><span>Certifications</span></a></li>
-          <li class="nav-item"><a href="#skills-section" class="nav-link"><span>Tech Stack</span></a></li>
-          <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Projects</span></a></li>
-          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
-        </ul>
-      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
   </nav>
 
-  <section id="home-section" class="hero" style="padding-top: 80px; ">
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
     <div class="container">
-      <div class="home-content"
-        style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 20px;">
-        <div class="profile-image"
-          style="width: 200px; height: 200px; border-radius: 50%; overflow: hidden; margin-bottom: 20px;">
-          <img src="images/ameer-hamza.jpeg" alt="ameer pic" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="text-content">
-          <span class="subheading" style="font-size: 1.2em;">Hello!</span>
-          <h1 class="mb-2 mt-2" style="font-size: 2.5em; margin-bottom: 10px;">I'm <span>Muhammad Ameer Hamza</span>
-          </h1>
-          <div class="social-links" style="margin-top: 30px; display: flex; justify-content: center; gap: 25px;">
-            <a href="https://www.linkedin.com/in/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;
-                    width: 50px; height: 50px; border-radius: 50%;
-                    color: #0A66C2; font-size: 1.8rem;">
-              <i class="fab fa-linkedin-in"></i>
+      <div class="hero-grid">
+        <div class="hero-text">
+          <p class="hero-eyebrow">Hi, I'm</p>
+          <h1 class="hero-name">Muhammad Ameer Hamza</h1>
+          <p class="hero-role">DevOps Engineer</p>
+          <p class="hero-tagline">Driving zero-downtime cloud infrastructure on AWS — migrations, CI/CD automation,
+            container orchestration, and observability across 30+ production environments.</p>
+
+          <div class="hero-social">
+            <a href="https://www.linkedin.com/in/nexusameer" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 16 16">
+                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+              </svg>
             </a>
-            <a href="https://github.com/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;
-                    width: 50px; height: 50px; border-radius: 50%;
-                    color: #333; font-size: 1.8rem;">
-              <i class="fab fa-github"></i>
+            <a href="https://github.com/nexusameer" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+              </svg>
             </a>
-            <a href="https://hub.docker.com/u/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;
-                    width: 50px; height: 50px; border-radius: 50%;
-                    color: #2496ED; font-size: 1.8rem;">
-              <i class="fab fa-docker"></i>
+            <a href="https://hub.docker.com/u/nexusameer" target="_blank" rel="noopener" aria-label="Docker Hub">
+              <svg viewBox="0 0 24 24">
+                <path d="M13.983 11.078h2.119a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 0 0 .186-.186V3.574a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 0 0 .186-.186V6.29a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 0 0 .184-.186V6.29a.185.185 0 0 0-.185-.185H8.1a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 0 0 .185-.186V6.29a.185.185 0 0 0-.185-.185H5.136a.186.186 0 0 0-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 0 0 .185-.185V9.006a.185.185 0 0 0-.185-.186H5.136a.186.186 0 0 0-.186.186v1.888c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.186v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 0 0-.75.748 11.376 11.376 0 0 0 .692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 0 0 3.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288z" />
+              </svg>
             </a>
           </div>
-          <br>
-          <h2 class="mb-3" style="font-size: 1.8em; margin-bottom: 20px;">DevOps Engineer | AWS Certified SysOps Administrator</h2>
-          <p style="margin-bottom: 20px; font-size: 1.1em; line-height: 1.6; max-width: 760px;">
-            Driving zero-downtime cloud infrastructure on AWS — migrations, CI/CD automation,
-            container orchestration, and observability across 30+ production environments.
-          </p>
 
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="Muhammad-Ameer-Hamza-CV.pdf" class="btn btn-outline" download>Download CV</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat"><span class="stat-num">25+</span><span class="stat-label">Workloads Migrated</span></div>
+            <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Production Environments</span></div>
+            <div class="stat"><span class="stat-num">2x</span><span class="stat-label">AWS Certified</span></div>
+          </div>
+        </div>
+
+        <div class="hero-photo">
+          <img src="images/ameer-hamza.jpeg" alt="Muhammad Ameer Hamza" />
         </div>
       </div>
     </div>
   </section>
 
-
-  <section class="ftco-section" id="services-section" style="margin-top: -120px; ">
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section id="experience">
     <div class="container">
-      <div class="row justify-content-center py-5 mt-5">
-        <div class="col-md-12 heading-section text-center ftco-animate">
-          <h1 class="big big-2"></h1>
-          <h2 class="mb-4">Tools &amp; Technologies</h2>
-          <p>The cloud-native toolchain I use to design, automate, and operate resilient AWS infrastructure.</p>
-        </div>
+      <div class="section-head">
+        <span class="section-label">Experience</span>
+        <h2 class="section-title">Where I've worked</h2>
       </div>
 
-      <div class="tech-group ftco-animate">
-        <span class="group-label">AWS Core</span>
-        <div class="tech-pills">
-          <span class="tech-pill">EC2</span>
-          <span class="tech-pill">ECS</span>
-          <span class="tech-pill">ECR</span>
-          <span class="tech-pill">RDS</span>
-          <span class="tech-pill">S3</span>
-          <span class="tech-pill">CloudFront</span>
-          <span class="tech-pill">ALB</span>
-          <span class="tech-pill">Route 53</span>
-          <span class="tech-pill">VPC</span>
-          <span class="tech-pill">IAM</span>
-          <span class="tech-pill">Secrets Manager</span>
-          <span class="tech-pill">CloudWatch</span>
-          <span class="tech-pill">Auto Scaling</span>
-          <span class="tech-pill">Amplify</span>
-          <span class="tech-pill">AWS Organizations</span>
-        </div>
-      </div>
-
-      <div class="tech-group ftco-animate">
-        <span class="group-label">DevOps Stack</span>
-        <div class="tech-pills">
-          <span class="tech-pill">Docker</span>
-          <span class="tech-pill">Kubernetes</span>
-          <span class="tech-pill">Terraform</span>
-          <span class="tech-pill">Ansible</span>
-          <span class="tech-pill">GitHub Actions</span>
-          <span class="tech-pill">Bitbucket Pipelines</span>
-          <span class="tech-pill">Grafana</span>
-          <span class="tech-pill">Prometheus</span>
-          <span class="tech-pill">Nginx</span>
-          <span class="tech-pill">n8n</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Certifications -->
-  <section class="ftco-section" id="certifications-section" style="padding-top: 2em;">
-    <div class="container">
-      <div class="row justify-content-center pb-5">
-        <div class="col-md-12 heading-section text-center ftco-animate">
-          <h1 class="big big-2"></h1>
-          <h2 class="mb-4">Certifications</h2>
-          <p>Validated AWS expertise across operations and cloud foundations.</p>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-md-6 mb-4 ftco-animate">
-          <div class="cert-card">
-            <svg class="cert-badge" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.249-8.25-3.286Z" />
-            </svg>
-            <div class="cert-body">
-              <h3>AWS SysOps Administrator – Associate</h3>
-              <p class="cert-org">Amazon Web Services</p>
-              <span class="cert-year">Issued 2025</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-4 ftco-animate">
-          <div class="cert-card">
-            <svg class="cert-badge" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.249-8.25-3.286Z" />
-            </svg>
-            <div class="cert-body">
-              <h3>AWS Cloud Practitioner</h3>
-              <p class="cert-org">Amazon Web Services</p>
-              <span class="cert-year">Issued 2024</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ftco-section" id="skills-section">
-    <div class="container">
-      <div class="row justify-content-center pb-5">
-        <div class="col-md-12 heading-section text-center ftco-animate">
-          <h1 class="big big-2"></h1>
-          <h2 class="mb-4">Tech Stack</h2>
-          <p>A practical, production-tested toolkit spanning cloud, containers, automation, and observability.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 ftco-animate">
-          <div class="skill-cat">
-            <h4>Infrastructure &amp; Cloud</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">AWS</span>
-              <span class="skill-tag">Terraform</span>
-              <span class="skill-tag">Ansible</span>
-              <span class="skill-tag">VPC</span>
-              <span class="skill-tag">IAM</span>
-              <span class="skill-tag">OIDC</span>
-            </div>
-          </div>
-          <div class="skill-cat">
-            <h4>Containers &amp; Orchestration</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">Docker</span>
-              <span class="skill-tag">ECS</span>
-              <span class="skill-tag">Kubernetes</span>
-              <span class="skill-tag">Helm</span>
-              <span class="skill-tag">ECR</span>
-            </div>
-          </div>
-          <div class="skill-cat">
-            <h4>CI/CD</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">GitHub Actions</span>
-              <span class="skill-tag">Bitbucket Pipelines</span>
-              <span class="skill-tag">Azure DevOps</span>
-              <span class="skill-tag">Mina</span>
-            </div>
-          </div>
-          <div class="skill-cat">
-            <h4>Monitoring</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">Grafana</span>
-              <span class="skill-tag">Prometheus</span>
-              <span class="skill-tag">CloudWatch</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 ftco-animate">
-          <div class="skill-cat">
-            <h4>Networking</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">Nginx</span>
-              <span class="skill-tag">SSL/TLS</span>
-              <span class="skill-tag">DNS</span>
-              <span class="skill-tag">Route 53</span>
-              <span class="skill-tag">Reverse Proxy</span>
-            </div>
-          </div>
-          <div class="skill-cat">
-            <h4>Databases</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">PostgreSQL</span>
-              <span class="skill-tag">MySQL</span>
-              <span class="skill-tag">Amazon RDS</span>
-              <span class="skill-tag">Aurora</span>
-            </div>
-          </div>
-          <div class="skill-cat">
-            <h4>Scripting</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">Bash</span>
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">JavaScript</span>
-            </div>
-          </div>
-          <div class="skill-cat">
-            <h4>OS &amp; Linux</h4>
-            <div class="skill-tags">
-              <span class="skill-tag">Ubuntu</span>
-              <span class="skill-tag">CentOS</span>
-              <span class="skill-tag">Amazon Linux</span>
-              <span class="skill-tag">SSH</span>
-              <span class="skill-tag">Hardening</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section class="projects-section" id="projects-section" style="padding: 60px 0;">
-    <div class="container">
-      <div class="section-heading text-center mb-5">
-        <h2 class="section-title" style="font-size: 2.5em; margin-bottom: 10px;">My Projects</h2>
-        <p class="section-description" style="font-size: 1.1em; max-width: 700px; margin: 0 auto;">
-          Production cloud and DevOps work — from AWS migrations to fully automated delivery pipelines.
-        </p>
-      </div>
-
-      <div class="row">
-
-        <!-- AWS Cloud Migration -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100">
-            <div class="project-details">
-              <span class="project-badge">AWS · Terraform · IaC</span>
-              <h3 class="project-title">AWS Cloud Migration &amp; Infrastructure Modernization</h3>
-              <p class="project-desc">Zero-downtime migration of 25 production workloads from DigitalOcean to AWS using
-                Terraform IaC — VPCs, EC2 Auto Scaling, RDS, and full dev/stage/prod parity, plus multi-account AWS
-                Organizations with least-privilege IAM and OIDC-based Bitbucket auth.</p>
-              <div class="project-tags">
-                <span>AWS</span><span>Terraform</span><span>EC2</span><span>RDS</span><span>IAM</span><span>OIDC</span><span>Organizations</span>
-              </div>
-              <div class="project-actions">
-                <span class="internal-note">Internal production project</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Containerized App on ECS -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100">
-            <div class="project-details">
-              <span class="project-badge">Docker · ECS · ECR</span>
-              <h3 class="project-title">Containerized App Deployment on AWS ECS</h3>
-              <p class="project-desc">Containerized production Rails/Node.js/Django apps with Docker, pushed to Amazon
-                ECR, and deployed on ECS with ALB routing and Route 53 DNS. Integrated AWS Secrets Manager; frontend via
-                AWS Amplify connected to ECS backend and RDS.</p>
-              <div class="project-tags">
-                <span>Docker</span><span>ECS</span><span>ECR</span><span>ALB</span><span>Amplify</span><span>Secrets Manager</span><span>Route 53</span>
-              </div>
-              <div class="project-actions">
-                <span class="internal-note">Internal production project</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Automated CI/CD -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100">
-            <div class="project-details">
-              <span class="project-badge">Bitbucket Pipelines · GitHub Actions</span>
-              <h3 class="project-title">Automated CI/CD — Commit to Live Pipeline</h3>
-              <p class="project-desc">Fully automated Bitbucket Pipelines workflow that self-provisions EC2, scans code,
-                installs dependencies, configures DNS, provisions SSL, and authenticates — zero manual steps from commit
-                to production, running across 30+ environments.</p>
-              <div class="project-tags">
-                <span>CI/CD</span><span>Bitbucket Pipelines</span><span>GitHub Actions</span><span>EC2</span><span>SSL</span><span>DNS</span>
-              </div>
-              <div class="project-actions">
-                <span class="internal-note">Internal production project</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Poly Nexus Kube -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100">
-            <div class="project-details">
-              <span class="project-badge">Kubernetes · DevOps</span>
-              <h3 class="project-title">Poly Nexus Kube</h3>
-              <p class="project-desc">Multi-service Kubernetes deployment demonstrating container orchestration, rolling
-                deployments, and service networking across a managed cluster with Helm-packaged workloads.</p>
-              <div class="project-tags">
-                <span>Kubernetes</span><span>Docker</span><span>Helm</span><span>DevOps</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/nexusameer/PolyKubeNexus" target="_blank">View Project</a>
-                <a href="https://www.linkedin.com/posts/nexusameer_devops-cloudnative-azure-activity-7310763897177669633-hxFV?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEU-0HkB8WXyMmzLZ7gf669PTAZGgR1nfuM"
-                  target="_blank">Project Video</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Cloud Monitoring System -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100">
-            <div class="project-details">
-              <span class="project-badge">Prometheus · Grafana</span>
-              <h3 class="project-title">Cloud Monitoring System</h3>
-              <p class="project-desc">End-to-end observability stack with Prometheus metrics collection and Grafana
-                dashboards for real-time infrastructure monitoring, visualization, and alerting.</p>
-              <div class="project-tags">
-                <span>Prometheus</span><span>Grafana</span><span>Monitoring</span><span>Alerting</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://www.linkedin.com/posts/nexusameer_devops-cloudnative-azure-activity-7310763897177669633-hxFV?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEU-0HkB8WXyMmzLZ7gf669PTAZGgR1nfuM"
-                  target="_blank">Project Video</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Voting App Microservices -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100">
-            <div class="project-details">
-              <span class="project-badge">Docker · Microservices</span>
-              <h3 class="project-title">Voting App Microservices</h3>
-              <p class="project-desc">Polyglot microservices voting application orchestrated with Docker — decoupled
-                services, a Redis queue, and Postgres persistence deployed across multiple containers.</p>
-              <div class="project-tags">
-                <span>Docker</span><span>Microservices</span><span>Redis</span><span>Postgres</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/nexusameer/Voting-App-Microservices" target="_blank">View Project</a>
-                <a href="https://www.linkedin.com/in/nexusameer/details/projects/" target="_blank">Description</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="projects.html" class="view-more-btn"
-          style="padding: 12px 24px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease; text-decoration: none; display: inline-block;">
-          View More Projects
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="ftco-section ftco-no-pb" id="resume-section">
-    <div class="container">
-      <div class="row justify-content-center pb-5">
-        <div class="col-md-10 heading-section text-center ftco-animate">
-          <h1 class="big big-2"></h1>
-          <h2 class="mb-4">Resume</h2>
-          <p>A track record of building and operating cloud-native infrastructure on AWS.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="resume-wrap ftco-animate">
-            <span class="date">Apr 2025 – Present</span>
-            <h2 class="mt-2">DevOps Engineer</h2>
-            <span class="position">Clustox (AWS Partner), Lahore</span>
-            <ul class="mt-4" style="padding-left: 18px;">
-              <li>Zero-downtime migration of 25 production workloads from DigitalOcean to AWS</li>
-              <li>Multi-account AWS Organizations setup with least-privilege IAM and OIDC auth</li>
-              <li>Containerized apps via Docker/ECS with ALB, Route 53, and Secrets Manager</li>
-              <li>Observability across 30+ production environments — Grafana, Prometheus, CloudWatch</li>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date"><span class="pill">Apr 2025 – Present</span></div>
+          <div class="tl-content card">
+            <h3>DevOps Engineer</h3> <span class="tl-company">· Clustox · Lahore, Pakistan</span>
+            <ul class="tl-bullets">
+              <li>Spearheaded zero-downtime migration of 25 production workloads from DigitalOcean to AWS</li>
+              <li>Architected multi-account AWS Organizations setup with least-privilege IAM and OIDC auth</li>
+              <li>Containerized apps with Docker/ECS, deployed via ALB, Route 53, and Secrets Manager</li>
+              <li>Built observability stack across 30+ environments — Grafana, Prometheus, CloudWatch</li>
+              <li>Engineered fully automated CI/CD pipelines — commit to production, zero manual steps</li>
             </ul>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="resume-wrap ftco-animate">
-            <span class="date">Aug 2024 – Mar 2025</span>
-            <h2 class="mt-2">DevOps Engineer (Training Program)</h2>
-            <span class="position">Systems Limited, Lahore</span>
-            <ul class="mt-4" style="padding-left: 18px;">
-              <li>Deployed 10+ microservices on Azure Kubernetes Service with CI/CD via Azure DevOps</li>
+
+        <div class="tl-item">
+          <div class="tl-date"><span class="pill">Aug 2024 – Mar 2025</span></div>
+          <div class="tl-content card">
+            <h3>DevOps Engineer (Training Program)</h3> <span class="tl-company">· Systems Limited · Lahore, Pakistan</span>
+            <ul class="tl-bullets">
+              <li>Deployed 10+ Django microservices on Azure Kubernetes Service with auto-scaling</li>
+              <li>Built CI/CD pipelines with Azure DevOps and GitHub Actions</li>
               <li>Terraform provisioning for AKS clusters and Azure VMs</li>
             </ul>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="resume-wrap ftco-animate">
-            <span class="date">Sep 2023 – Aug 2024</span>
-            <h2 class="mt-2">Django Developer</h2>
-            <span class="position">Tintosh Technologies, Lahore</span>
-            <ul class="mt-4" style="padding-left: 18px;">
-              <li>Developed and deployed 10+ Django applications on Azure with 99.9% uptime</li>
-              <li>Optimized database queries reducing execution time by 40%</li>
+
+        <div class="tl-item">
+          <div class="tl-date"><span class="pill">Sep 2023 – Aug 2024</span></div>
+          <div class="tl-content card">
+            <h3>Django Developer</h3> <span class="tl-company">· Tintosh Technologies · Lahore, Pakistan</span>
+            <ul class="tl-bullets">
+              <li>Built and deployed 10+ Django applications on Azure with 99.9% uptime</li>
+              <li>Optimized DB queries reducing execution time by 40%</li>
+              <li>Integrated notification workflows cutting user response time by 30%</li>
             </ul>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="resume-wrap ftco-animate">
-            <span class="date">2019 – 2023</span>
-            <h2 class="mt-2">BS Computer Science</h2>
-            <span class="position">Beaconhouse National University (BNU), Lahore</span>
-            <p class="mt-4">Studied core CS subjects, completed projects, and built programming fundamentals.</p>
+
+        <div class="tl-item">
+          <div class="tl-date"><span class="pill">2019 – 2023</span></div>
+          <div class="tl-content card">
+            <h3>BS Computer Science</h3> <span class="tl-company">· Beaconhouse National University · Lahore, Pakistan</span>
+            <ul class="tl-bullets">
+              <li>Graduated with focus on systems, algorithms, and software engineering</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="ftco-footer ftco-section bg-dark text-white py-5">
+  <!-- ===================== CERTIFICATIONS ===================== -->
+  <section id="certifications">
     <div class="container">
-      <div class="row mb-4">
-        <!-- About Column -->
-        <div class="col-md-5 mb-4 mb-md-0">
-          <div class="mb-4">
-            <h2 class="h4 text-white">DevOps Engineer</h2>
-            <p class="text-muted">Bridging Development & Operations for Scalable Excellence – Designing, automating,
-              and optimizing cloud-native solutions to drive reliability, efficiency, and innovation in modern
-              infrastructure.</p>
-          </div>
-
-          <!-- Social Icons -->
-          <div class="d-flex justify-content-center justify-content-md-start">
-            <a href="https://www.google.com/maps?q=Lahore,Pakistan" target="_blank"
-              class="d-flex align-items-center justify-content-center rounded-circle bg-light text-danger"
-              style="width: 50px; height: 50px; font-size: 1.5rem; margin-right: 1rem;">
-              <i class="fas fa-map-marker-alt"></i>
-            </a>
-
-            <a href="tel:03017009220"
-              class="d-flex align-items-center justify-content-center rounded-circle bg-light text-success"
-              style="width: 50px; height: 50px; font-size: 1.5rem; margin-right: 1rem;">
-              <i class="fas fa-mobile-alt"></i>
-            </a>
-
-            <a href="mailto: nexusameer@gmail.com"
-              class="d-flex align-items-center justify-content-center rounded-circle bg-light text-primary"
-              style="width: 50px; height: 50px; font-size: 1.5rem;">
-              <i class="fas fa-envelope"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Soft Skills Column -->
-        <div class="col-md-3 mb-4 mb-md-0 ps-md-5">
-          <h2 class="h4 text-white">Soft Skills</h2>
-          <ul class="list-unstyled">
-            <li class="mb-2">
-              <span class="fas fa-server me-2 text-muted"></span>
-              <span class="text-muted">Problem-Solving</span>
-            </li>
-            <li class="mb-2">
-              <span class="fas fa-code-branch me-2 text-muted"></span>
-              <span class="text-muted">Leadership</span>
-            </li>
-            <li class="mb-2">
-              <span class="fas fa-code me-2 text-muted"></span>
-              <span class="text-muted">Adaptability</span>
-            </li>
-            <li class="mb-2">
-              <span class="fas fa-shield-alt me-2 text-muted"></span>
-              <span class="text-muted">Collaboration</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Tech Roles Column -->
-        <div class="col-md-3 mb-4 mb-md-0 ps-md-5">
-          <h2 class="h4 text-white">Tech Roles</h2>
-          <ul class="list-unstyled">
-            <li class="mb-2 d-flex align-items-center">
-              <i class="fas fa-server me-2 text-muted" style="width: 20px;"></i>
-              <span class="text-muted">DevOps Engineer</span>
-            </li>
-            <li class="mb-2 d-flex align-items-center">
-              <i class="fas fa-cloud me-2 text-muted" style="width: 20px;"></i>
-              <span class="text-muted">Cloud Engineer</span>
-            </li>
-            <li class="mb-2 d-flex align-items-center">
-              <i class="fas fa-shield-alt me-2 text-muted" style="width: 20px;"></i>
-              <span class="text-muted">AWS SysOps Administrator</span>
-            </li>
-          </ul>
-        </div>
+      <div class="section-head">
+        <span class="section-label">Certifications</span>
+        <h2 class="section-title">AWS Certified</h2>
       </div>
 
-
-      <!-- Copyright -->
-      <div class="row">
-        <div class="col-12 text-center">
-          <div class="footer-social-links mb-3">
-            <a href="https://www.linkedin.com/in/nexusameer" target="_blank">LinkedIn</a>·
-            <a href="https://github.com/nexusameer" target="_blank">GitHub</a>·
-            <a href="mailto:nexusameer@gmail.com">nexusameer@gmail.com</a>
+      <div class="cert-grid">
+        <div class="cert-card card">
+          <span class="cert-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
+            </svg>
+          </span>
+          <div>
+            <h3>AWS SysOps Administrator – Associate</h3>
+            <div class="cert-issuer">Amazon Web Services</div>
+            <span class="pill">2025</span>
           </div>
-          <p class="text-muted mb-0">&copy; 2025 Muhammad Ameer Hamza · DevOps Engineer · AWS Certified SysOps
-            Administrator</p>
+        </div>
+
+        <div class="cert-card card">
+          <span class="cert-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
+            </svg>
+          </span>
+          <div>
+            <h3>AWS Cloud Practitioner</h3>
+            <div class="cert-issuer">Amazon Web Services</div>
+            <span class="pill">2024</span>
+          </div>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ===================== TECH STACK ===================== -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Tech Stack</span>
+        <h2 class="section-title">Tools and technologies I work with</h2>
+      </div>
+
+      <div class="stack-list">
+        <div class="stack-row">
+          <div class="stack-label">Cloud &amp; IaC</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">AWS</span><span class="pill pill--mono">EC2</span><span class="pill pill--mono">ECS</span><span class="pill pill--mono">RDS</span><span class="pill pill--mono">S3</span><span class="pill pill--mono">VPC</span><span class="pill pill--mono">IAM</span><span class="pill pill--mono">CloudFront</span><span class="pill pill--mono">Route 53</span><span class="pill pill--mono">Secrets Manager</span><span class="pill pill--mono">CloudWatch</span><span class="pill pill--mono">Terraform</span><span class="pill pill--mono">Ansible</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">Containers</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">Docker</span><span class="pill pill--mono">Kubernetes</span><span class="pill pill--mono">ECS</span><span class="pill pill--mono">Helm</span><span class="pill pill--mono">ECR</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">CI/CD</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">GitHub Actions</span><span class="pill pill--mono">Bitbucket Pipelines</span><span class="pill pill--mono">Azure DevOps</span><span class="pill pill--mono">OIDC</span><span class="pill pill--mono">Mina</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">Monitoring</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">Grafana</span><span class="pill pill--mono">Prometheus</span><span class="pill pill--mono">CloudWatch</span><span class="pill pill--mono">Alerting</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">Networking</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">Nginx</span><span class="pill pill--mono">SSL/TLS</span><span class="pill pill--mono">DNS</span><span class="pill pill--mono">Reverse Proxy</span><span class="pill pill--mono">ALB</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">Databases</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">PostgreSQL</span><span class="pill pill--mono">MySQL</span><span class="pill pill--mono">Amazon RDS</span><span class="pill pill--mono">Aurora</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">Scripting</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">Bash</span><span class="pill pill--mono">Python</span><span class="pill pill--mono">JavaScript</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-label">OS &amp; Linux</div>
+          <div class="stack-pills">
+            <span class="pill pill--mono">Ubuntu</span><span class="pill pill--mono">CentOS</span><span class="pill pill--mono">Amazon Linux</span><span class="pill pill--mono">SSH</span><span class="pill pill--mono">Hardening</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Projects</span>
+        <h2 class="section-title">What I've built and shipped</h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Card 1 -->
+        <div class="project-card card">
+          <span class="pill project-cat">AWS · Terraform · IaC</span>
+          <h3>AWS Cloud Migration &amp; Infrastructure Modernization</h3>
+          <p class="project-desc">Zero-downtime migration of 25 production workloads from DigitalOcean to AWS using
+            Terraform IaC. Provisioned VPCs, EC2 Auto Scaling, RDS, and dev/stage/prod parity. Multi-account AWS
+            Organizations with least-privilege IAM and OIDC-based Bitbucket auth.</p>
+          <div class="project-tags">
+            <span class="pill pill--mono">AWS</span><span class="pill pill--mono">Terraform</span><span class="pill pill--mono">EC2</span><span class="pill pill--mono">RDS</span><span class="pill pill--mono">IAM</span><span class="pill pill--mono">OIDC</span>
+          </div>
+          <div class="project-links"><span class="internal">Internal Production Project</span></div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="project-card card">
+          <span class="pill project-cat">Docker · ECS · ECR</span>
+          <h3>Containerized App Deployment on AWS ECS</h3>
+          <p class="project-desc">Containerized Rails/Node.js/Django apps with Docker, pushed to Amazon ECR, deployed on
+            ECS with ALB and Route 53. Secrets Manager for credential injection. Frontend via AWS Amplify connected to
+            ECS backend and RDS.</p>
+          <div class="project-tags">
+            <span class="pill pill--mono">Docker</span><span class="pill pill--mono">ECS</span><span class="pill pill--mono">ECR</span><span class="pill pill--mono">ALB</span><span class="pill pill--mono">Amplify</span><span class="pill pill--mono">Secrets Manager</span>
+          </div>
+          <div class="project-links"><span class="internal">Internal Production Project</span></div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="project-card card">
+          <span class="pill project-cat">CI/CD · Automation</span>
+          <h3>Automated CI/CD — Commit to Live Pipeline</h3>
+          <p class="project-desc">Bitbucket Pipelines workflow that self-provisions EC2, scans code, installs
+            dependencies, configures DNS, provisions SSL, and authenticates — zero manual steps from commit to
+            production across 30+ environments.</p>
+          <div class="project-tags">
+            <span class="pill pill--mono">Bitbucket Pipelines</span><span class="pill pill--mono">GitHub Actions</span><span class="pill pill--mono">EC2</span><span class="pill pill--mono">SSL</span><span class="pill pill--mono">DNS</span>
+          </div>
+          <div class="project-links"><span class="internal">Internal Production Project</span></div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="project-card card">
+          <span class="pill project-cat">Kubernetes · Terraform</span>
+          <h3>Poly Nexus Kube</h3>
+          <p class="project-desc">10 microservices deployed on Kubernetes with YAML manifests for deployments, services,
+            and ingress. Terraform-provisioned infrastructure with GitHub Actions and Azure DevOps CI/CD for
+            zero-downtime releases.</p>
+          <div class="project-tags">
+            <span class="pill pill--mono">Kubernetes</span><span class="pill pill--mono">Terraform</span><span class="pill pill--mono">GitHub Actions</span><span class="pill pill--mono">Azure DevOps</span><span class="pill pill--mono">Helm</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/nexusameer/PolyKubeNexus" target="_blank" rel="noopener">View Project →</a>
+            <a href="https://www.linkedin.com/posts/nexusameer_devops-cloudnative-azure-activity-7310763897177669633-hxFV"
+              target="_blank" rel="noopener">Demo Video →</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="project-card card">
+          <span class="pill project-cat">Prometheus · Grafana</span>
+          <h3>Cloud Monitoring System</h3>
+          <p class="project-desc">End-to-end observability setup using Prometheus for metrics collection and Grafana for
+            dashboard visualization. Configured alerting rules and built dashboards for infrastructure health
+            monitoring.</p>
+          <div class="project-tags">
+            <span class="pill pill--mono">Prometheus</span><span class="pill pill--mono">Grafana</span><span class="pill pill--mono">CloudWatch</span><span class="pill pill--mono">Alerting</span><span class="pill pill--mono">Linux</span>
+          </div>
+          <div class="project-links">
+            <a href="https://www.linkedin.com/posts/nexusameer_devops-cloudnative-azure-activity-7310763897177669633-hxFV"
+              target="_blank" rel="noopener">Demo Video →</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="project-card card">
+          <span class="pill project-cat">Docker · Microservices</span>
+          <h3>Voting App Microservices</h3>
+          <p class="project-desc">Containerized voting application built as microservices architecture. Multi-container
+            setup with Docker Compose, demonstrating service isolation, networking, and container orchestration
+            patterns.</p>
+          <div class="project-tags">
+            <span class="pill pill--mono">Docker</span><span class="pill pill--mono">Microservices</span><span class="pill pill--mono">Docker Compose</span><span class="pill pill--mono">Redis</span><span class="pill pill--mono">PostgreSQL</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/nexusameer/Voting-App-Microservices" target="_blank" rel="noopener">View Project →</a>
+            <a href="https://www.linkedin.com/in/nexusameer/details/projects/" target="_blank" rel="noopener">Details →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Contact</span>
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-sub">Open to DevOps, cloud infrastructure, and platform engineering roles</p>
+      </div>
+
+      <div class="contact-wrap">
+        <div class="contact-grid">
+          <a class="contact-card card" href="mailto:nexusameer@gmail.com">
+            <span class="contact-icon">📧</span>
+            <span class="contact-label">Email</span>
+            <span class="contact-value">nexusameer@gmail.com</span>
+          </a>
+          <div class="contact-card card">
+            <span class="contact-icon">📍</span>
+            <span class="contact-label">Based in</span>
+            <span class="contact-value">Lahore, Pakistan</span>
+          </div>
+          <a class="contact-card card" href="https://www.linkedin.com/in/nexusameer" target="_blank" rel="noopener">
+            <span class="contact-icon">💼</span>
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-value">linkedin.com/in/nexusameer</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <p class="footer-name">Muhammad Ameer Hamza</p>
+    <p>DevOps Engineer · AWS Certified SysOps Administrator</p>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/nexusameer" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/nexusameer" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://hub.docker.com/u/nexusameer" target="_blank" rel="noopener">Docker Hub</a>
+    </div>
+    <p>© 2025 · Built with purpose</p>
   </footer>
-  <div id="ftco-loader" class="show fullscreen">
-    <svg class="circular" width="48px" height="48px">
-      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#2563EB" />
-    </svg>
-  </div>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script src="js/main.js"></script>
+
+  <!-- ===================== JS (vanilla) ===================== -->
+  <script>
+    // Mobile nav toggle
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    toggle.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    // Close dropdown after clicking a link (mobile)
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
+      });
+    });
+    // Navbar shadow on scroll
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+      navbar.classList.toggle('scrolled', window.scrollY > 8);
+    });
+  </script>
+
 </body>
 
 </html>
