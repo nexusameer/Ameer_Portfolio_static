@@ -22,70 +22,91 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <style>
-    /* ===== AWS DevOps Dark Theme Overrides ===== */
+    /* ===== Clean Light Theme (AWS DevOps) ===== */
     :root {
-      --aws-orange: #FF9900;
-      --bg-dark: #0d1117;
-      --card-bg: #161b22;
-      --border-subtle: #21262d;
-      --text-main: #e6edf3;
-      --text-muted: #9aa4b2;
+      --bg: #F8F9FA;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --text: #1A202C;
+      --text-2: #4A5568;
+      --accent: #2563EB;
+      --accent-hover: #1D4ED8;
+      --pill-bg: #EFF6FF;
+      --pill-text: #2563EB;
+      --pill-border: #DBEAFE;
     }
 
     body {
-      background-color: var(--bg-dark) !important;
-      color: var(--text-main) !important;
+      background-color: var(--bg) !important;
+      color: var(--text) !important;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     }
 
-    /* Navbar */
+    /* Navbar — white, sticky-on-scroll with subtle shadow */
     #ftco-navbar,
     .ftco_navbar {
-      background: rgba(13, 17, 23, 0.92) !important;
-      border-bottom: 1px solid var(--border-subtle);
+      background: var(--surface) !important;
+      border-bottom: 1px solid var(--border);
     }
     .navbar-brand,
     .navbar-brand:hover,
-    .navbar-brand:focus {
-      color: #fff !important;
-      font-weight: 700;
-    }
-    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
-      color: rgba(230, 237, 243, 0.85) !important;
-    }
+    .navbar-brand:focus { color: var(--text) !important; font-weight: 700; }
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link { color: var(--text-2) !important; }
     .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover,
-    .ftco-navbar-light .navbar-nav > .nav-item .nav-link.active {
-      color: var(--aws-orange) !important;
+    .ftco-navbar-light .navbar-nav > .nav-item .nav-link.active { color: var(--accent) !important; }
+    .navbar-toggler { color: var(--text) !important; }
+    /* Override template's black scrolled bar -> white with shadow */
+    .ftco-navbar-light.scrolled {
+      background: var(--surface) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+      border-bottom: 1px solid var(--border);
     }
+    .ftco-navbar-light.scrolled .navbar-brand { color: var(--text) !important; }
+    .ftco-navbar-light.scrolled .nav-item > .nav-link,
+    .ftco-navbar-light.scrolled .nav-link { color: var(--text-2) !important; }
+    .ftco-navbar-light.scrolled .nav-link:hover,
+    .ftco-navbar-light.scrolled .nav-link.active,
+    .ftco-navbar-light.scrolled .nav-item.active > a { color: var(--accent) !important; }
+    .ftco-navbar-light.scrolled .navbar-toggler { color: var(--text) !important; }
 
     /* Hero */
     #home-section .subheading {
-      color: var(--aws-orange) !important;
+      color: var(--accent) !important;
       text-transform: uppercase;
       letter-spacing: 3px;
       font-weight: 600;
     }
-    #home-section h1 span { color: var(--aws-orange); }
-    #home-section h2 { color: #fff; font-weight: 600; }
-    #home-section p { color: var(--text-muted); }
-    #home-section p strong { color: var(--text-main); }
+    #home-section h1 { color: var(--text); }
+    #home-section h1 span { color: var(--accent); }
+    #home-section h2 { color: var(--text); font-weight: 600; }
+    #home-section p { color: var(--text-2); }
+    .social-links a {
+      background-color: var(--surface) !important;
+      border: 1px solid var(--border);
+      transition: color .25s ease, border-color .25s ease, transform .25s ease;
+    }
+    .social-links a:hover {
+      color: var(--accent) !important;
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
 
     /* Section headings */
     .heading-section h2,
-    .section-title { color: #fff !important; font-weight: 700; }
+    .section-title { color: var(--text) !important; font-weight: 700; }
     .heading-section h2:after {
       content: '';
       display: block;
       width: 64px;
       height: 3px;
-      background: var(--aws-orange);
+      background: var(--accent);
       margin: 16px auto 0;
     }
     .heading-section .subheading,
     .heading-section p,
-    .section-description { color: var(--text-muted) !important; }
+    .section-description { color: var(--text-2) !important; }
 
-    /* Tech pill groups (Tools section) */
+    /* Tools — pill groups */
     .tech-group { margin-bottom: 44px; }
     .group-label {
       display: inline-flex;
@@ -94,26 +115,27 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--aws-orange);
-      border-left: 3px solid var(--aws-orange);
+      color: var(--accent);
+      border-left: 3px solid var(--accent);
       padding-left: 12px;
       margin-bottom: 22px;
     }
     .tech-pills { display: flex; flex-wrap: wrap; gap: 12px; }
     .tech-pill {
-      background: var(--card-bg);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
       padding: 10px 18px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 15px;
       font-weight: 500;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
       transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
     }
     .tech-pill:hover {
-      border-color: var(--aws-orange);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 153, 0, 0.18);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
     /* Certifications */
@@ -121,115 +143,161 @@
       display: flex;
       align-items: center;
       gap: 22px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-subtle);
-      border-left: 4px solid var(--aws-orange);
-      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
       padding: 26px;
       height: 100%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
       transition: transform .3s ease, box-shadow .3s ease;
     }
     #certifications-section .cert-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
     #certifications-section .cert-badge {
       flex-shrink: 0;
-      font-size: 52px;
-      line-height: 1;
+      width: 48px;
+      height: 48px;
+      color: var(--accent);
     }
     #certifications-section .cert-card h3 {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       margin: 0 0 4px;
-      color: #fff;
+      color: var(--text);
       font-weight: 700;
     }
-    #certifications-section .cert-org { color: var(--text-muted); margin: 0 0 6px; font-size: .95rem; }
+    #certifications-section .cert-org { color: var(--text-2); margin: 0 0 6px; font-size: .95rem; }
     #certifications-section .cert-year {
       display: inline-block;
-      color: var(--aws-orange);
+      color: var(--accent);
       font-weight: 600;
       font-size: .8rem;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    /* Skills tag-cloud */
-    .skill-cat { margin-bottom: 26px; }
+    /* Tech Stack — tag grid */
+    .skill-cat { margin-bottom: 24px; }
     .skill-cat h4 {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--aws-orange);
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-2);
       margin-bottom: 12px;
     }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
     .skill-tag {
-      background: rgba(255, 153, 0, 0.08);
-      border: 1px solid rgba(255, 153, 0, 0.3);
-      color: var(--text-main);
-      padding: 7px 15px;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      color: var(--pill-text);
+      padding: 4px 12px;
       border-radius: 20px;
       font-size: 14px;
-      transition: background .25s ease;
     }
-    .skill-tag:hover { background: rgba(255, 153, 0, 0.18); }
 
-    /* Project cards */
+    /* Projects — uniform cards */
     .project-card {
-      background: var(--card-bg) !important;
-      border: 1px solid var(--border-subtle) !important;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+      background: var(--surface) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+      overflow: hidden;
       transition: transform .3s ease, box-shadow .3s ease !important;
     }
     .project-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
     }
-    .project-title { color: #fff !important; }
-    .project-type { color: var(--aws-orange) !important; font-style: normal !important; font-weight: 600; }
-    .project-desc { color: var(--text-muted); font-size: .9rem; line-height: 1.55; margin-bottom: 12px; }
-    .project-actions a {
-      background-color: var(--aws-orange) !important;
-      color: #0d1117 !important;
+    .project-details {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .project-badge {
+      align-self: flex-start;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      border: 1px solid var(--pill-border);
+      font-size: 12px;
       font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
     }
-    .project-actions a:hover { background-color: #ffad33 !important; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .project-title {
+      color: var(--text) !important;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .project-desc {
+      color: var(--text-2);
+      font-size: .92rem;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
     .project-tags span {
       font-size: 11px;
-      background: rgba(255, 153, 0, 0.1);
-      color: var(--aws-orange);
-      border: 1px solid rgba(255, 153, 0, 0.28);
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      border: 1px solid var(--pill-border);
       padding: 3px 9px;
       border-radius: 12px;
     }
-    .view-more-btn { background-color: var(--aws-orange) !important; color: #0d1117 !important; font-weight: 600; }
+    .project-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; align-items: center; }
+    .project-actions a {
+      background-color: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      transition: background-color .25s ease;
+    }
+    .project-actions a:hover { background-color: var(--accent-hover); }
+    .project-actions .internal-note { color: var(--text-2); font-size: .85rem; font-style: italic; }
+    .view-more-btn { background-color: var(--accent) !important; color: #fff !important; font-weight: 600; }
+    .view-more-btn:hover { background-color: var(--accent-hover) !important; }
 
     /* Resume */
     .resume-wrap {
-      background: var(--card-bg) !important;
-      border: 1px solid var(--border-subtle);
-      border-left: 3px solid var(--aws-orange);
+      background: var(--surface) !important;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: transform .3s ease, box-shadow .3s ease;
     }
-    .resume-wrap .date { color: var(--aws-orange) !important; }
-    .resume-wrap h2 { color: #fff; }
-    .resume-wrap .position { color: var(--text-muted); }
-    .resume-wrap p, .resume-wrap span { color: var(--text-main); }
+    .resume-wrap:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); }
+    .resume-wrap .date { color: var(--accent) !important; font-weight: 700; }
+    .resume-wrap h2 { color: var(--text); }
+    .resume-wrap .position { color: var(--text-2); }
+    .resume-wrap p, .resume-wrap li { color: var(--text-2); }
 
-    /* Footer */
-    .ftco-footer { background: #0a0d12 !important; border-top: 1px solid var(--border-subtle); }
+    /* Footer — dark on light site */
+    .ftco-footer { background: #1A202C !important; border-top: 1px solid var(--border); }
+    .ftco-footer h2,
+    .ftco-footer p,
+    .ftco-footer .text-muted,
+    .ftco-footer li span { color: #CBD5E0 !important; }
+    .ftco-footer .text-white { color: #fff !important; }
     .footer-social-links a {
-      color: var(--text-muted);
+      color: #CBD5E0;
       margin: 0 10px;
       text-decoration: none;
       transition: color .25s ease;
     }
-    .footer-social-links a:hover { color: var(--aws-orange); }
+    .footer-social-links a:hover { color: #fff; }
 
+    /* Responsive */
     @media (max-width: 767.98px) {
-      #certifications-section .cert-card { flex-direction: column; text-align: center; }
-      #certifications-section .cert-card { border-left: 1px solid var(--border-subtle); border-top: 4px solid var(--aws-orange); }
+      #certifications-section .cert-card { flex-direction: column; text-align: center; align-items: center; }
     }
   </style>
 </head>
@@ -265,36 +333,31 @@
           <img src="images/ameer-hamza.jpeg" alt="ameer pic" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <div class="text-content">
-          <span class="subheading" style="font-size: 1.2em; color: #888;">Hello!</span>
+          <span class="subheading" style="font-size: 1.2em;">Hello!</span>
           <h1 class="mb-2 mt-2" style="font-size: 2.5em; margin-bottom: 10px;">I'm <span>Muhammad Ameer Hamza</span>
           </h1>
           <div class="social-links" style="margin-top: 30px; display: flex; justify-content: center; gap: 25px;">
-            <a href="https://www.linkedin.com/in/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; 
-                    width: 50px; height: 50px; border-radius: 50%; 
-                    background-color: #f0f0f0; color: #0A66C2; font-size: 1.8rem;">
+            <a href="https://www.linkedin.com/in/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;
+                    width: 50px; height: 50px; border-radius: 50%;
+                    color: #0A66C2; font-size: 1.8rem;">
               <i class="fab fa-linkedin-in"></i>
             </a>
-            <a href="https://github.com/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; 
-                    width: 50px; height: 50px; border-radius: 50%; 
-                    background-color: #f0f0f0; color: #333; font-size: 1.8rem;">
+            <a href="https://github.com/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;
+                    width: 50px; height: 50px; border-radius: 50%;
+                    color: #333; font-size: 1.8rem;">
               <i class="fab fa-github"></i>
             </a>
-            <!-- <a href="https://devsearch-db-acec10e69d94.herokuapp.com/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; 
-                    width: 50px; height: 50px; border-radius: 50%; 
-                    background-color: #f0f0f0; color: #333; font-size: 1.8rem;">
-              <i class="fab fa-github-alt"></i>
-            </a> -->
-            <a href="https://hub.docker.com/u/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; 
-                    width: 50px; height: 50px; border-radius: 50%; 
-                    background-color: #f0f0f0; color: #2496ED; font-size: 1.8rem;">
+            <a href="https://hub.docker.com/u/nexusameer" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;
+                    width: 50px; height: 50px; border-radius: 50%;
+                    color: #2496ED; font-size: 1.8rem;">
               <i class="fab fa-docker"></i>
             </a>
           </div>
           <br>
           <h2 class="mb-3" style="font-size: 1.8em; margin-bottom: 20px;">DevOps Engineer | AWS Certified SysOps Administrator</h2>
           <p style="margin-bottom: 20px; font-size: 1.1em; line-height: 1.6; max-width: 760px;">
-            Spearheading cloud-native infrastructure on AWS — migrations, CI/CD automation,
-            container orchestration, and zero-downtime deployments across 30+ production environments.
+            Driving zero-downtime cloud infrastructure on AWS — migrations, CI/CD automation,
+            container orchestration, and observability across 30+ production environments.
           </p>
 
         </div>
@@ -343,7 +406,6 @@
           <span class="tech-pill">Ansible</span>
           <span class="tech-pill">GitHub Actions</span>
           <span class="tech-pill">Bitbucket Pipelines</span>
-          <span class="tech-pill">Azure DevOps</span>
           <span class="tech-pill">Grafana</span>
           <span class="tech-pill">Prometheus</span>
           <span class="tech-pill">Nginx</span>
@@ -367,7 +429,11 @@
       <div class="row justify-content-center">
         <div class="col-md-6 mb-4 ftco-animate">
           <div class="cert-card">
-            <i class="fas fa-award cert-badge" style="color: #FF9900;"></i>
+            <svg class="cert-badge" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.249-8.25-3.286Z" />
+            </svg>
             <div class="cert-body">
               <h3>AWS SysOps Administrator – Associate</h3>
               <p class="cert-org">Amazon Web Services</p>
@@ -377,7 +443,11 @@
         </div>
         <div class="col-md-6 mb-4 ftco-animate">
           <div class="cert-card">
-            <i class="fas fa-award cert-badge" style="color: #c0c6cf;"></i>
+            <svg class="cert-badge" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.249-8.25-3.286Z" />
+            </svg>
             <div class="cert-body">
               <h3>AWS Cloud Practitioner</h3>
               <p class="cert-org">Amazon Web Services</p>
@@ -403,9 +473,10 @@
           <div class="skill-cat">
             <h4>Infrastructure &amp; Cloud</h4>
             <div class="skill-tags">
-              <span class="skill-tag">AWS (EC2/ECS/RDS/S3/VPC)</span>
+              <span class="skill-tag">AWS</span>
               <span class="skill-tag">Terraform</span>
               <span class="skill-tag">Ansible</span>
+              <span class="skill-tag">VPC</span>
               <span class="skill-tag">IAM</span>
               <span class="skill-tag">OIDC</span>
             </div>
@@ -415,7 +486,7 @@
             <div class="skill-tags">
               <span class="skill-tag">Docker</span>
               <span class="skill-tag">ECS</span>
-              <span class="skill-tag">Kubernetes (AKS)</span>
+              <span class="skill-tag">Kubernetes</span>
               <span class="skill-tag">Helm</span>
               <span class="skill-tag">ECR</span>
             </div>
@@ -440,14 +511,13 @@
         </div>
         <div class="col-md-6 ftco-animate">
           <div class="skill-cat">
-            <h4>Web &amp; Networking</h4>
+            <h4>Networking</h4>
             <div class="skill-tags">
               <span class="skill-tag">Nginx</span>
-              <span class="skill-tag">Apache</span>
               <span class="skill-tag">SSL/TLS</span>
               <span class="skill-tag">DNS</span>
-              <span class="skill-tag">Reverse Proxy</span>
               <span class="skill-tag">Route 53</span>
+              <span class="skill-tag">Reverse Proxy</span>
             </div>
           </div>
           <div class="skill-cat">
@@ -455,16 +525,16 @@
             <div class="skill-tags">
               <span class="skill-tag">PostgreSQL</span>
               <span class="skill-tag">MySQL</span>
-              <span class="skill-tag">Amazon RDS / Aurora</span>
+              <span class="skill-tag">Amazon RDS</span>
+              <span class="skill-tag">Aurora</span>
             </div>
           </div>
           <div class="skill-cat">
-            <h4>Scripting &amp; Languages</h4>
+            <h4>Scripting</h4>
             <div class="skill-tags">
               <span class="skill-tag">Bash</span>
               <span class="skill-tag">Python</span>
               <span class="skill-tag">JavaScript</span>
-              <span class="skill-tag">Ruby (deployment context)</span>
             </div>
           </div>
           <div class="skill-cat">
@@ -474,7 +544,7 @@
               <span class="skill-tag">CentOS</span>
               <span class="skill-tag">Amazon Linux</span>
               <span class="skill-tag">SSH</span>
-              <span class="skill-tag">Server Hardening</span>
+              <span class="skill-tag">Hardening</span>
             </div>
           </div>
         </div>
@@ -487,232 +557,123 @@
     <div class="container">
       <div class="section-heading text-center mb-5">
         <h2 class="section-title" style="font-size: 2.5em; margin-bottom: 10px;">My Projects</h2>
-        <p class="section-description" style="font-size: 1.1em; color: #666; max-width: 700px; margin: 0 auto;">
-          Explore a selection of my projects, showcasing my skills and dedication to creating impactful solutions.
+        <p class="section-description" style="font-size: 1.1em; max-width: 700px; margin: 0 auto;">
+          Production cloud and DevOps work — from AWS migrations to fully automated delivery pipelines.
         </p>
       </div>
 
       <div class="row">
 
-        <!-- AWS Cloud Migration Project -->
+        <!-- AWS Cloud Migration -->
         <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 200px; background-size: cover; background-position: center; position: relative; background-image: url('images/terraform.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
-              </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.4em; margin-bottom: 5px;">AWS Cloud Migration &amp; Infrastructure Modernization</h3>
-              <p class="project-type" style="margin-bottom: 10px;">AWS · Terraform · IaC</p>
+          <div class="project-card h-100">
+            <div class="project-details">
+              <span class="project-badge">AWS · Terraform · IaC</span>
+              <h3 class="project-title">AWS Cloud Migration &amp; Infrastructure Modernization</h3>
               <p class="project-desc">Zero-downtime migration of 25 production workloads from DigitalOcean to AWS using
-                Terraform. Provisioned VPCs, EC2 Auto Scaling, RDS, and full dev/stage/prod environment parity. Set up
-                multi-account AWS Organizations with least-privilege IAM and OIDC-based Bitbucket-AWS authentication —
-                eliminating all static credentials across pipelines.</p>
+                Terraform IaC — VPCs, EC2 Auto Scaling, RDS, and full dev/stage/prod parity, plus multi-account AWS
+                Organizations with least-privilege IAM and OIDC-based Bitbucket auth.</p>
               <div class="project-tags">
                 <span>AWS</span><span>Terraform</span><span>EC2</span><span>RDS</span><span>IAM</span><span>OIDC</span><span>Organizations</span>
               </div>
+              <div class="project-actions">
+                <span class="internal-note">Internal production project</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- AWS Containerized Deployment Project -->
+        <!-- Containerized App on ECS -->
         <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 200px; background-size: cover; background-position: center; position: relative; background-image: url('images/kubernetes.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
-              </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.4em; margin-bottom: 5px;">AWS Containerized Application Deployment</h3>
-              <p class="project-type" style="margin-bottom: 10px;">Docker · ECS · ECR</p>
-              <p class="project-desc">Containerized production Rails/Node.js/Django apps with Docker, pushed to Amazon ECR,
-                and deployed on ECS with ALB traffic routing and Route 53 DNS. Integrated AWS Secrets Manager for secure
-                credential injection. Frontend deployed via AWS Amplify with full end-to-end validation against ECS
-                backend and RDS.</p>
+          <div class="project-card h-100">
+            <div class="project-details">
+              <span class="project-badge">Docker · ECS · ECR</span>
+              <h3 class="project-title">Containerized App Deployment on AWS ECS</h3>
+              <p class="project-desc">Containerized production Rails/Node.js/Django apps with Docker, pushed to Amazon
+                ECR, and deployed on ECS with ALB routing and Route 53 DNS. Integrated AWS Secrets Manager; frontend via
+                AWS Amplify connected to ECS backend and RDS.</p>
               <div class="project-tags">
-                <span>Docker</span><span>ECS</span><span>ECR</span><span>ALB</span><span>Amplify</span><span>Secrets Manager</span>
+                <span>Docker</span><span>ECS</span><span>ECR</span><span>ALB</span><span>Amplify</span><span>Secrets Manager</span><span>Route 53</span>
+              </div>
+              <div class="project-actions">
+                <span class="internal-note">Internal production project</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Automated CI/CD Pipeline Project -->
+        <!-- Automated CI/CD -->
         <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 200px; background-size: cover; background-position: center; position: relative; background-image: url('images/pipeline.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
-              </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.4em; margin-bottom: 5px;">Automated CI/CD Pipeline — Commit to Live</h3>
-              <p class="project-type" style="margin-bottom: 10px;">Bitbucket Pipelines · GitHub Actions</p>
-              <p class="project-desc">Engineered a fully automated Bitbucket Pipelines workflow that self-provisions EC2,
-                scans code, installs dependencies, handles git operations, configures DNS, provisions SSL, and
-                authenticates — zero manual steps from commit to production across 30+ environments.</p>
+          <div class="project-card h-100">
+            <div class="project-details">
+              <span class="project-badge">Bitbucket Pipelines · GitHub Actions</span>
+              <h3 class="project-title">Automated CI/CD — Commit to Live Pipeline</h3>
+              <p class="project-desc">Fully automated Bitbucket Pipelines workflow that self-provisions EC2, scans code,
+                installs dependencies, configures DNS, provisions SSL, and authenticates — zero manual steps from commit
+                to production, running across 30+ environments.</p>
               <div class="project-tags">
-                <span>CI/CD</span><span>Bitbucket</span><span>GitHub Actions</span><span>EC2</span><span>SSL</span><span>DNS</span>
+                <span>CI/CD</span><span>Bitbucket Pipelines</span><span>GitHub Actions</span><span>EC2</span><span>SSL</span><span>DNS</span>
+              </div>
+              <div class="project-actions">
+                <span class="internal-note">Internal production project</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- PolyKubeNexus Project -->
+        <!-- Poly Nexus Kube -->
         <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 320px; background-size: cover; background-position: center; position: relative; background-image: url('images/kubernetes.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
+          <div class="project-card h-100">
+            <div class="project-details">
+              <span class="project-badge">Kubernetes · DevOps</span>
+              <h3 class="project-title">Poly Nexus Kube</h3>
+              <p class="project-desc">Multi-service Kubernetes deployment demonstrating container orchestration, rolling
+                deployments, and service networking across a managed cluster with Helm-packaged workloads.</p>
+              <div class="project-tags">
+                <span>Kubernetes</span><span>Docker</span><span>Helm</span><span>DevOps</span>
               </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.5em; margin-bottom: 5px;">Poly Nexus Kube</h3>
-              <p class="project-type" style="font-style: italic; color: #666; margin-bottom: 10px;">Devops</p>
-              <div class="project-actions" style="display: flex; gap: 10px;">
-                <a href="https://github.com/nexusameer/PolyKubeNexus" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  View Project</a>
+              <div class="project-actions">
+                <a href="https://github.com/nexusameer/PolyKubeNexus" target="_blank">View Project</a>
                 <a href="https://www.linkedin.com/posts/nexusameer_devops-cloudnative-azure-activity-7310763897177669633-hxFV?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEU-0HkB8WXyMmzLZ7gf669PTAZGgR1nfuM"
-                  target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  Project Video</a>
+                  target="_blank">Project Video</a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Slides Saver Project -->
+        <!-- Cloud Monitoring System -->
         <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 320px; background-size: cover; background-position: center; position: relative; background-image: url('images/slideshare.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
+          <div class="project-card h-100">
+            <div class="project-details">
+              <span class="project-badge">Prometheus · Grafana</span>
+              <h3 class="project-title">Cloud Monitoring System</h3>
+              <p class="project-desc">End-to-end observability stack with Prometheus metrics collection and Grafana
+                dashboards for real-time infrastructure monitoring, visualization, and alerting.</p>
+              <div class="project-tags">
+                <span>Prometheus</span><span>Grafana</span><span>Monitoring</span><span>Alerting</span>
               </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.5em; margin-bottom: 5px;">Slideshare Downloader</h3>
-              <p class="project-type" style="font-style: italic; color: #666; margin-bottom: 10px;">Devops & Development
-              </p>
-              <div class="project-actions" style="display: flex; gap: 10px;">
-                <a href="https://slidessaver.com/" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  View Project</a>
-                <a href="https://github.com/nexusameer/Slideshare-Api" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  GitHub</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Prometeus and grafana Project -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 320px; background-size: cover; background-position: center; position: relative; background-image: url('images/prom.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
-              </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.5em; margin-bottom: 5px;">Cloud Monitoring System</h3>
-              <p class="project-type" style="font-style: italic; color: #666; margin-bottom: 10px;">Prometheus & Grafana
-              </p>
-              <div class="project-actions" style="display: flex; gap: 10px;">
+              <div class="project-actions">
                 <a href="https://www.linkedin.com/posts/nexusameer_devops-cloudnative-azure-activity-7310763897177669633-hxFV?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEU-0HkB8WXyMmzLZ7gf669PTAZGgR1nfuM"
-                  target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  Project Video</a>
+                  target="_blank">Project Video</a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Voting App Project -->
+        <!-- Voting App Microservices -->
         <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 320px; background-size: cover; background-position: center; position: relative; background-image: url('images/Voting.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
+          <div class="project-card h-100">
+            <div class="project-details">
+              <span class="project-badge">Docker · Microservices</span>
+              <h3 class="project-title">Voting App Microservices</h3>
+              <p class="project-desc">Polyglot microservices voting application orchestrated with Docker — decoupled
+                services, a Redis queue, and Postgres persistence deployed across multiple containers.</p>
+              <div class="project-tags">
+                <span>Docker</span><span>Microservices</span><span>Redis</span><span>Postgres</span>
               </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.5em; margin-bottom: 5px;">Voting App</h3>
-              <p class="project-type" style="font-style: italic; color: #666; margin-bottom: 10px;">Devops</p>
-              <div class="project-actions" style="display: flex; gap: 10px;">
-                <a href="https://github.com/nexusameer/Voting-App-Microservices" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  View Project</a>
-                <a href="https://www.linkedin.com/in/nexusameer/details/projects/" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  Description</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CostCalculator project -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 320px; background-size: cover; background-position: center; position: relative; background-image: url('images/calculator.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
-              </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.5em; margin-bottom: 5px;">Cost Calculator</h3>
-              <p class="project-type" style="font-style: italic; color: #666; margin-bottom: 10px;">Devops</p>
-              <div class="project-actions" style="display: flex; gap: 10px;">
-                <a href="https://howmuchitcosttobuildanapp.com/" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  View Project</a>
-                <a href="https://www.linkedin.com/posts/nexusameer_devops-php-webdevelopment-activity-7320821690173730816-YWGB?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEU-0HkB8WXyMmzLZ7gf669PTAZGgR1nfuM"
-                  target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  Description</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WulfGang project -->
-        <div class="col-md-4 mb-4">
-          <div class="project-card h-100"
-            style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <div class="project-image"
-              style="height: 320px; background-size: cover; background-position: center; position: relative; background-image: url('images/camera.webp');">
-              <div class="project-overlay"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease;">
-              </div>
-            </div>
-            <div class="project-details" style="padding: 20px;">
-              <h3 class="project-title" style="font-size: 1.5em; margin-bottom: 5px;">Camera Website</h3>
-              <p class="project-type" style="font-style: italic; color: #666; margin-bottom: 10px;">Devops & Development
-              </p>
-              <div class="project-actions" style="display: flex; gap: 10px;">
-                <a href="https://wulfgang.ca/" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  View Project</a>
-                <a href="https://www.linkedin.com/in/nexusameer/details/projects/" target="_blank"
-                  style="background-color: #007bff; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; transition: background-color 0.3s ease;">
-                  Description</a>
+              <div class="project-actions">
+                <a href="https://github.com/nexusameer/Voting-App-Microservices" target="_blank">View Project</a>
+                <a href="https://www.linkedin.com/in/nexusameer/details/projects/" target="_blank">Description</a>
               </div>
             </div>
           </div>
@@ -722,7 +683,7 @@
 
       <div style="text-align: center; margin-top: 40px;">
         <a href="projects.html" class="view-more-btn"
-          style="background-color: #007bff; color: white; padding: 12px 24px; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease; text-decoration: none; display: inline-block;">
+          style="padding: 12px 24px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease; text-decoration: none; display: inline-block;">
           View More Projects
         </a>
       </div>
@@ -744,12 +705,12 @@
           <div class="resume-wrap ftco-animate">
             <span class="date">Apr 2025 – Present</span>
             <h2 class="mt-2">DevOps Engineer</h2>
-            <span class="position">Clustox (AWS Partner)</span>
+            <span class="position">Clustox (AWS Partner), Lahore</span>
             <ul class="mt-4" style="padding-left: 18px;">
-              <li>Spearheaded zero-downtime migration of 25 production workloads (DigitalOcean → AWS)</li>
-              <li>Architected multi-account AWS setup with Organizations, least-privilege IAM, and OIDC auth</li>
-              <li>Containerized apps with Docker/ECS, deployed via ALB + Route 53 + Secrets Manager</li>
-              <li>Maintains observability across 30+ production environments (Grafana, Prometheus, CloudWatch)</li>
+              <li>Zero-downtime migration of 25 production workloads from DigitalOcean to AWS</li>
+              <li>Multi-account AWS Organizations setup with least-privilege IAM and OIDC auth</li>
+              <li>Containerized apps via Docker/ECS with ALB, Route 53, and Secrets Manager</li>
+              <li>Observability across 30+ production environments — Grafana, Prometheus, CloudWatch</li>
             </ul>
           </div>
         </div>
@@ -757,10 +718,10 @@
           <div class="resume-wrap ftco-animate">
             <span class="date">Aug 2024 – Mar 2025</span>
             <h2 class="mt-2">DevOps Engineer (Training Program)</h2>
-            <span class="position">Systems Limited</span>
+            <span class="position">Systems Limited, Lahore</span>
             <ul class="mt-4" style="padding-left: 18px;">
-              <li>Deployed 10+ Django microservices on Azure Kubernetes Service (AKS)</li>
-              <li>Built CI/CD pipelines with Azure DevOps and GitHub Actions; Terraform for AKS provisioning</li>
+              <li>Deployed 10+ microservices on Azure Kubernetes Service with CI/CD via Azure DevOps</li>
+              <li>Terraform provisioning for AKS clusters and Azure VMs</li>
             </ul>
           </div>
         </div>
@@ -768,8 +729,11 @@
           <div class="resume-wrap ftco-animate">
             <span class="date">Sep 2023 – Aug 2024</span>
             <h2 class="mt-2">Django Developer</h2>
-            <span class="position">Tintosh Technologies</span>
-            <p class="mt-4">Developed Django applications, handled APIs, and optimized backend performance.</p>
+            <span class="position">Tintosh Technologies, Lahore</span>
+            <ul class="mt-4" style="padding-left: 18px;">
+              <li>Developed and deployed 10+ Django applications on Azure with 99.9% uptime</li>
+              <li>Optimized database queries reducing execution time by 40%</li>
+            </ul>
           </div>
         </div>
         <div class="col-md-6">
@@ -818,10 +782,6 @@
           </div>
         </div>
 
-
-
-
-
         <!-- Soft Skills Column -->
         <div class="col-md-3 mb-4 mb-md-0 ps-md-5">
           <h2 class="h4 text-white">Soft Skills</h2>
@@ -845,7 +805,7 @@
           </ul>
         </div>
 
-        <!-- Tech Stack Column -->
+        <!-- Tech Roles Column -->
         <div class="col-md-3 mb-4 mb-md-0 ps-md-5">
           <h2 class="h4 text-white">Tech Roles</h2>
           <ul class="list-unstyled">
@@ -854,12 +814,12 @@
               <span class="text-muted">DevOps Engineer</span>
             </li>
             <li class="mb-2 d-flex align-items-center">
-              <i class="fas fa-code-branch me-2 text-muted" style="width: 20px;"></i>
-              <span class="text-muted">Django Developer</span>
-            </li>
-            <li class="mb-2 d-flex align-items-center">
               <i class="fas fa-cloud me-2 text-muted" style="width: 20px;"></i>
               <span class="text-muted">Cloud Engineer</span>
+            </li>
+            <li class="mb-2 d-flex align-items-center">
+              <i class="fas fa-shield-alt me-2 text-muted" style="width: 20px;"></i>
+              <span class="text-muted">AWS SysOps Administrator</span>
             </li>
           </ul>
         </div>
@@ -884,7 +844,7 @@
     <svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
       <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
+        stroke="#2563EB" />
     </svg>
   </div>
   <script src="js/jquery.min.js"></script>
