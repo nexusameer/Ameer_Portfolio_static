@@ -87,7 +87,6 @@
     <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 5.5h18v13H3zM3.5 6l8.5 6 8.5-6"/></symbol>
     <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></g></symbol>
-    <symbol id="i-chevron" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5M19 5l-8 8"/><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></g></symbol>
     <symbol id="i-cert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5 7 22l5-3 5 3-1.5-8.5"/></g></symbol>
     <symbol id="i-edu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.5 12 4l10 4.5-10 4.5z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5M22 8.5V14"/></g></symbol>
@@ -263,13 +262,6 @@
                   <path class="edge e-traffic" d="M560,224 L560,205 L632,205 L632,168" marker-end="url(#mk1)"/>
                   <text class="e-label" x="241" y="282" text-anchor="middle">own CI: push → build → host</text>
 
-                  <!-- step badges -->
-                  <g class="badge" transform="translate(178,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
-                  <g class="badge" transform="translate(320,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
-                  <g class="badge" transform="translate(436,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
-                  <g class="badge" transform="translate(312,246)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
-                  <g class="badge" transform="translate(448,246)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
-                  <g class="badge" transform="translate(338,148)"><circle r="9"/><text text-anchor="middle" dy="3.5">6</text></g>
                 </svg>
               </div>
               <div class="legend">
@@ -283,28 +275,6 @@
               <div class="tags">
                 <span class="tag">Docker</span><span class="tag">ECS</span><span class="tag">ECR</span><span class="tag">ALB</span><span class="tag">Secrets Manager</span><span class="tag">GitHub Actions</span><span class="tag">Amplify</span>
               </div>
-              <details class="more" open>
-                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-                <div class="detail-inner">
-                  <h4>How it works</h4>
-                  <ol class="steps">
-                    <li>Backend push triggers GitHub Actions to build the Docker image.</li>
-                    <li>The image is pushed to ECR.</li>
-                    <li>Actions updates the ECS service with a new task definition; ECS rolls it out, and a failed deployment auto-rolls back.</li>
-                    <li>The frontend on Amplify calls the backend API through the ALB.</li>
-                    <li>The shared ALB routes to the staging or production target groups.</li>
-                    <li>Tasks pull DB credentials and app config from separate Secrets Manager stores at runtime.</li>
-                  </ol>
-                  <h4 class="built-h">What I built</h4>
-                  <ul class="built">
-                    <li>Containerized 5+ production services and authored ECS task definitions from scratch.</li>
-                    <li>Isolated staging and production clusters behind one shared ALB with weighted target groups.</li>
-                    <li>Automatic rollback on failed ECS deployments.</li>
-                    <li>Split secrets into separate Secrets Manager stores for DB credentials and app config.</li>
-                    <li>Independent CI paths: Amplify for the frontend, GitHub Actions → ECR → ECS for the backend.</li>
-                  </ul>
-                </div>
-              </details>
             </div>
           </article>
 
@@ -377,11 +347,6 @@
                   <path class="edge e-deploy" d="M412,254 L512,254" marker-end="url(#mk2)"/>
                   <text class="e-label" x="462" y="245" text-anchor="middle">DNS cutover</text>
 
-                  <g class="badge" transform="translate(191,72)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
-                  <g class="badge" transform="translate(491,72)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
-                  <g class="badge" transform="translate(329,170)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
-                  <g class="badge" transform="translate(250,254)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
-                  <g class="badge" transform="translate(462,254)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
                 </svg>
               </div>
               <div class="legend">
@@ -395,25 +360,6 @@
               <div class="tags">
                 <span class="tag">Terraform</span><span class="tag">AWS Organizations</span><span class="tag">SCPs</span><span class="tag">IAM / OIDC</span><span class="tag">EC2</span><span class="tag">Route 53</span>
               </div>
-              <details class="more">
-                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-                <div class="detail-inner">
-                  <h4>How it works</h4>
-                  <ol class="steps">
-                    <li>Terraform provisions the Organizations structure.</li>
-                    <li>Every project gets its own account, tagged for cost extraction, with SCPs enforced org-wide.</li>
-                    <li>Each repo's pipeline assumes a role scoped to its own project via OIDC, so no long-lived keys exist.</li>
-                    <li>Workloads migrate from DigitalOcean to EC2, with a final DB sync just before cutover.</li>
-                    <li>DNS cuts over in Route 53, keeping downtime to a brief validation window.</li>
-                  </ol>
-                  <h4 class="built-h">What I built</h4>
-                  <ul class="built">
-                    <li>Provisioned 25 isolated AWS accounts via Terraform under AWS Organizations, with per-project tagging for cost extraction and blast-radius containment.</li>
-                    <li>Enforced SCPs restricting regions and instance types org-wide; replaced long-lived IAM keys with per-repository OIDC federation from Bitbucket — each pipeline role scoped to one repo.</li>
-                    <li>Migrated workloads from DigitalOcean to AWS EC2 with a final DB sync just before DNS cutover — minimal-downtime cutover held to a brief validation window.</li>
-                  </ul>
-                </div>
-              </details>
             </div>
           </article>
 
@@ -465,11 +411,6 @@
                   <text class="e-label alert" x="430" y="210" text-anchor="start">fail</text>
                   <text class="e-label" x="412" y="266" text-anchor="middle">production untouched</text>
 
-                  <g class="badge" transform="translate(257,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
-                  <g class="badge" transform="translate(183,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
-                  <g class="badge" transform="translate(347,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
-                  <g class="badge" transform="translate(492,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
-                  <g class="badge" transform="translate(645,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
                 </svg>
               </div>
               <div class="legend">
@@ -483,25 +424,6 @@
               <div class="tags">
                 <span class="tag">Bitbucket Pipelines</span><span class="tag">self-hosted runner</span><span class="tag">Snyk</span><span class="tag">Route 53</span><span class="tag">ACM</span><span class="tag">Certbot</span><span class="tag">Slack</span>
               </div>
-              <details class="more">
-                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-                <div class="detail-inner">
-                  <h4>How it works</h4>
-                  <ol class="steps">
-                    <li>A provisioning script bootstraps an EC2 instance so it is ready for the app.</li>
-                    <li>On every push, a Bitbucket pipeline runs on a self-hosted runner.</li>
-                    <li>A Snyk scan gate runs before code reaches the server.</li>
-                    <li>On pass, the code deploys to EC2; on fail, the team is alerted and production is left untouched.</li>
-                    <li>Per-project SSL and DNS are set up automatically with Route 53 and ACM (Certbot / Let's Encrypt where needed).</li>
-                  </ol>
-                  <h4 class="built-h">What I built</h4>
-                  <ul class="built">
-                    <li>Modular design: a provisioning script bootstraps EC2, then a per-project Bitbucket pipeline ships code on every push.</li>
-                    <li>Self-hosted runner executes Snyk scans before code reaches the server; a failed scan alerts the team without touching production.</li>
-                    <li>Automated per-project SSL + DNS with Route 53 and ACM, rolled out across all company repositories.</li>
-                  </ul>
-                </div>
-              </details>
             </div>
           </article>
 
@@ -574,12 +496,6 @@
                   <path class="edge e-alert" d="M194,175 L214,175 L214,340 L194,340" marker-end="url(#mk4)"/>
                   <text class="e-label alert" x="224" y="300" text-anchor="start">failures only · throttled</text>
 
-                  <g class="badge" transform="translate(212,66)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
-                  <g class="badge" transform="translate(222,160)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
-                  <g class="badge" transform="translate(288,210)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
-                  <g class="badge" transform="translate(400,250)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
-                  <g class="badge" transform="translate(580,250)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
-                  <g class="badge" transform="translate(214,300)"><circle r="9"/><text text-anchor="middle" dy="3.5">6</text></g>
                 </svg>
               </div>
               <div class="legend">
@@ -593,26 +509,6 @@
               <div class="tags">
                 <span class="tag">Jenkins</span><span class="tag">Groovy</span><span class="tag">Docker</span><span class="tag">systemd</span><span class="tag">Prometheus</span><span class="tag">Node Exporter</span><span class="tag">Pushgateway</span><span class="tag">Grafana</span><span class="tag">Linux</span>
               </div>
-              <details class="more">
-                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-                <div class="detail-inner">
-                  <h4>How it works</h4>
-                  <ol class="steps">
-                    <li>Each new project is onboarded with an isolated Linux user, its own virtualenv and a dedicated MCP server under systemd.</li>
-                    <li>A scheduled Jenkins job runs a Docker container executing Claude Code, which uses that project's MCP server.</li>
-                    <li>The Jenkins job pushes metrics to Pushgateway.</li>
-                    <li>Prometheus scrapes both Pushgateway and the host/GPU Node Exporter.</li>
-                    <li>Grafana queries Prometheus as the visualization layer.</li>
-                    <li>A Jenkins Groovy init script alerts Slack on failures only, throttled.</li>
-                  </ol>
-                  <h4 class="built-h">What I built</h4>
-                  <ul class="built">
-                    <li>Repeatable onboarding on a shared GPU server: isolated Linux user, own virtualenv and a dedicated MCP server under systemd per project.</li>
-                    <li>Self-hosted Jenkins runs scheduled pipelines executing Claude Code in Docker containers; a custom Groovy init script applies global Slack alerts with failure-only throttling.</li>
-                    <li>Prometheus + Node Exporter + Pushgateway for metrics, with Grafana as the query layer.</li>
-                  </ul>
-                </div>
-              </details>
             </div>
           </article>
 
@@ -655,10 +551,6 @@
                   <path class="edge e-deploy" d="M380,160 L436,160" marker-end="url(#mk5)"/>
                   <text class="e-label" x="561" y="198" text-anchor="middle">new instances get the current revision automatically</text>
 
-                  <g class="badge" transform="translate(250,48)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
-                  <g class="badge" transform="translate(250,70)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
-                  <g class="badge" transform="translate(212,160)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
-                  <g class="badge" transform="translate(408,160)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
                 </svg>
               </div>
               <div class="legend">
@@ -672,22 +564,6 @@
               <div class="tags">
                 <span class="tag">CodeDeploy</span><span class="tag">Auto Scaling</span><span class="tag">EC2</span><span class="tag">Ansible</span><span class="tag">Rails</span><span class="tag">PostgreSQL</span>
               </div>
-              <details class="more">
-                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-                <div class="detail-inner">
-                  <h4>How it works</h4>
-                  <ol class="steps">
-                    <li>Ansible playbooks provision the EC2 instances running the Rails app.</li>
-                    <li>Ansible also provisions PostgreSQL.</li>
-                    <li>A release is rolled out through AWS CodeDeploy.</li>
-                    <li>CodeDeploy deploys onto an Auto Scaling Group, and new instances receive the current revision automatically.</li>
-                  </ol>
-                  <h4 class="built-h">What I built</h4>
-                  <ul class="built">
-                    <li>Deployed with AWS CodeDeploy behind auto-scaling; Ansible provisions the Ruby on Rails app and PostgreSQL.</li>
-                  </ul>
-                </div>
-              </details>
             </div>
           </article>
 

@@ -490,8 +490,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .diagram-panel > * { position: relative; z-index: 1; }
 
-/* lower body */
-.project-lower { padding: var(--s3) var(--s4) var(--s4); }
+/* lower body — tags only */
+.project-lower { padding: var(--s3) var(--s4); }
 .tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .tag {
   font-family: var(--font-mono);
@@ -501,47 +501,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 4px 9px;
-}
-
-/* details toggle */
-details.more { margin-top: var(--s3); border-top: 1px solid var(--line); padding-top: var(--s3); }
-details.more > summary {
-  list-style: none; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
-  transition: color .2s var(--ease);
-}
-details.more > summary::-webkit-details-marker { display: none; }
-details.more > summary:hover, details.more[open] > summary { color: var(--accent-ink); }
-details.more > summary .ico { width: 14px; height: 14px; transition: transform .25s var(--ease); }
-details.more[open] > summary .ico { transform: rotate(180deg); }
-
-.detail-inner { padding-top: var(--s3); }
-.detail-inner h4 {
-  font-family: var(--font-mono); font-size: 12px; text-transform: uppercase;
-  letter-spacing: .06em; color: var(--muted); font-weight: 500;
-  margin: 0 0 var(--s2);
-}
-.detail-inner h4.built-h { margin-top: var(--s3); }
-
-/* how it works — numbered steps that match diagram badges */
-ol.steps { counter-reset: step; display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-ol.steps li { position: relative; padding-left: 36px; font-size: 16px; line-height: 1.6; color: var(--text); }
-ol.steps li::before {
-  counter-increment: step; content: counter(step);
-  position: absolute; left: 0; top: 0;
-  width: 24px; height: 24px; border-radius: 50%;
-  border: 1px solid var(--node-line); background: var(--surface-2);
-  color: var(--accent); font-family: var(--font-mono); font-weight: 500; font-size: 12px;
-  display: grid; place-items: center;
-}
-
-/* what I built bullets */
-ul.built { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-ul.built li { position: relative; padding-left: 22px; font-size: 16px; line-height: 1.6; color: var(--text); }
-ul.built li::before {
-  content: ""; position: absolute; left: 2px; top: 10px;
-  width: 7px; height: 7px; border-radius: 2px; background: var(--accent);
 }
 
 /* featured card — gradient ring + soft glow behind diagram */
@@ -585,10 +544,6 @@ ul.built li::before {
 .diagram .e-config  { stroke: var(--edge-config); stroke-dasharray: 5 4; }
 .diagram .e-alert   { stroke: var(--edge-alert); stroke-dasharray: 5 4; }
 .diagram marker path { fill: context-stroke; }
-
-/* step badges */
-.diagram .badge circle { fill: var(--bg); stroke: var(--node-line); stroke-width: 1; }
-.diagram .badge text { fill: var(--text); font-size: 10px; font-weight: 500; }
 
 /* hover flow — only the hovered path */
 @keyframes dash { to { stroke-dashoffset: -18; } }
