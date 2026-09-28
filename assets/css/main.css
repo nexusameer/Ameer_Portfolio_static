@@ -5,19 +5,25 @@
 
 :root {
   /* dark theme (default) */
-  --bg: #0A0D12;
-  --surface: #10151C;
-  --surface-2: #161C25;
-  --line: #222A35;
-  --text: #E7ECF2;
-  --muted: #8A96A6;
+  --bg: #0B0E13;
+  --surface: #121821;    /* cards: clearly lifted from bg */
+  --surface-2: #19212C;  /* diagram panel / nodes */
+  --line: #273140;       /* visible hairlines */
+  --node-line: #34414F;  /* diagram node borders */
+  --text: #EEF2F6;
+  --muted: #A0ACBA;
   --accent: #4FD1A5;
   --accent-2: #7AA7FF;
   --warn: #F5B454;
-  --glow: rgba(79, 209, 165, .14);
+  --glow: rgba(79, 209, 165, .16);
   /* ink = accent tuned for small text; matches accent on dark, darkens on light */
   --accent-ink: var(--accent);
   --warn-ink: var(--warn);
+  /* diagram edge colours */
+  --edge-deploy: var(--accent-2);
+  --edge-traffic: var(--accent);
+  --edge-config: var(--muted);
+  --edge-alert: var(--warn);
 
   /* type */
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -40,6 +46,7 @@
   --surface: #FFFFFF;
   --surface-2: #F0F2F5;
   --line: #E3E7EC;
+  --node-line: #CBD3DC;
   --text: #0E1116;
   --muted: #5B6573;
   --accent: #0E9F74;
@@ -48,6 +55,10 @@
   --glow: rgba(14, 159, 116, .12);
   --accent-ink: #097552;
   --warn-ink: #8A5A08;
+  --edge-deploy: #2F6FEB;
+  --edge-traffic: #097552;
+  --edge-config: #5B6573;
+  --edge-alert: #8A5A08;
   color-scheme: light;
 }
 
@@ -58,6 +69,7 @@
     --surface: #FFFFFF;
     --surface-2: #F0F2F5;
     --line: #E3E7EC;
+    --node-line: #CBD3DC;
     --text: #0E1116;
     --muted: #5B6573;
     --accent: #0E9F74;
@@ -66,6 +78,10 @@
     --glow: rgba(14, 159, 116, .12);
     --accent-ink: #097552;
     --warn-ink: #8A5A08;
+    --edge-deploy: #2F6FEB;
+    --edge-traffic: #097552;
+    --edge-config: #5B6573;
+    --edge-alert: #8A5A08;
     color-scheme: light;
   }
 }
@@ -274,6 +290,20 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: clamp(48px, 9vw, 104px) 0 var(--s6);
   overflow: hidden;
 }
+/* soft radial accent glow so the page doesn't open on flat black */
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -12%;
+  left: -6%;
+  width: 62%;
+  height: 90%;
+  background:
+    radial-gradient(45% 55% at 30% 40%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 60% 55%, color-mix(in srgb, var(--accent-2) 6%, transparent), transparent 72%);
+  pointer-events: none;
+}
 .grid-bg {
   position: absolute;
   inset: 0;
@@ -281,7 +311,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   background-image:
     radial-gradient(circle, color-mix(in srgb, var(--muted) 40%, transparent) 1px, transparent 1px);
   background-size: 26px 26px;
-  opacity: .06;
+  opacity: .07;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 92%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 92%);
   pointer-events: none;
@@ -434,76 +464,35 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: relative;
   transition: border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
 }
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0;
-  transition: opacity .25s var(--ease);
-}
-.card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); box-shadow: 0 0 40px -18px var(--glow); }
-.card:hover::before { opacity: .8; }
+.card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); box-shadow: 0 0 40px -20px var(--glow); transform: translateY(-1px); }
 
-.projects-grid { display: grid; gap: var(--s3); }
+.projects-grid { display: grid; gap: var(--s4); }
 
 .project { overflow: hidden; }
-.project .diagram-panel {
+.project-top { padding: var(--s4) var(--s4) var(--s3); }
+.project h3 { font-size: clamp(20px, 2.4vw, 24px); margin-bottom: 8px; }
+.project .context { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0; max-width: 70ch; }
+
+.featured-flag {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--accent-ink); margin-bottom: 10px;
+}
+.featured-flag::before { content: "★"; }
+
+/* diagram panel */
+.diagram-panel {
   background: var(--surface-2);
+  border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  padding: var(--s3);
-}
-.project .diagram-panel svg { width: 100%; height: auto; display: block; }
-.project-body { padding: var(--s3) var(--s3) var(--s3); }
-.project-body summary { list-style: none; cursor: pointer; }
-.project-body summary::-webkit-details-marker { display: none; }
-
-.project-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--s2);
-}
-.project h3 { font-size: 21px; margin-bottom: 6px; }
-.project .problem { color: var(--muted); font-size: 15px; margin: 0; }
-
-.expand-hint {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 4px 10px;
-  transition: color .2s var(--ease), border-color .2s var(--ease);
-}
-details[open] .expand-hint { color: var(--accent-ink); border-color: var(--accent); }
-.expand-hint .ico { width: 12px; height: 12px; transition: transform .25s var(--ease); }
-details[open] .expand-hint .ico { transform: rotate(180deg); }
-
-.project-detail { padding-top: var(--s3); }
-.project-detail ul { display: grid; gap: 10px; margin-bottom: var(--s3); }
-.project-detail li {
+  padding: var(--s3) var(--s3) var(--s2);
   position: relative;
-  padding-left: 22px;
-  color: var(--text);
-  font-size: 14.5px;
-  line-height: 1.55;
 }
-.project-detail li::before {
-  content: "";
-  position: absolute;
-  left: 2px; top: 9px;
-  width: 7px; height: 7px;
-  border-radius: 2px;
-  background: var(--accent);
-}
+.diagram-panel > * { position: relative; z-index: 1; }
 
-.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: var(--s2); }
+/* lower body */
+.project-lower { padding: var(--s3) var(--s4) var(--s4); }
+.tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .tag {
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -514,25 +503,107 @@ details[open] .expand-hint .ico { transform: rotate(180deg); }
   padding: 4px 9px;
 }
 
-/* diagram flow animation on hover */
-.flow { stroke-dasharray: 5 5; }
-.card:hover .flow { animation: dash 1s linear infinite; }
-@keyframes dash { to { stroke-dashoffset: -20; } }
+/* details toggle */
+details.more { margin-top: var(--s3); border-top: 1px solid var(--line); padding-top: var(--s3); }
+details.more > summary {
+  list-style: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+  transition: color .2s var(--ease);
+}
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary:hover, details.more[open] > summary { color: var(--accent-ink); }
+details.more > summary .ico { width: 14px; height: 14px; transition: transform .25s var(--ease); }
+details.more[open] > summary .ico { transform: rotate(180deg); }
+
+.detail-inner { padding-top: var(--s3); }
+.detail-inner h4 {
+  font-family: var(--font-mono); font-size: 12px; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--muted); font-weight: 500;
+  margin: 0 0 var(--s2);
+}
+.detail-inner h4.built-h { margin-top: var(--s3); }
+
+/* how it works — numbered steps that match diagram badges */
+ol.steps { counter-reset: step; display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+ol.steps li { position: relative; padding-left: 36px; font-size: 16px; line-height: 1.6; color: var(--text); }
+ol.steps li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: 0;
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid var(--node-line); background: var(--surface-2);
+  color: var(--accent); font-family: var(--font-mono); font-weight: 500; font-size: 12px;
+  display: grid; place-items: center;
+}
+
+/* what I built bullets */
+ul.built { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+ul.built li { position: relative; padding-left: 22px; font-size: 16px; line-height: 1.6; color: var(--text); }
+ul.built li::before {
+  content: ""; position: absolute; left: 2px; top: 10px;
+  width: 7px; height: 7px; border-radius: 2px; background: var(--accent);
+}
+
+/* featured card — gradient ring + soft glow behind diagram */
+.project.featured { border-color: transparent; }
+.project.featured::after {
+  content: ""; position: absolute; inset: 0; border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(130deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, var(--accent-2) 55%, transparent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+.project.featured .diagram-panel::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(55% 75% at 50% 42%, var(--glow), transparent 70%);
+  pointer-events: none;
+}
+
+/* ---- diagram lane system ---- */
+.diagram-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+.diagram { width: 100%; height: auto; display: block; }
+@media (max-width: 640px) { .diagram { min-width: 580px; } }  /* scroll, don't shrink text */
 
 .diagram text { font-family: var(--font-mono); }
-.diagram .box { fill: var(--surface); stroke: var(--line); stroke-width: 1; }
-.diagram .box-2 { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; }
-.diagram .box-accent { fill: color-mix(in srgb, var(--accent) 13%, var(--surface)); stroke: color-mix(in srgb, var(--accent) 50%, var(--line)); stroke-width: 1; }
-.diagram .box-warn { fill: color-mix(in srgb, var(--warn) 12%, var(--surface)); stroke: color-mix(in srgb, var(--warn) 45%, var(--line)); stroke-width: 1; }
-.diagram .lbl { fill: var(--text); font-size: 11px; font-weight: 500; }
-.diagram .lbl-mut { fill: var(--muted); font-size: 9px; letter-spacing: .04em; }
-.diagram .edge { stroke: var(--accent-2); stroke-width: 1.5; fill: none; }
-.diagram .edge-warn { stroke: var(--warn); stroke-width: 1.5; fill: none; }
-.diagram .ah { fill: var(--accent-2); }
-.diagram .ah-warn { fill: var(--warn); }
+.diagram .lane-band { fill: color-mix(in srgb, var(--muted) 6%, transparent); }
+.diagram .lane-label { fill: var(--muted); font-size: 10px; font-weight: 500; letter-spacing: .12em; }
 
-/* small project (no diagram) */
-.project-sm .project-body { padding: var(--s3); }
+.diagram .node { fill: var(--surface-2); stroke: var(--node-line); stroke-width: 1.5; }
+.diagram .node-core { fill: color-mix(in srgb, var(--accent) 15%, var(--surface-2)); stroke: color-mix(in srgb, var(--accent) 60%, var(--node-line)); stroke-width: 1.5; }
+.diagram .n-title { fill: var(--text); font-size: 11px; font-weight: 500; }
+.diagram .n-sub { fill: var(--muted); font-size: 9px; }
+.diagram .e-label { fill: var(--muted); font-size: 9px; }
+.diagram .e-label.alert { fill: var(--warn-ink); }
+
+/* edges */
+.diagram .edge { fill: none; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round; }
+.diagram .e-deploy  { stroke: var(--edge-deploy); }
+.diagram .e-traffic { stroke: var(--edge-traffic); }
+.diagram .e-config  { stroke: var(--edge-config); stroke-dasharray: 5 4; }
+.diagram .e-alert   { stroke: var(--edge-alert); stroke-dasharray: 5 4; }
+.diagram marker path { fill: context-stroke; }
+
+/* step badges */
+.diagram .badge circle { fill: var(--bg); stroke: var(--node-line); stroke-width: 1; }
+.diagram .badge text { fill: var(--text); font-size: 10px; font-weight: 500; }
+
+/* hover flow — only the hovered path */
+@keyframes dash { to { stroke-dashoffset: -18; } }
+@media (prefers-reduced-motion: no-preference) {
+  .diagram .edge:hover { stroke-dasharray: 6 4; animation: dash .8s linear infinite; }
+}
+
+/* legend */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--line); }
+.legend .lg { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+.legend .sw { width: 20px; border-top: 2px solid; display: inline-block; }
+.legend .sw.deploy  { border-color: var(--edge-deploy); }
+.legend .sw.traffic { border-color: var(--edge-traffic); }
+.legend .sw.config  { border-color: var(--edge-config); border-top-style: dashed; }
+.legend .sw.alert   { border-color: var(--edge-alert); border-top-style: dashed; }
 
 /* -------------------------------------------------------------------------
    lab builds
