@@ -629,38 +629,128 @@ ul { margin: 0; padding: 0; list-style: none; }
 .edu-line .ico { width: 16px; height: 16px; color: var(--accent); }
 
 /* -------------------------------------------------------------------------
-   stack
+   stack — delivery pipeline rail
    ------------------------------------------------------------------------- */
-.stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s3); }
-@media (max-width: 900px) { .stack-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .stack-grid { grid-template-columns: 1fr; } }
-.stack-col { padding: var(--s3); }
-.stack-col h3 {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent-ink);
-  font-weight: 500;
-  margin-bottom: var(--s2);
+.rail {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
-.pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 6px 10px;
-  transition: border-color .2s var(--ease);
+/* horizontal rail line through the node centres (desktop) */
+.rail::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, var(--accent) 0 7px, transparent 7px 14px);
+  background-size: 14px 100%;
+  opacity: .5;
+  z-index: 0;
 }
-.pill:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
-.pill .ico { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
-.pill:hover .ico { color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .rail:hover::before { animation: railflow .7s linear infinite; }
+}
+@keyframes railflow { to { background-position: 14px 0; } }
+
+.stage { position: relative; display: flex; flex-direction: column; padding: 0 12px; }
+.stage-node { align-self: center; z-index: 1; height: 18px; display: grid; place-items: center; margin-bottom: 14px; }
+.stage-node .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent);
+}
+.stage-head { margin-bottom: var(--s2); }
+.node-label {
+  display: block; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .06em; color: var(--accent-ink); margin-bottom: 6px;
+}
+.stage-name { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; margin: 0 0 4px; }
+.stage-cap { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.4; }
+
+.tool-list { list-style: none; margin: 0; padding: 0; }
+.tool-row {
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  height: 36px; padding: 0 4px;
+  background: none; border: 0; border-top: 1px solid var(--line);
+  font-family: var(--font-body); font-size: 15px; color: var(--text);
+  text-align: left; cursor: pointer;
+  transition: color .15s var(--ease), background .15s var(--ease);
+}
+.tool-list li:last-child .tool-row { border-bottom: 1px solid var(--line); }
+.tool-row .t-ico { width: 20px; height: 20px; display: grid; place-items: center; color: var(--muted); flex-shrink: 0; transition: color .15s var(--ease); }
+.tool-row .t-ico svg { width: 20px; height: 20px; fill: currentColor; display: block; }
+.tool-row .dot-ico { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+/* colour lives on the span, not the <button>: some engines don't re-resolve
+   an inherited custom property on a form control when the root theme flips */
+.tool-row .t-name { flex: 1; min-width: 0; color: var(--text); }
+.aws-tag {
+  margin-left: auto; flex-shrink: 0;
+  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px;
+  transition: color .15s var(--ease), border-color .15s var(--ease);
+}
+.tool-row:hover, .tool-row:focus-visible, .tool-row.active {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.tool-row:hover .t-ico, .tool-row:focus-visible .t-ico, .tool-row.active .t-ico { color: var(--accent); }
+.tool-row:hover .aws-tag, .tool-row.active .aws-tag { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent-ink); }
+
+/* languages & systems line */
+.langs {
+  margin: var(--s4) 0 0; padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 13px; color: var(--text);
+}
+.langs-label { color: var(--accent-ink); margin-right: 10px; letter-spacing: .06em; }
+
+/* project highlight driven by stack rows */
+.project.dimmed { opacity: .5; }
+.project.hl { box-shadow: 0 0 0 2px var(--accent); }
+.uses-chip {
+  position: absolute; top: 12px; right: 12px; z-index: 3;
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 15%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line));
+  border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+}
+.uses-chip[hidden] { display: none; }
+
+/* screen-reader only */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* mobile — vertical rail on the left */
+@media (max-width: 1023px) {
+  .rail { grid-template-columns: 1fr; gap: var(--s5); }
+  .rail::before {
+    top: 4px; bottom: 4px; left: 8px; right: auto; width: 2px; height: auto;
+    background-image: repeating-linear-gradient(180deg, var(--accent) 0 7px, transparent 7px 14px);
+    background-size: 100% 14px;
+  }
+  .rail:hover::before { animation: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .rail:hover::before { animation: railflowv .7s linear infinite; }
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    grid-template-areas: "node head" "gap tools";
+    padding: 0;
+    row-gap: var(--s2);
+  }
+  .stage-node { grid-area: node; align-self: start; justify-self: start; margin: 2px 0 0 0; }
+  .stage-head { grid-area: head; margin-bottom: 0; }
+  .tool-list { grid-area: tools; }
+}
+@keyframes railflowv { to { background-position: 0 14px; } }
 
 /* -------------------------------------------------------------------------
    certifications

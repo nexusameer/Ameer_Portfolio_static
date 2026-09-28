@@ -137,4 +137,52 @@
       setTimeout(typeLine, 500);
     }
   }
+
+  /* ---- stack rail: highlight projects that use a tool ---- */
+  var toolRows = document.querySelectorAll(".tool-row");
+  if (toolRows.length) {
+    var projects = document.querySelectorAll(".project[data-project]");
+    var pinned = null;
+
+    function clearHighlight() {
+      projects.forEach(function (p) {
+        p.classList.remove("hl", "dimmed");
+        var chip = p.querySelector(".uses-chip");
+        if (chip) { chip.hidden = true; chip.textContent = ""; }
+      });
+      toolRows.forEach(function (r) { r.classList.remove("active"); });
+    }
+
+    function activate(row) {
+      clearHighlight();
+      row.classList.add("active");
+      var ids = (row.getAttribute("data-projects") || "").split(/\s+/).filter(Boolean);
+      if (!ids.length) return; // no project match — just highlight the row itself
+      var tool = row.getAttribute("data-tool") || "";
+      projects.forEach(function (p) {
+        if (ids.indexOf(p.getAttribute("data-project")) !== -1) {
+          p.classList.add("hl");
+          var chip = p.querySelector(".uses-chip");
+          if (chip) { chip.textContent = "uses " + tool; chip.hidden = false; }
+        } else {
+          p.classList.add("dimmed");
+        }
+      });
+    }
+
+    toolRows.forEach(function (row) {
+      row.addEventListener("mouseenter", function () { if (!pinned) activate(row); });
+      row.addEventListener("mouseleave", function () { if (!pinned) clearHighlight(); });
+      row.addEventListener("focus", function () { if (!pinned) activate(row); });
+      row.addEventListener("blur", function () { if (!pinned) clearHighlight(); });
+      row.addEventListener("click", function () {
+        if (pinned === row) { pinned = null; clearHighlight(); }
+        else { pinned = row; activate(row); }
+      });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && pinned) { pinned = null; clearHighlight(); }
+    });
+  }
 })();
