@@ -181,278 +181,513 @@
         <span class="eyebrow">// 01 — work</span>
         <h2 class="section-title">Featured projects</h2>
         <p class="section-intro">
-          Production infrastructure built at Clustox. Each card opens to the full picture —
-          the problem, what I built, and the architecture behind it.
+          Production infrastructure built at Clustox. Each card shows the context and the
+          architecture; open <em>How it works</em> for the numbered walkthrough that matches
+          the diagram.
         </p>
 
         <div class="projects-grid">
 
-          <!-- Project 1 -->
-          <article class="card project reveal">
-            <div class="diagram-panel">
-              <svg class="diagram" viewBox="0 0 660 190" role="img" aria-label="Architecture: a management account branches into organizational units and then isolated project accounts; Bitbucket connects through OIDC to a per-repo scoped IAM role.">
-                <defs>
-                  <marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path class="ah" d="M0 0l6 3-6 3z"/></marker>
-                </defs>
-                <rect class="box-accent" x="16" y="24" width="150" height="42" rx="7"/>
-                <text class="lbl" x="91" y="42" text-anchor="middle">Management</text>
-                <text class="lbl-mut" x="91" y="56" text-anchor="middle">AWS Organizations</text>
-
-                <rect class="box-2" x="246" y="24" width="120" height="42" rx="7"/>
-                <text class="lbl" x="306" y="42" text-anchor="middle">OUs</text>
-                <text class="lbl-mut" x="306" y="56" text-anchor="middle">+ SCPs</text>
-
-                <rect class="box" x="446" y="10" width="198" height="30" rx="7"/>
-                <text class="lbl" x="545" y="29" text-anchor="middle">project account · 01</text>
-                <rect class="box" x="446" y="48" width="198" height="30" rx="7"/>
-                <text class="lbl" x="545" y="67" text-anchor="middle">project account · … 25</text>
-
-                <line class="edge flow" x1="166" y1="45" x2="242" y2="45" marker-end="url(#ah1)"/>
-                <line class="edge flow" x1="366" y1="42" x2="442" y2="25" marker-end="url(#ah1)"/>
-                <line class="edge flow" x1="366" y1="48" x2="442" y2="63" marker-end="url(#ah1)"/>
-
-                <rect class="box-2" x="16" y="126" width="150" height="42" rx="7"/>
-                <text class="lbl" x="91" y="144" text-anchor="middle">Bitbucket</text>
-                <text class="lbl-mut" x="91" y="158" text-anchor="middle">pipeline</text>
-
-                <rect class="box-accent" x="246" y="126" width="120" height="42" rx="7"/>
-                <text class="lbl" x="306" y="144" text-anchor="middle">OIDC</text>
-                <text class="lbl-mut" x="306" y="158" text-anchor="middle">federation</text>
-
-                <rect class="box" x="446" y="126" width="198" height="42" rx="7"/>
-                <text class="lbl" x="545" y="144" text-anchor="middle">scoped IAM role</text>
-                <text class="lbl-mut" x="545" y="158" text-anchor="middle">one role per repo</text>
-
-                <line class="edge flow" x1="166" y1="147" x2="242" y2="147" marker-end="url(#ah1)"/>
-                <line class="edge flow" x1="366" y1="147" x2="442" y2="147" marker-end="url(#ah1)"/>
-              </svg>
+          <!-- ============ 1 · ECS (featured) ============ -->
+          <article class="card project featured reveal">
+            <div class="project-top">
+              <div class="featured-flag">Featured</div>
+              <h3>Containerized Deployments on ECS</h3>
+              <p class="context">Production services moved onto containers with separate staging and production environments and automated deploys.</p>
             </div>
-            <div class="project-body">
-              <details>
-                <summary>
-                  <div class="project-head">
-                    <div>
-                      <h3>AWS Multi-Account Migration &amp; Governance</h3>
-                      <p class="problem">Ungoverned single-account sprawl with long-lived keys and no cost isolation.</p>
-                    </div>
-                    <span class="expand-hint">details <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></span>
-                  </div>
-                </summary>
-                <div class="project-detail">
-                  <ul>
+            <div class="diagram-panel">
+              <div class="diagram-scroll">
+                <svg class="diagram" viewBox="0 0 780 300" role="img" aria-label="ECS delivery. DEPLOY lane: git push triggers GitHub Actions to build an image, which is pushed to ECR, then the ECS service is updated and rolled out to isolated staging and production clusters; a failed health check auto-rolls back. TRAFFIC lane: users reach an Amplify frontend that calls the backend API through a shared ALB, which routes via weighted target groups up into the staging and production clusters. RUNTIME lane: Secrets Manager injects db-credentials and app-config into the tasks at runtime.">
+                  <defs><marker id="mk1" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+                  <!-- lane bands -->
+                  <rect class="lane-band" x="0" y="8" width="780" height="88"/>
+                  <rect class="lane-band" x="0" y="200" width="780" height="92"/>
+                  <text class="lane-label" x="10" y="55">DEPLOY</text>
+                  <text class="lane-label" x="10" y="151">RUNTIME</text>
+                  <text class="lane-label" x="10" y="249">TRAFFIC</text>
+
+                  <!-- DEPLOY nodes -->
+                  <rect class="node" x="74" y="30" width="92" height="44" rx="10"/>
+                  <text class="n-title" x="120" y="56" text-anchor="middle">git push</text>
+                  <rect class="node" x="190" y="30" width="118" height="44" rx="10"/>
+                  <text class="n-title" x="249" y="51" text-anchor="middle">GitHub Actions</text>
+                  <text class="n-sub" x="249" y="64" text-anchor="middle">build image</text>
+                  <rect class="node" x="332" y="30" width="92" height="44" rx="10"/>
+                  <text class="n-title" x="378" y="51" text-anchor="middle">ECR</text>
+                  <text class="n-sub" x="378" y="64" text-anchor="middle">push image</text>
+                  <rect class="node" x="448" y="30" width="150" height="44" rx="10"/>
+                  <text class="n-title" x="523" y="51" text-anchor="middle">ECS service update</text>
+                  <text class="n-sub" x="523" y="64" text-anchor="middle">new task def</text>
+
+                  <!-- RUNTIME nodes -->
+                  <rect class="node" x="74" y="112" width="150" height="72" rx="10"/>
+                  <text class="n-title" x="149" y="134" text-anchor="middle">Secrets Manager</text>
+                  <text class="n-sub" x="149" y="152" text-anchor="middle">db-credentials</text>
+                  <text class="n-sub" x="149" y="166" text-anchor="middle">app-config</text>
+                  <rect class="node-core" x="452" y="124" width="104" height="44" rx="10"/>
+                  <text class="n-title" x="504" y="150" text-anchor="middle">ECS · staging</text>
+                  <rect class="node-core" x="580" y="124" width="104" height="44" rx="10"/>
+                  <text class="n-title" x="632" y="150" text-anchor="middle">ECS · prod</text>
+
+                  <!-- TRAFFIC nodes -->
+                  <rect class="node" x="74" y="224" width="84" height="44" rx="10"/>
+                  <text class="n-title" x="116" y="250" text-anchor="middle">User</text>
+                  <rect class="node" x="182" y="224" width="118" height="44" rx="10"/>
+                  <text class="n-title" x="241" y="245" text-anchor="middle">Amplify</text>
+                  <text class="n-sub" x="241" y="258" text-anchor="middle">frontend</text>
+                  <rect class="node" x="324" y="224" width="112" height="44" rx="10"/>
+                  <text class="n-title" x="380" y="245" text-anchor="middle">ALB</text>
+                  <text class="n-sub" x="380" y="258" text-anchor="middle">weighted TG</text>
+                  <rect class="node" x="460" y="224" width="140" height="44" rx="10"/>
+                  <text class="n-title" x="530" y="245" text-anchor="middle">target groups</text>
+                  <text class="n-sub" x="530" y="258" text-anchor="middle">staging | prod</text>
+
+                  <!-- DEPLOY edges -->
+                  <path class="edge e-deploy" d="M166,52 L190,52" marker-end="url(#mk1)"/>
+                  <path class="edge e-deploy" d="M308,52 L332,52" marker-end="url(#mk1)"/>
+                  <path class="edge e-deploy" d="M424,52 L448,52" marker-end="url(#mk1)"/>
+                  <!-- rollout to clusters -->
+                  <path class="edge e-deploy" d="M523,74 L523,100 L504,100 L504,124" marker-end="url(#mk1)"/>
+                  <path class="edge e-deploy" d="M523,74 L523,92 L632,92 L632,124" marker-end="url(#mk1)"/>
+                  <!-- secrets injection -->
+                  <path class="edge e-config" d="M224,148 L452,148" marker-end="url(#mk1)"/>
+                  <text class="e-label" x="338" y="142" text-anchor="middle">injected at runtime</text>
+                  <!-- auto rollback -->
+                  <path class="edge e-alert" d="M660,124 L660,108 L724,108 L724,148 L684,148" marker-end="url(#mk1)"/>
+                  <text class="e-label alert" x="662" y="102" text-anchor="middle">fails health check → rollback</text>
+                  <!-- TRAFFIC edges -->
+                  <path class="edge e-traffic" d="M158,246 L182,246" marker-end="url(#mk1)"/>
+                  <path class="edge e-traffic" d="M300,246 L324,246" marker-end="url(#mk1)"/>
+                  <path class="edge e-traffic" d="M436,246 L460,246" marker-end="url(#mk1)"/>
+                  <path class="edge e-traffic" d="M505,224 L505,168" marker-end="url(#mk1)"/>
+                  <path class="edge e-traffic" d="M560,224 L560,205 L632,205 L632,168" marker-end="url(#mk1)"/>
+                  <text class="e-label" x="241" y="282" text-anchor="middle">own CI: push → build → host</text>
+
+                  <!-- step badges -->
+                  <g class="badge" transform="translate(178,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
+                  <g class="badge" transform="translate(320,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
+                  <g class="badge" transform="translate(436,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
+                  <g class="badge" transform="translate(312,246)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
+                  <g class="badge" transform="translate(448,246)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
+                  <g class="badge" transform="translate(338,148)"><circle r="9"/><text text-anchor="middle" dy="3.5">6</text></g>
+                </svg>
+              </div>
+              <div class="legend">
+                <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                <span class="lg"><span class="sw config"></span>config / secrets / scrape</span>
+                <span class="lg"><span class="sw alert"></span>alerts</span>
+              </div>
+            </div>
+            <div class="project-lower">
+              <div class="tags">
+                <span class="tag">Docker</span><span class="tag">ECS</span><span class="tag">ECR</span><span class="tag">ALB</span><span class="tag">Secrets Manager</span><span class="tag">GitHub Actions</span><span class="tag">Amplify</span>
+              </div>
+              <details class="more" open>
+                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                <div class="detail-inner">
+                  <h4>How it works</h4>
+                  <ol class="steps">
+                    <li>Backend push triggers GitHub Actions to build the Docker image.</li>
+                    <li>The image is pushed to ECR.</li>
+                    <li>Actions updates the ECS service with a new task definition; ECS rolls it out, and a failed deployment auto-rolls back.</li>
+                    <li>The frontend on Amplify calls the backend API through the ALB.</li>
+                    <li>The shared ALB routes to the staging or production target groups.</li>
+                    <li>Tasks pull DB credentials and app config from separate Secrets Manager stores at runtime.</li>
+                  </ol>
+                  <h4 class="built-h">What I built</h4>
+                  <ul class="built">
+                    <li>Containerized 5+ production services and authored ECS task definitions from scratch.</li>
+                    <li>Isolated staging and production clusters behind one shared ALB with weighted target groups.</li>
+                    <li>Automatic rollback on failed ECS deployments.</li>
+                    <li>Split secrets into separate Secrets Manager stores for DB credentials and app config.</li>
+                    <li>Independent CI paths: Amplify for the frontend, GitHub Actions → ECR → ECS for the backend.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- ============ 2 · AWS Multi-Account ============ -->
+          <article class="card project reveal">
+            <div class="project-top">
+              <h3>AWS Multi-Account Migration &amp; Governance</h3>
+              <p class="context">Client workloads consolidated from DigitalOcean into AWS, with every project isolated in its own account.</p>
+            </div>
+            <div class="diagram-panel">
+              <div class="diagram-scroll">
+                <svg class="diagram" viewBox="0 0 780 300" role="img" aria-label="Governance. GOVERN lane: Terraform provisions AWS Organizations (management account); SCPs limiting regions and instance types apply down to 25 tagged project accounts. ACCESS lane: a Bitbucket pipeline for repo A exchanges an OIDC token for an IAM role scoped to project A only, and cannot reach other project accounts. MIGRATE lane: workloads move from DigitalOcean to AWS EC2 with a final DB sync, then DNS cuts over in Route 53 within a brief validation window.">
+                  <defs><marker id="mk2" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+                  <rect class="lane-band" x="0" y="8" width="780" height="112"/>
+                  <rect class="lane-band" x="0" y="216" width="780" height="80"/>
+                  <text class="lane-label" x="10" y="64">GOVERN</text>
+                  <text class="lane-label" x="10" y="172">ACCESS</text>
+                  <text class="lane-label" x="10" y="260">MIGRATE</text>
+
+                  <!-- GOVERN -->
+                  <rect class="node" x="74" y="48" width="104" height="44" rx="10"/>
+                  <text class="n-title" x="126" y="74" text-anchor="middle">Terraform</text>
+                  <rect class="node-core" x="204" y="48" width="136" height="44" rx="10"/>
+                  <text class="n-title" x="272" y="67" text-anchor="middle">AWS Organizations</text>
+                  <text class="n-sub" x="272" y="80" text-anchor="middle">mgmt account</text>
+                  <rect class="node" x="366" y="48" width="104" height="44" rx="10"/>
+                  <text class="n-title" x="418" y="67" text-anchor="middle">SCPs</text>
+                  <text class="n-sub" x="418" y="80" text-anchor="middle">region + type</text>
+                  <rect class="node" x="556" y="16" width="204" height="28" rx="8"/>
+                  <text class="n-title" x="566" y="34" text-anchor="start">project account · 01 · tag</text>
+                  <rect class="node" x="556" y="50" width="204" height="28" rx="8"/>
+                  <text class="n-title" x="566" y="68" text-anchor="start">project account · 02 · tag</text>
+                  <rect class="node" x="556" y="84" width="204" height="28" rx="8"/>
+                  <text class="n-title" x="566" y="102" text-anchor="start">project account · …25 · tag</text>
+                  <path class="edge e-deploy" d="M178,72 L204,72" marker-end="url(#mk2)"/>
+                  <path class="edge e-deploy" d="M340,72 L366,72" marker-end="url(#mk2)"/>
+                  <path class="edge e-deploy" d="M470,72 L512,72 L512,30 L556,30" marker-end="url(#mk2)"/>
+                  <path class="edge e-deploy" d="M512,72 L512,64 L556,64" marker-end="url(#mk2)"/>
+                  <path class="edge e-deploy" d="M512,72 L512,98 L556,98" marker-end="url(#mk2)"/>
+
+                  <!-- ACCESS -->
+                  <rect class="node" x="74" y="150" width="110" height="40" rx="10"/>
+                  <text class="n-title" x="129" y="168" text-anchor="middle">Bitbucket</text>
+                  <text class="n-sub" x="129" y="181" text-anchor="middle">repo A</text>
+                  <rect class="node" x="206" y="150" width="96" height="40" rx="10"/>
+                  <text class="n-title" x="254" y="174" text-anchor="middle">OIDC token</text>
+                  <rect class="node" x="330" y="138" width="210" height="66" rx="10" stroke-dasharray="4 4"/>
+                  <text class="n-sub" x="340" y="150" text-anchor="start">account · project A</text>
+                  <rect class="node-core" x="356" y="158" width="160" height="34" rx="8"/>
+                  <text class="n-title" x="436" y="179" text-anchor="middle">IAM role · project A</text>
+                  <rect class="node" x="596" y="156" width="150" height="34" rx="8" stroke-dasharray="4 4"/>
+                  <text class="n-sub" x="671" y="177" text-anchor="middle">account · project B</text>
+                  <path class="edge e-deploy" d="M184,170 L206,170" marker-end="url(#mk2)"/>
+                  <path class="edge e-deploy" d="M302,170 L356,170" marker-end="url(#mk2)"/>
+                  <path class="edge e-alert" d="M516,174 L596,174"/>
+                  <text class="e-label alert" x="556" y="150" text-anchor="middle">cannot reach other projects</text>
+                  <line x1="550" y1="168" x2="562" y2="180" stroke="var(--edge-alert)" stroke-width="1.7"/>
+                  <line x1="562" y1="168" x2="550" y2="180" stroke="var(--edge-alert)" stroke-width="1.7"/>
+
+                  <!-- MIGRATE -->
+                  <rect class="node" x="74" y="234" width="126" height="40" rx="10"/>
+                  <text class="n-title" x="137" y="258" text-anchor="middle">DigitalOcean</text>
+                  <rect class="node" x="300" y="234" width="112" height="40" rx="10"/>
+                  <text class="n-title" x="356" y="258" text-anchor="middle">AWS EC2</text>
+                  <rect class="node-core" x="512" y="234" width="180" height="40" rx="10"/>
+                  <text class="n-title" x="602" y="252" text-anchor="middle">Route 53</text>
+                  <text class="n-sub" x="602" y="265" text-anchor="middle">brief validation window</text>
+                  <path class="edge e-deploy" d="M200,254 L300,254" marker-end="url(#mk2)"/>
+                  <text class="e-label" x="250" y="245" text-anchor="middle">final DB sync</text>
+                  <path class="edge e-deploy" d="M412,254 L512,254" marker-end="url(#mk2)"/>
+                  <text class="e-label" x="462" y="245" text-anchor="middle">DNS cutover</text>
+
+                  <g class="badge" transform="translate(191,72)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
+                  <g class="badge" transform="translate(491,72)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
+                  <g class="badge" transform="translate(329,170)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
+                  <g class="badge" transform="translate(250,254)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
+                  <g class="badge" transform="translate(462,254)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
+                </svg>
+              </div>
+              <div class="legend">
+                <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                <span class="lg"><span class="sw config"></span>config / secrets / scrape</span>
+                <span class="lg"><span class="sw alert"></span>alerts</span>
+              </div>
+            </div>
+            <div class="project-lower">
+              <div class="tags">
+                <span class="tag">Terraform</span><span class="tag">AWS Organizations</span><span class="tag">SCPs</span><span class="tag">IAM / OIDC</span><span class="tag">EC2</span><span class="tag">Route 53</span>
+              </div>
+              <details class="more">
+                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                <div class="detail-inner">
+                  <h4>How it works</h4>
+                  <ol class="steps">
+                    <li>Terraform provisions the Organizations structure.</li>
+                    <li>Every project gets its own account, tagged for cost extraction, with SCPs enforced org-wide.</li>
+                    <li>Each repo's pipeline assumes a role scoped to its own project via OIDC, so no long-lived keys exist.</li>
+                    <li>Workloads migrate from DigitalOcean to EC2, with a final DB sync just before cutover.</li>
+                    <li>DNS cuts over in Route 53, keeping downtime to a brief validation window.</li>
+                  </ol>
+                  <h4 class="built-h">What I built</h4>
+                  <ul class="built">
                     <li>Provisioned 25 isolated AWS accounts via Terraform under AWS Organizations, with per-project tagging for cost extraction and blast-radius containment.</li>
                     <li>Enforced SCPs restricting regions and instance types org-wide; replaced long-lived IAM keys with per-repository OIDC federation from Bitbucket — each pipeline role scoped to one repo.</li>
-                    <li>Migrated workloads from DigitalOcean to AWS EC2 with a final DB sync just before DNS cutover — downtime held to a brief validation window.</li>
+                    <li>Migrated workloads from DigitalOcean to AWS EC2 with a final DB sync just before DNS cutover — minimal-downtime cutover held to a brief validation window.</li>
                   </ul>
-                  <div class="tags">
-                    <span class="tag">Terraform</span><span class="tag">AWS Organizations</span><span class="tag">SCPs</span><span class="tag">IAM / OIDC</span><span class="tag">EC2</span><span class="tag">Route 53</span>
-                  </div>
                 </div>
               </details>
             </div>
           </article>
 
-          <!-- Project 2 -->
+          <!-- ============ 3 · CI/CD ============ -->
           <article class="card project reveal">
+            <div class="project-top">
+              <h3>CI/CD System — Commit to Live</h3>
+              <p class="context">One standard deployment path for every company repository.</p>
+            </div>
             <div class="diagram-panel">
-              <svg class="diagram" viewBox="0 0 660 190" role="img" aria-label="Architecture: GitHub Actions builds an image to ECR which updates ECS staging and production services behind a shared ALB; an Amplify-hosted frontend also routes through the ALB.">
-                <defs>
-                  <marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path class="ah" d="M0 0l6 3-6 3z"/></marker>
-                </defs>
-                <rect class="box-2" x="16" y="26" width="130" height="42" rx="7"/>
-                <text class="lbl" x="81" y="44" text-anchor="middle">GitHub Actions</text>
-                <text class="lbl-mut" x="81" y="58" text-anchor="middle">build</text>
+              <div class="diagram-scroll">
+                <svg class="diagram" viewBox="0 0 780 270" role="img" aria-label="CI/CD. BOOTSTRAP lane (one-time): a provisioning script prepares an EC2 instance for the app. DEPLOY lane (every push): git push runs a Bitbucket pipeline on a self-hosted runner, then a Snyk scan gate; on pass it deploys to EC2 and sets up SSL and DNS via Route 53 and ACM; on fail it alerts Slack and leaves production untouched.">
+                  <defs><marker id="mk3" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+                  <rect class="lane-band" x="0" y="8" width="780" height="84"/>
+                  <text class="lane-label" x="10" y="54">BOOTSTRAP</text>
+                  <text class="lane-label" x="10" y="180">DEPLOY</text>
 
-                <rect class="box-2" x="196" y="26" width="96" height="42" rx="7"/>
-                <text class="lbl" x="244" y="44" text-anchor="middle">ECR</text>
-                <text class="lbl-mut" x="244" y="58" text-anchor="middle">image</text>
+                  <!-- BOOTSTRAP -->
+                  <rect class="node" x="74" y="30" width="140" height="44" rx="10"/>
+                  <text class="n-title" x="144" y="56" text-anchor="middle">Provisioning script</text>
+                  <rect class="node" x="300" y="30" width="130" height="44" rx="10"/>
+                  <text class="n-title" x="365" y="51" text-anchor="middle">EC2 instance</text>
+                  <text class="n-sub" x="365" y="64" text-anchor="middle">ready for app</text>
+                  <path class="edge e-deploy" d="M214,52 L300,52" marker-end="url(#mk3)"/>
+                  <text class="e-label" x="257" y="43" text-anchor="middle">one-time</text>
 
-                <rect class="box-accent" x="342" y="10" width="150" height="30" rx="7"/>
-                <text class="lbl" x="417" y="29" text-anchor="middle">ECS · staging</text>
-                <rect class="box-accent" x="342" y="52" width="150" height="30" rx="7"/>
-                <text class="lbl" x="417" y="71" text-anchor="middle">ECS · prod</text>
+                  <!-- DEPLOY -->
+                  <rect class="node" x="74" y="150" width="96" height="44" rx="10"/>
+                  <text class="n-title" x="122" y="176" text-anchor="middle">git push</text>
+                  <rect class="node" x="196" y="150" width="138" height="44" rx="10"/>
+                  <text class="n-title" x="265" y="171" text-anchor="middle">Bitbucket pipeline</text>
+                  <text class="n-sub" x="265" y="184" text-anchor="middle">self-hosted runner</text>
+                  <rect class="node-core" x="360" y="150" width="104" height="44" rx="10"/>
+                  <text class="n-title" x="412" y="171" text-anchor="middle">Snyk gate</text>
+                  <text class="n-sub" x="412" y="184" text-anchor="middle">scan</text>
+                  <rect class="node" x="520" y="150" width="112" height="44" rx="10"/>
+                  <text class="n-title" x="576" y="176" text-anchor="middle">Deploy → EC2</text>
+                  <rect class="node" x="658" y="150" width="112" height="44" rx="10"/>
+                  <text class="n-title" x="714" y="171" text-anchor="middle">Route 53 + ACM</text>
+                  <text class="n-sub" x="714" y="184" text-anchor="middle">SSL + DNS</text>
+                  <rect class="node" x="360" y="216" width="104" height="40" rx="10"/>
+                  <text class="n-title" x="412" y="240" text-anchor="middle">Slack</text>
+                  <path class="edge e-deploy" d="M170,172 L196,172" marker-end="url(#mk3)"/>
+                  <path class="edge e-deploy" d="M334,172 L360,172" marker-end="url(#mk3)"/>
+                  <path class="edge e-deploy" d="M464,172 L520,172" marker-end="url(#mk3)"/>
+                  <text class="e-label" x="492" y="163" text-anchor="middle">pass</text>
+                  <path class="edge e-deploy" d="M632,172 L658,172" marker-end="url(#mk3)"/>
+                  <path class="edge e-alert" d="M412,194 L412,216" marker-end="url(#mk3)"/>
+                  <text class="e-label alert" x="430" y="210" text-anchor="start">fail</text>
+                  <text class="e-label" x="412" y="266" text-anchor="middle">production untouched</text>
 
-                <rect class="box" x="542" y="26" width="102" height="42" rx="7"/>
-                <text class="lbl" x="593" y="44" text-anchor="middle">ALB</text>
-                <text class="lbl-mut" x="593" y="58" text-anchor="middle">weighted TG</text>
-
-                <line class="edge flow" x1="146" y1="47" x2="192" y2="47" marker-end="url(#ah2)"/>
-                <line class="edge flow" x1="292" y1="44" x2="338" y2="26" marker-end="url(#ah2)"/>
-                <line class="edge flow" x1="292" y1="50" x2="338" y2="66" marker-end="url(#ah2)"/>
-                <line class="edge flow" x1="542" y1="40" x2="494" y2="26" marker-end="url(#ah2)"/>
-                <line class="edge flow" x1="542" y1="54" x2="494" y2="66" marker-end="url(#ah2)"/>
-
-                <rect class="box-2" x="196" y="130" width="130" height="42" rx="7"/>
-                <text class="lbl" x="261" y="148" text-anchor="middle">Amplify</text>
-                <text class="lbl-mut" x="261" y="162" text-anchor="middle">frontend · own CI</text>
-                <path class="edge flow" d="M326 151 H430 Q450 151 450 120 V84" fill="none" marker-end="url(#ah2)"/>
-              </svg>
+                  <g class="badge" transform="translate(257,52)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
+                  <g class="badge" transform="translate(183,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
+                  <g class="badge" transform="translate(347,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
+                  <g class="badge" transform="translate(492,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
+                  <g class="badge" transform="translate(645,172)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
+                </svg>
+              </div>
+              <div class="legend">
+                <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                <span class="lg"><span class="sw config"></span>config / secrets / scrape</span>
+                <span class="lg"><span class="sw alert"></span>alerts</span>
+              </div>
             </div>
-            <div class="project-body">
-              <details>
-                <summary>
-                  <div class="project-head">
-                    <div>
-                      <h3>Containerized Deployments on ECS</h3>
-                      <p class="problem">Manual releases with no isolation between staging and production.</p>
-                    </div>
-                    <span class="expand-hint">details <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></span>
-                  </div>
-                </summary>
-                <div class="project-detail">
-                  <ul>
-                    <li>Containerized 5+ production services with Docker on ECS across isolated staging and production clusters; task definitions authored from scratch.</li>
-                    <li>Shared ALB with weighted target groups; automatic rollback on failed deployments; secrets split across Secrets Manager stores and injected at runtime.</li>
-                    <li>Amplify-hosted frontend with an independent CI path; backend pushes trigger GitHub Actions to rebuild images to ECR and update the ECS service.</li>
-                  </ul>
-                  <div class="tags">
-                    <span class="tag">Docker</span><span class="tag">ECS</span><span class="tag">ECR</span><span class="tag">ALB</span><span class="tag">Secrets Manager</span><span class="tag">GitHub Actions</span><span class="tag">Amplify</span>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </article>
-
-          <!-- Project 3 -->
-          <article class="card project reveal">
-            <div class="diagram-panel">
-              <svg class="diagram" viewBox="0 0 660 190" role="img" aria-label="Architecture: a git push triggers a self-hosted runner, which runs a Snyk security gate; a failed scan alerts Slack, a pass proceeds to deploy onto EC2 with automated SSL and DNS.">
-                <defs>
-                  <marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path class="ah" d="M0 0l6 3-6 3z"/></marker>
-                  <marker id="ah3w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path class="ah-warn" d="M0 0l6 3-6 3z"/></marker>
-                </defs>
-                <rect class="box-2" x="14" y="40" width="104" height="42" rx="7"/>
-                <text class="lbl" x="66" y="58" text-anchor="middle">git push</text>
-                <text class="lbl-mut" x="66" y="72" text-anchor="middle">Bitbucket</text>
-
-                <rect class="box-2" x="156" y="40" width="104" height="42" rx="7"/>
-                <text class="lbl" x="208" y="58" text-anchor="middle">runner</text>
-                <text class="lbl-mut" x="208" y="72" text-anchor="middle">self-hosted</text>
-
-                <rect class="box-warn" x="298" y="40" width="104" height="42" rx="7"/>
-                <text class="lbl" x="350" y="58" text-anchor="middle">Snyk gate</text>
-                <text class="lbl-mut" x="350" y="72" text-anchor="middle">scan</text>
-
-                <rect class="box-accent" x="440" y="40" width="96" height="42" rx="7"/>
-                <text class="lbl" x="488" y="63" text-anchor="middle">deploy</text>
-
-                <rect class="box" x="560" y="40" width="88" height="42" rx="7"/>
-                <text class="lbl" x="604" y="58" text-anchor="middle">EC2</text>
-                <text class="lbl-mut" x="604" y="72" text-anchor="middle">SSL + DNS</text>
-
-                <rect class="box-warn" x="298" y="132" width="104" height="40" rx="7"/>
-                <text class="lbl" x="350" y="157" text-anchor="middle">Slack</text>
-
-                <line class="edge flow" x1="118" y1="61" x2="152" y2="61" marker-end="url(#ah3)"/>
-                <line class="edge flow" x1="260" y1="61" x2="294" y2="61" marker-end="url(#ah3)"/>
-                <line class="edge flow" x1="402" y1="61" x2="436" y2="61" marker-end="url(#ah3)"/>
-                <line class="edge flow" x1="536" y1="61" x2="556" y2="61" marker-end="url(#ah3)"/>
-                <line class="edge-warn flow" x1="350" y1="82" x2="350" y2="128" marker-end="url(#ah3w)"/>
-                <text class="lbl-mut" x="360" y="108" fill="var(--warn-ink)">fail</text>
-              </svg>
-            </div>
-            <div class="project-body">
-              <details>
-                <summary>
-                  <div class="project-head">
-                    <div>
-                      <h3>CI/CD System — Commit to Live</h3>
-                      <p class="problem">No standard path from commit to production, and no security gate.</p>
-                    </div>
-                    <span class="expand-hint">details <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></span>
-                  </div>
-                </summary>
-                <div class="project-detail">
-                  <ul>
+            <div class="project-lower">
+              <div class="tags">
+                <span class="tag">Bitbucket Pipelines</span><span class="tag">self-hosted runner</span><span class="tag">Snyk</span><span class="tag">Route 53</span><span class="tag">ACM</span><span class="tag">Certbot</span><span class="tag">Slack</span>
+              </div>
+              <details class="more">
+                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                <div class="detail-inner">
+                  <h4>How it works</h4>
+                  <ol class="steps">
+                    <li>A provisioning script bootstraps an EC2 instance so it is ready for the app.</li>
+                    <li>On every push, a Bitbucket pipeline runs on a self-hosted runner.</li>
+                    <li>A Snyk scan gate runs before code reaches the server.</li>
+                    <li>On pass, the code deploys to EC2; on fail, the team is alerted and production is left untouched.</li>
+                    <li>Per-project SSL and DNS are set up automatically with Route 53 and ACM (Certbot / Let's Encrypt where needed).</li>
+                  </ol>
+                  <h4 class="built-h">What I built</h4>
+                  <ul class="built">
                     <li>Modular design: a provisioning script bootstraps EC2, then a per-project Bitbucket pipeline ships code on every push.</li>
                     <li>Self-hosted runner executes Snyk scans before code reaches the server; a failed scan alerts the team without touching production.</li>
-                    <li>Automated per-project SSL + DNS with Route 53 and ACM (Certbot / Let's Encrypt where needed), rolled out across all company repositories.</li>
+                    <li>Automated per-project SSL + DNS with Route 53 and ACM, rolled out across all company repositories.</li>
                   </ul>
-                  <div class="tags">
-                    <span class="tag">Bitbucket Pipelines</span><span class="tag">self-hosted runner</span><span class="tag">Snyk</span><span class="tag">Route 53</span><span class="tag">ACM</span><span class="tag">Certbot</span><span class="tag">Slack</span>
-                  </div>
                 </div>
               </details>
             </div>
           </article>
 
-          <!-- Project 4 -->
+          <!-- ============ 4 · GPU Automation ============ -->
           <article class="card project reveal">
-            <div class="diagram-panel">
-              <svg class="diagram" viewBox="0 0 660 190" role="img" aria-label="Architecture: a Jenkins scheduler runs Docker jobs that push metrics to Pushgateway, scraped by Prometheus and visualized in Grafana; Jenkins also alerts Slack on failures only.">
-                <defs>
-                  <marker id="ah4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path class="ah" d="M0 0l6 3-6 3z"/></marker>
-                  <marker id="ah4w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path class="ah-warn" d="M0 0l6 3-6 3z"/></marker>
-                </defs>
-                <rect class="box-accent" x="14" y="40" width="112" height="42" rx="7"/>
-                <text class="lbl" x="70" y="58" text-anchor="middle">Jenkins</text>
-                <text class="lbl-mut" x="70" y="72" text-anchor="middle">scheduler</text>
-
-                <rect class="box-2" x="150" y="40" width="104" height="42" rx="7"/>
-                <text class="lbl" x="202" y="58" text-anchor="middle">Docker job</text>
-                <text class="lbl-mut" x="202" y="72" text-anchor="middle">Claude Code</text>
-
-                <rect class="box-2" x="278" y="40" width="104" height="42" rx="7"/>
-                <text class="lbl" x="330" y="58" text-anchor="middle">Pushgateway</text>
-
-                <rect class="box-2" x="406" y="40" width="104" height="42" rx="7"/>
-                <text class="lbl" x="458" y="58" text-anchor="middle">Prometheus</text>
-
-                <rect class="box-accent" x="534" y="40" width="110" height="42" rx="7"/>
-                <text class="lbl" x="589" y="58" text-anchor="middle">Grafana</text>
-                <text class="lbl-mut" x="589" y="72" text-anchor="middle">query layer</text>
-
-                <rect class="box-warn" x="14" y="132" width="112" height="40" rx="7"/>
-                <text class="lbl" x="70" y="157" text-anchor="middle">Slack</text>
-
-                <line class="edge flow" x1="126" y1="61" x2="146" y2="61" marker-end="url(#ah4)"/>
-                <line class="edge flow" x1="254" y1="61" x2="274" y2="61" marker-end="url(#ah4)"/>
-                <line class="edge flow" x1="382" y1="61" x2="402" y2="61" marker-end="url(#ah4)"/>
-                <line class="edge flow" x1="510" y1="61" x2="530" y2="61" marker-end="url(#ah4)"/>
-                <line class="edge-warn flow" x1="70" y1="82" x2="70" y2="128" marker-end="url(#ah4w)"/>
-                <text class="lbl-mut" x="80" y="108" fill="var(--warn-ink)">failures</text>
-              </svg>
+            <div class="project-top">
+              <h3>GPU Automation Platform — Self-Hosted CI</h3>
+              <p class="context">Several automation projects share one GPU server and need isolation, scheduling and visibility.</p>
             </div>
-            <div class="project-body">
-              <details>
-                <summary>
-                  <div class="project-head">
-                    <div>
-                      <h3>GPU Automation Platform — Self-Hosted CI</h3>
-                      <p class="problem">Ad-hoc onboarding and no visibility on a shared GPU server.</p>
-                    </div>
-                    <span class="expand-hint">details <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></span>
-                  </div>
-                </summary>
-                <div class="project-detail">
-                  <ul>
+            <div class="diagram-panel">
+              <div class="diagram-scroll">
+                <svg class="diagram" viewBox="0 0 800 384" role="img" aria-label="GPU automation. ONBOARD lane: each new project gets an isolated Linux user, virtualenv and an MCP server under systemd, repeated per project. RUN lane: a scheduled Jenkins job runs a Docker container executing Claude Code, which uses that project's MCP server. OBSERVE lane: the Jenkins job pushes metrics to Pushgateway; Prometheus scrapes both Pushgateway and a Node Exporter; Grafana queries Prometheus. ALERT lane: a Jenkins Groovy init script alerts Slack on failures only, throttled.">
+                  <defs><marker id="mk4" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+                  <rect class="lane-band" x="0" y="8" width="800" height="112"/>
+                  <rect class="lane-band" x="0" y="200" width="800" height="100"/>
+                  <text class="lane-label" x="10" y="64">ONBOARD</text>
+                  <text class="lane-label" x="10" y="164">RUN</text>
+                  <text class="lane-label" x="10" y="254">OBSERVE</text>
+                  <text class="lane-label" x="10" y="346">ALERT</text>
+
+                  <!-- ONBOARD -->
+                  <rect class="node" x="74" y="48" width="110" height="40" rx="10"/>
+                  <text class="n-title" x="129" y="72" text-anchor="middle">New project</text>
+                  <rect class="node" x="252" y="26" width="232" height="88" rx="10" opacity="0.5"/>
+                  <rect class="node" x="240" y="16" width="232" height="88" rx="10" stroke-dasharray="4 4"/>
+                  <text class="n-sub" x="250" y="30" text-anchor="start">per project</text>
+                  <rect class="node" x="260" y="36" width="190" height="20" rx="6"/>
+                  <text class="n-title" x="355" y="50" text-anchor="middle">Linux user</text>
+                  <rect class="node" x="260" y="60" width="190" height="20" rx="6"/>
+                  <text class="n-title" x="355" y="74" text-anchor="middle">virtualenv</text>
+                  <rect class="node" x="260" y="84" width="190" height="20" rx="6"/>
+                  <text class="n-title" x="355" y="98" text-anchor="middle">MCP server · systemd</text>
+                  <path class="edge e-deploy" d="M184,66 L240,66" marker-end="url(#mk4)"/>
+                  <text class="e-label" x="356" y="116" text-anchor="middle">repeatable per project</text>
+
+                  <!-- RUN -->
+                  <rect class="node-core" x="74" y="138" width="120" height="44" rx="10"/>
+                  <text class="n-title" x="134" y="159" text-anchor="middle">Jenkins</text>
+                  <text class="n-sub" x="134" y="172" text-anchor="middle">scheduled</text>
+                  <rect class="node" x="250" y="138" width="180" height="44" rx="10"/>
+                  <text class="n-title" x="340" y="159" text-anchor="middle">Docker container</text>
+                  <text class="n-sub" x="340" y="172" text-anchor="middle">Claude Code</text>
+                  <path class="edge e-deploy" d="M194,160 L250,160" marker-end="url(#mk4)"/>
+                  <path class="edge e-config" d="M340,138 L340,104" marker-end="url(#mk4)"/>
+                  <text class="e-label" x="352" y="124" text-anchor="start">uses</text>
+
+                  <!-- OBSERVE -->
+                  <rect class="node" x="74" y="228" width="120" height="44" rx="10"/>
+                  <text class="n-title" x="134" y="249" text-anchor="middle">Node Exporter</text>
+                  <text class="n-sub" x="134" y="262" text-anchor="middle">host / GPU</text>
+                  <rect class="node" x="250" y="228" width="120" height="44" rx="10"/>
+                  <text class="n-title" x="310" y="254" text-anchor="middle">Pushgateway</text>
+                  <rect class="node" x="430" y="228" width="120" height="44" rx="10"/>
+                  <text class="n-title" x="490" y="254" text-anchor="middle">Prometheus</text>
+                  <rect class="node" x="610" y="228" width="120" height="44" rx="10"/>
+                  <text class="n-title" x="670" y="249" text-anchor="middle">Grafana</text>
+                  <text class="n-sub" x="670" y="262" text-anchor="middle">query layer</text>
+                  <path class="edge e-config" d="M134,182 L134,210 L310,210 L310,228" marker-end="url(#mk4)"/>
+                  <text class="e-label" x="262" y="204" text-anchor="middle">push metrics</text>
+                  <path class="edge e-config" d="M430,250 L370,250" marker-end="url(#mk4)"/>
+                  <text class="e-label" x="400" y="243" text-anchor="middle">scrape</text>
+                  <path class="edge e-config" d="M490,272 L490,290 L134,290 L134,272" marker-end="url(#mk4)"/>
+                  <text class="e-label" x="300" y="286" text-anchor="middle">scrape</text>
+                  <path class="edge e-config" d="M610,250 L550,250" marker-end="url(#mk4)"/>
+                  <text class="e-label" x="580" y="243" text-anchor="middle">query</text>
+
+                  <!-- ALERT -->
+                  <rect class="node" x="74" y="318" width="120" height="44" rx="10"/>
+                  <text class="n-title" x="134" y="344" text-anchor="middle">Slack</text>
+                  <path class="edge e-alert" d="M194,175 L214,175 L214,340 L194,340" marker-end="url(#mk4)"/>
+                  <text class="e-label alert" x="224" y="300" text-anchor="start">failures only · throttled</text>
+
+                  <g class="badge" transform="translate(212,66)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
+                  <g class="badge" transform="translate(222,160)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
+                  <g class="badge" transform="translate(288,210)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
+                  <g class="badge" transform="translate(400,250)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
+                  <g class="badge" transform="translate(580,250)"><circle r="9"/><text text-anchor="middle" dy="3.5">5</text></g>
+                  <g class="badge" transform="translate(214,300)"><circle r="9"/><text text-anchor="middle" dy="3.5">6</text></g>
+                </svg>
+              </div>
+              <div class="legend">
+                <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                <span class="lg"><span class="sw config"></span>config / secrets / scrape</span>
+                <span class="lg"><span class="sw alert"></span>alerts</span>
+              </div>
+            </div>
+            <div class="project-lower">
+              <div class="tags">
+                <span class="tag">Jenkins</span><span class="tag">Groovy</span><span class="tag">Docker</span><span class="tag">systemd</span><span class="tag">Prometheus</span><span class="tag">Node Exporter</span><span class="tag">Pushgateway</span><span class="tag">Grafana</span><span class="tag">Linux</span>
+              </div>
+              <details class="more">
+                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                <div class="detail-inner">
+                  <h4>How it works</h4>
+                  <ol class="steps">
+                    <li>Each new project is onboarded with an isolated Linux user, its own virtualenv and a dedicated MCP server under systemd.</li>
+                    <li>A scheduled Jenkins job runs a Docker container executing Claude Code, which uses that project's MCP server.</li>
+                    <li>The Jenkins job pushes metrics to Pushgateway.</li>
+                    <li>Prometheus scrapes both Pushgateway and the host/GPU Node Exporter.</li>
+                    <li>Grafana queries Prometheus as the visualization layer.</li>
+                    <li>A Jenkins Groovy init script alerts Slack on failures only, throttled.</li>
+                  </ol>
+                  <h4 class="built-h">What I built</h4>
+                  <ul class="built">
                     <li>Repeatable onboarding on a shared GPU server: isolated Linux user, own virtualenv and a dedicated MCP server under systemd per project.</li>
                     <li>Self-hosted Jenkins runs scheduled pipelines executing Claude Code in Docker containers; a custom Groovy init script applies global Slack alerts with failure-only throttling.</li>
-                    <li>Prometheus + Node Exporter + Pushgateway for metrics, Grafana as the query layer.</li>
+                    <li>Prometheus + Node Exporter + Pushgateway for metrics, with Grafana as the query layer.</li>
                   </ul>
-                  <div class="tags">
-                    <span class="tag">Jenkins</span><span class="tag">Groovy</span><span class="tag">Docker</span><span class="tag">systemd</span><span class="tag">Prometheus</span><span class="tag">Pushgateway</span><span class="tag">Grafana</span><span class="tag">Linux</span>
-                  </div>
                 </div>
               </details>
             </div>
           </article>
 
-          <!-- Project 5 (small, no diagram) -->
-          <article class="card project-sm reveal">
-            <div class="project-body">
-              <div class="project-head">
-                <div>
-                  <h3>Email Verification Service</h3>
-                  <p class="problem">A Rails + PostgreSQL service needing resilient, hands-off deploys.</p>
-                </div>
+          <!-- ============ 5 · Email Verification ============ -->
+          <article class="card project reveal">
+            <div class="project-top">
+              <h3>Email Verification Service</h3>
+              <p class="context">A Rails + PostgreSQL service deployed onto auto-scaling EC2 capacity.</p>
+            </div>
+            <div class="diagram-panel">
+              <div class="diagram-scroll">
+                <svg class="diagram" viewBox="0 0 720 220" role="img" aria-label="Email verification. PROVISION lane: Ansible playbooks provision the EC2 Rails app and PostgreSQL. DEPLOY lane: a release goes through AWS CodeDeploy onto an Auto Scaling Group, and new instances receive the current revision automatically.">
+                  <defs><marker id="mk5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+                  <rect class="lane-band" x="0" y="8" width="720" height="100"/>
+                  <text class="lane-label" x="10" y="58">PROVISION</text>
+                  <text class="lane-label" x="10" y="160">DEPLOY</text>
+
+                  <!-- PROVISION -->
+                  <rect class="node" x="74" y="38" width="136" height="40" rx="10"/>
+                  <text class="n-title" x="142" y="62" text-anchor="middle">Ansible playbooks</text>
+                  <rect class="node" x="310" y="20" width="140" height="36" rx="10"/>
+                  <text class="n-title" x="380" y="42" text-anchor="middle">EC2 · Rails app</text>
+                  <rect class="node" x="310" y="66" width="140" height="36" rx="10"/>
+                  <text class="n-title" x="380" y="88" text-anchor="middle">PostgreSQL</text>
+                  <path class="edge e-deploy" d="M210,58 L260,58 L260,38 L310,38" marker-end="url(#mk5)"/>
+                  <path class="edge e-deploy" d="M210,58 L260,58 L260,84 L310,84" marker-end="url(#mk5)"/>
+
+                  <!-- DEPLOY -->
+                  <rect class="node" x="74" y="138" width="110" height="44" rx="10"/>
+                  <text class="n-title" x="129" y="164" text-anchor="middle">Release</text>
+                  <rect class="node" x="240" y="138" width="140" height="44" rx="10"/>
+                  <text class="n-title" x="310" y="164" text-anchor="middle">AWS CodeDeploy</text>
+                  <rect class="node" x="436" y="120" width="254" height="82" rx="10" stroke-dasharray="4 4"/>
+                  <text class="n-sub" x="452" y="134" text-anchor="start">Auto Scaling Group</text>
+                  <rect class="node-core" x="456" y="140" width="210" height="22" rx="6"/>
+                  <text class="n-title" x="561" y="155" text-anchor="middle">EC2 instance</text>
+                  <rect class="node-core" x="456" y="166" width="210" height="22" rx="6"/>
+                  <text class="n-title" x="561" y="181" text-anchor="middle">EC2 instance</text>
+                  <path class="edge e-deploy" d="M184,160 L240,160" marker-end="url(#mk5)"/>
+                  <path class="edge e-deploy" d="M380,160 L436,160" marker-end="url(#mk5)"/>
+                  <text class="e-label" x="561" y="198" text-anchor="middle">new instances get the current revision automatically</text>
+
+                  <g class="badge" transform="translate(250,48)"><circle r="9"/><text text-anchor="middle" dy="3.5">1</text></g>
+                  <g class="badge" transform="translate(250,70)"><circle r="9"/><text text-anchor="middle" dy="3.5">2</text></g>
+                  <g class="badge" transform="translate(212,160)"><circle r="9"/><text text-anchor="middle" dy="3.5">3</text></g>
+                  <g class="badge" transform="translate(408,160)"><circle r="9"/><text text-anchor="middle" dy="3.5">4</text></g>
+                </svg>
               </div>
-              <ul class="project-detail" style="margin-top:16px">
-                <li>Deployed with AWS CodeDeploy behind auto-scaling; Ansible provisions the Ruby on Rails app and PostgreSQL.</li>
-              </ul>
+              <div class="legend">
+                <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                <span class="lg"><span class="sw config"></span>config / secrets / scrape</span>
+                <span class="lg"><span class="sw alert"></span>alerts</span>
+              </div>
+            </div>
+            <div class="project-lower">
               <div class="tags">
-                <span class="tag">CodeDeploy</span><span class="tag">Auto Scaling</span><span class="tag">Ansible</span><span class="tag">Rails</span><span class="tag">PostgreSQL</span>
+                <span class="tag">CodeDeploy</span><span class="tag">Auto Scaling</span><span class="tag">EC2</span><span class="tag">Ansible</span><span class="tag">Rails</span><span class="tag">PostgreSQL</span>
               </div>
+              <details class="more">
+                <summary>How it works &amp; what I built <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                <div class="detail-inner">
+                  <h4>How it works</h4>
+                  <ol class="steps">
+                    <li>Ansible playbooks provision the EC2 instances running the Rails app.</li>
+                    <li>Ansible also provisions PostgreSQL.</li>
+                    <li>A release is rolled out through AWS CodeDeploy.</li>
+                    <li>CodeDeploy deploys onto an Auto Scaling Group, and new instances receive the current revision automatically.</li>
+                  </ol>
+                  <h4 class="built-h">What I built</h4>
+                  <ul class="built">
+                    <li>Deployed with AWS CodeDeploy behind auto-scaling; Ansible provisions the Ruby on Rails app and PostgreSQL.</li>
+                  </ul>
+                </div>
+              </details>
             </div>
           </article>
 
