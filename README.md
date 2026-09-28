@@ -1,53 +1,54 @@
-Ameer Portfolio (Static)
+# Muhammad Ameer Hamza — Portfolio
 
-Welcome to my static portfolio website, showcasing my journey as a DevOps Engineer and Django Developer. This site highlights my projects, technical skills, and professional experience.
+Personal portfolio of **Muhammad Ameer Hamza**, DevOps Engineer (AWS). A single-page,
+dependency-free static site describing production infrastructure work, lab builds,
+experience and stack.
 
-🌐 Live Site
-Access the live portfolio here: nexusameer.site
+🌐 **Live:** [nexusameer.me](https://nexusameer.me)
 
-📁 Project Structure
-The repository is organized as follows:
+## Stack
 
-index.html – Main landing page
+Deliberately minimal — no framework, no build step, no runtime dependencies:
 
-projects.html – Detailed projects showcase
+- **HTML** — one `index.html`
+- **CSS** — one `assets/css/main.css` (CSS custom properties, dark + light themes,
+  `prefers-color-scheme` and `prefers-reduced-motion` aware)
+- **JavaScript** — one `assets/js/main.js` (~150 lines of vanilla JS: theme toggle,
+  scroll reveal, count-up stats, hero terminal typewriter, copy-to-clipboard)
+- **Fonts** — Space Grotesk, Inter and JetBrains Mono via Google Fonts (`display=swap`,
+  loaded non-render-blocking)
+- **Icons & diagrams** — inline SVG only (tool logos from Simple Icons; architecture
+  diagrams hand-drawn as inline SVG)
 
-css/ – Compiled CSS files
+No Bootstrap, jQuery, carousels, or animation libraries.
 
-scss/ – SCSS source files for styling
+## Structure
 
-js/ – JavaScript files for interactivity
+```
+index.html            # the whole page
+assets/css/main.css    # styles + theme tokens
+assets/js/main.js      # behaviour
+images/                # profile photo (WebP) + favicons
+CNAME                  # custom domain
+.github/workflows/     # deployment (do not edit by hand)
+```
 
-images/ – Portfolio images and assets
+## Local preview
 
-fonts/ – Custom fonts used in the site
+```bash
+python3 -m http.server 8765
+```
 
-CNAME – Custom domain configuration for GitHub Pages
+Then open <http://localhost:8765>.
 
-prepros-6.config – Configuration file for Prepros (used for SCSS compilation)
-github.com
+## Quality
 
-🚀 Deployment
-The site is deployed using GitHub Pages with a custom domain: nexusameer.site. The CNAME file ensures proper domain mapping.
+Lighthouse (desktop): Performance 99 · Accessibility 100 · Best Practices 100 · SEO 100.
+Fully responsive (360 → 1440px), keyboard-navigable, with a JSON-LD `Person` schema and
+Open Graph / Twitter card metadata.
 
-🛠️ Technologies Used
-HTML5 & CSS3
+## Contact
 
-SCSS for modular and maintainable styling
-
-JavaScript for dynamic content
-
-GitHub Pages for hosting
-
-Prepros for SCSS compilation and live browser reloads
-
-📸 Preview
-
-📬 Contact
-Feel free to connect with me:
-
-Email: nexusameer@gmail.com
-
-LinkedIn: linkedin.com/in/nexusameer
-
-Portfolio: nexusameer.site
+- Email: nexusameer@gmail.com
+- GitHub: [github.com/nexusameer](https://github.com/nexusameer)
+- LinkedIn: [linkedin.com/in/nexusameer](https://www.linkedin.com/in/nexusameer)
