@@ -970,6 +970,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 .cs-item { border-left: 2px solid var(--line); padding-left: var(--s3); }
 .cs-item h3 { font-size: 16.5px; margin-bottom: 7px; }
 .cs-item p { color: var(--muted); font-size: 15px; margin: 0; }
+.cs-item p + p { margin-top: var(--s1); }
+.cs-item p strong { color: var(--text); font-weight: 600; }
 .cs-item.warn { border-left-color: color-mix(in srgb, var(--warn) 50%, var(--line)); }
 
 /* inline note / callout (non-placeholder prose) */

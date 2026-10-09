@@ -84,7 +84,7 @@
           <span class="tag">ALB</span>
           <span class="tag">RDS PostgreSQL</span>
           <span class="tag">Amazon Rekognition</span>
-          <span class="tag">Amazon Bedrock</span>
+          <span class="tag">Bedrock (Claude)</span>
           <span class="tag">Bitbucket OIDC</span>
           <span class="tag">ECR</span>
         </div>
@@ -212,8 +212,8 @@
                 <ul class="cs-list">
                   <li>ECS Fargate running the CareIntake app behind the ALB, in private subnets — same blueprint as Sentinel.</li>
                   <li><strong>AI integration (the distinctive part):</strong> the app service calls <strong>Amazon Rekognition</strong> to analyze uploaded photos — wheelchair, mobility-equipment and patient photos — during intake.</li>
-                  <li>It also calls <strong>Amazon Bedrock</strong> to read the intake form data and produce a summary, so reviewers get a condensed view of each submission.</li>
-                  <!-- TODO(ameer): Bedrock model used -->
+                  <li>It also calls <strong>an Anthropic Claude model on Amazon Bedrock</strong> to read the intake form data and produce a summary, so reviewers get a condensed view of each submission.</li>
+                  <!-- TODO(ameer): exact Claude version -->
                   <!-- TODO(ameer): are photos stored in S3 first? -->
                   <!-- TODO(ameer): service names / count, CPU/memory -->
                 </ul>
@@ -284,7 +284,7 @@
           <section class="cs-section" id="next">
             <h2>What's next</h2>
             <ul class="cs-list">
-              <li>Document the exact Bedrock model and the photo storage path for the intake flow.</li>
+              <li>Document the exact Claude model version and the photo storage path for the intake flow.</li>
               <li>Review whether a cost guardrail should wrap the AI calls, as on Sentinel.</li>
               <!-- TODO(ameer): any cost guardrail like Sentinel? -->
             </ul>
@@ -298,7 +298,7 @@
               <span class="tag">ALB</span>
               <span class="tag">RDS PostgreSQL</span>
               <span class="tag">Amazon Rekognition</span>
-              <span class="tag">Amazon Bedrock</span>
+              <span class="tag">Bedrock (Claude)</span>
               <span class="tag">ECR</span>
               <span class="tag">Bitbucket Pipelines</span>
               <span class="tag">OIDC</span>

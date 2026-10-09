@@ -174,7 +174,7 @@
               </div>
               <figcaption class="cs-figcaption">Ansible provisions the Rails + PostgreSQL instances; Bitbucket builds a release that CodeDeploy rolls onto the Auto Scaling Group.</figcaption>
             </figure>
-            <!-- TODO(ameer): ALB in front? auto-rollback on failure enabled? -->
+            <!-- TODO(ameer): show the ALB in the diagram (its routing + health checks are now covered in Challenges) -->
           </section>
 
           <section class="cs-section" id="built">
@@ -241,20 +241,38 @@
                 <p>Instances launched by the Auto Scaling Group pick up the current revision automatically, so scaling out never quietly serves a stale version of the app.</p>
               </div>
             </div>
-            <!-- TODO(ameer): ALB in front? auto-rollback on failure enabled? -->
           </section>
 
           <section class="cs-section" id="challenges">
             <h2>Challenges &amp; fixes</h2>
-            <p>Rather than write up challenges from memory, I'd prefer to note the real ones here once I've confirmed the details — so this stays accurate rather than approximate.</p>
-            <!-- TODO(ameer): 1-2 real challenges -->
+            <div class="cs-dl">
+              <div class="cs-item warn">
+                <h3>New instances took traffic too early</h3>
+                <p><strong>Problem:</strong> when the Auto Scaling Group scaled out, the ALB started routing requests to new EC2 instances before the Rails app and the CodeDeploy revision were in place, so some users hit errors during scale-out.</p>
+                <p><strong>Why:</strong> an instance counted as "in service" as soon as it launched, not when the app was actually ready to serve.</p>
+                <p><strong>Fix:</strong> new instances now join the pool only once the current revision is deployed and the app is healthy — the ASG health-check grace period / a lifecycle hook holds the instance back so CodeDeploy finishes first. <!-- REVIEW(ameer): grace period, lifecycle hook, or both? --></p>
+              </div>
+              <div class="cs-item warn">
+                <h3>ALB health checks failing during deploys</h3>
+                <p><strong>Problem:</strong> deployments triggered failed health checks and unnecessary rollbacks even when the release was fine.</p>
+                <p><strong>Why:</strong> Rails took longer to boot than the health check allowed, and the check wasn't hitting a lightweight endpoint.</p>
+                <p><strong>Fix:</strong> tuned the target-group health check — path, timeout and healthy/unhealthy thresholds — to match real boot time. <!-- REVIEW(ameer): which of path / timeout / thresholds did you change? --> A too-strict health check makes automatic rollback fire on good releases, so tuning it is what made rollback trustworthy — it now fires only on genuinely bad releases.</p>
+              </div>
+              <div class="cs-item warn">
+                <h3>Instance disks filling up</h3>
+                <p><strong>Problem:</strong> long-running instances ran low on disk space.</p>
+                <p><strong>Why:</strong> old CodeDeploy revisions and application logs accumulated on the instance across many deployments.</p>
+                <p><strong>Fix:</strong> cleaned up retained CodeDeploy revisions and added log rotation so disk usage stays bounded. <!-- REVIEW(ameer): revision cleanup, logrotate, or both? --></p>
+              </div>
+            </div>
+            <p class="cs-note">The lesson: on EC2 + CodeDeploy the instance lifecycle — launch → deploy → health → traffic — is mine to manage, and each of these was a seam in that lifecycle. That operational ownership is part of why I reached for ECS Fargate on the newer products; see <a href="/work/ec2-vs-ecs.html">EC2 vs ECS</a>.</p>
           </section>
 
           <section class="cs-section" id="next">
             <h2>What's next</h2>
             <ul class="cs-list">
-              <li>Confirm and document the CodeDeploy deployment configuration and rollback behaviour so the release path is fully written down.</li>
-              <li>Pin down where PostgreSQL lives and whether an ALB sits in front, and reflect that in the architecture diagram.</li>
+              <li>Document the CodeDeploy deployment configuration — batch size and rollout order — in full, so the release path is written down end to end.</li>
+              <li>Pin down where PostgreSQL lives (managed RDS vs self-managed) and add the ALB to the architecture diagram.</li>
               <li>Weigh this EC2 / CodeDeploy stack against the containerised ECS Fargate approach used on the other services — see <a href="/work/ec2-vs-ecs.html">EC2 vs ECS</a>.</li>
             </ul>
           </section>

@@ -124,6 +124,11 @@
                   <td>No OS to patch. AWS manages the host; I own only what's inside the container image.</td>
                 </tr>
                 <tr>
+                  <th scope="row">Operational ownership</th>
+                  <td>The instance lifecycle — launch → deploy → health → traffic — is mine to wire up. On MailCheck that surfaced as real work: holding new instances out of the pool until the revision was deployed and healthy, tuning the target-group health check so rollback fired only on genuinely bad releases, and keeping disks bounded with revision cleanup and log rotation. See <a href="/work/mailcheck.html#challenges">MailCheck's challenges</a>.</td>
+                  <td>AWS owns the host and much of that lifecycle: a task is added behind the ALB only once it passes its health check, failed deploys stay on the old task set, and there is no host disk to keep clean.</td>
+                </tr>
+                <tr>
                   <th scope="row">Cost model</th>
                   <td>Pay for the running instances whether busy or idle — a good fit when load is steady and the box stays well used.</td>
                   <td>Pay per task for the vCPU and memory it requests, per second — a good fit for spiky or low-baseline load, with no idle host to amortise.</td>
