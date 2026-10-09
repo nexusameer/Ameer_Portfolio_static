@@ -124,7 +124,7 @@
             <figure class="cs-figure">
               <div class="diagram-panel">
                 <div class="diagram-scroll">
-                  <svg class="diagram" viewBox="0 0 780 440" role="img" aria-label="Sentinel on AWS in us-east-1, shown as three lanes. TRAFFIC lane: the internet enters through an Internet Gateway to an internet-facing ALB in the public subnets across two availability zones, which forwards to the sentinel-api Fargate service in the private-1 subnet; sentinel-api and the internal sentinel-ai-service talk to each other over ECS Service Connect, and sentinel-api reaches the private RDS PostgreSQL database on port 5432, where the database sits in a subnet group spanning both zones. The ai-service has no load balancer and is internal only. DEPLOY lane: Bitbucket Pipelines exchanges a short-lived OIDC token for a scoped IAM role with no static keys, pushes two images to two ECR repositories, then registers a new task definition and updates the ECS services. GUARDRAIL lane: cameras stream over RTSP into the ai-service, which uses ffmpeg to produce MJPEG frames and calls Amazon Rekognition per frame for labels, faces, PPE and moderation; the private subnet reaches AWS through a single NAT Gateway in zone A for egress; and an AWS Budget scoped to Rekognition at ten dollars a month raises an alert at eighty percent and triggers a Budget Action that attaches a deny policy to stop Rekognition calls if the budget is breached.">
+                  <svg class="diagram" viewBox="0 0 780 440" role="img" aria-label="Sentinel on AWS in us-east-1, shown as three lanes. TRAFFIC lane: the internet enters through an Internet Gateway to an internet-facing ALB in the public subnets across two availability zones, which terminates TLS using an ACM certificate and redirects HTTP to HTTPS before forwarding to the sentinel-api Fargate service in the private-1 subnet; sentinel-api and the internal sentinel-ai-service talk to each other over ECS Service Connect, and sentinel-api reaches the private RDS PostgreSQL database on port 5432, where the database sits in a subnet group spanning both zones. The ai-service has no load balancer and is internal only. DEPLOY lane: Bitbucket Pipelines exchanges a short-lived OIDC token for a scoped IAM role with no static keys, pushes two images to two ECR repositories, then registers a new task definition and updates the ECS services. GUARDRAIL lane: cameras stream over RTSP into the ai-service, which uses ffmpeg to produce MJPEG frames and calls Amazon Rekognition per frame for labels, faces, PPE and moderation; the private subnet reaches AWS through a single NAT Gateway in zone A for egress; and an AWS Budget scoped to Rekognition at ten dollars a month raises an alert at eighty percent and triggers a Budget Action that attaches a deny policy to stop Rekognition calls if the budget is breached.">
                     <defs><marker id="mk-sentinel" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
 
                     <!-- lane bands -->
@@ -140,9 +140,10 @@
                     <text class="n-title" x="105" y="66" text-anchor="middle">Internet</text>
                     <rect class="node" x="160" y="40" width="70" height="44" rx="10"/>
                     <text class="n-title" x="195" y="66" text-anchor="middle">IGW</text>
-                    <rect class="node" x="246" y="40" width="128" height="44" rx="10"/>
-                    <text class="n-title" x="310" y="59" text-anchor="middle">ALB</text>
-                    <text class="n-sub" x="310" y="72" text-anchor="middle">public subnets · 2 AZ</text>
+                    <rect class="node" x="246" y="40" width="128" height="52" rx="10"/>
+                    <text class="n-title" x="310" y="57" text-anchor="middle">ALB</text>
+                    <text class="n-sub" x="310" y="70" text-anchor="middle">public subnets · 2 AZ</text>
+                    <text class="n-sub" x="310" y="82" text-anchor="middle">HTTPS · ACM</text>
                     <rect class="node-core" x="388" y="40" width="148" height="44" rx="10"/>
                     <text class="n-title" x="462" y="59" text-anchor="middle">sentinel-api</text>
                     <text class="n-sub" x="462" y="72" text-anchor="middle">Fargate · private-1</text>
@@ -239,6 +240,7 @@
                   <li>Public route table to the Internet Gateway; the ECS private subnet (private-1) routes to a single NAT Gateway, plus a local route and an S3 gateway endpoint.</li>
                   <li>The RDS private subnet (private-2) has <strong>no internet route at all</strong> — only the local route and the S3 gateway endpoint.</li>
                   <li>Cost-aware single-AZ compute: the ECS tasks and one NAT Gateway (with an Elastic IP) live in AZ-a. The second private subnet in AZ-b exists only to satisfy the RDS subnet-group two-AZ requirement.</li>
+                  <li>The internet-facing ALB terminates TLS with an ACM certificate and redirects HTTP to HTTPS, so traffic is encrypted in transit.</li>
                 </ul>
               </div>
               <div class="cs-group">
@@ -299,6 +301,10 @@
                 <p>Each tier only accepts traffic from the tier in front of it: the internet reaches the ALB, the ALB reaches the ECS tasks, and only the ECS tasks reach the database. Nothing can skip a step.</p>
               </div>
               <div class="cs-item">
+                <h3>TLS terminates at the ALB</h3>
+                <p>The internet-facing ALB has an HTTPS listener backed by an ACM certificate, and the HTTP listener redirects to HTTPS — so traffic between clients and the load balancer is always encrypted in transit.</p>
+              </div>
+              <div class="cs-item">
                 <h3>The AI service is internal, by design</h3>
                 <p>It has no load balancer and no target group. The API reaches it over ECS Service Connect through a self-referencing security-group rule, so the vision service is never exposed to the internet.</p>
               </div>
@@ -326,7 +332,7 @@
             <div class="cs-dl">
               <div class="cs-item warn">
                 <h3>The AI image was too large</h3>
-                <p>The vision service needs ffmpeg, and the distro ffmpeg packages pulled in a lot of weight. I switched to a single static ffmpeg binary instead, which shrank the image noticeably. <!-- TODO(ameer): before/after image size --></p>
+                <p>The vision service needs ffmpeg, and the distro ffmpeg packages pulled in a lot of weight. I switched to a single static ffmpeg binary instead, which shrank the image. <!-- TODO(ameer): before/after MB --></p>
               </div>
               <div class="cs-item warn">
                 <h3>Building OpenCV from source was slow</h3>
@@ -345,7 +351,6 @@
               <li>Tighten the SES policy from <code>Resource: "*"</code> to the specific verified-identity ARNs.</li>
               <li>Move SES out of the sandbox for production sending.</li>
               <li>Go Multi-AZ for compute and NAT, and for RDS, once traffic justifies the second-NAT cost.</li>
-              <li>Add an HTTPS listener with an ACM certificate on the ALB. <!-- TODO(ameer): confirm whether HTTPS/ACM is already live; if yes move it to "What I built" --></li>
             </ul>
           </section>
 

@@ -79,7 +79,9 @@
         </div>
         <p class="cs-role"><strong>My role:</strong> I designed and built the AWS infrastructure, CI/CD and deployments. The application code was written by the dev teams.</p>
         <div class="tags">
-          <span class="tag">Amazon ECS</span>
+          <span class="tag">ECS Fargate</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">Amazon ECR</span>
           <span class="tag">Sidekiq</span>
           <span class="tag">Secrets Manager</span>
           <span class="tag">Amazon SES</span>
@@ -122,7 +124,7 @@
             <figure class="cs-figure">
               <div class="diagram-panel">
                 <div class="diagram-scroll">
-                  <svg class="diagram" viewBox="0 0 780 340" role="img" aria-label="PetCare infrastructure across three lanes. RUNTIME lane: users reach the PetCare web app ECS service over TLS; a separate PetCare Sidekiq worker ECS service runs alongside it from the same image pattern; AWS Secrets Manager injects credentials into both task definitions at runtime; staging mirrors production as petcare-staging and petcare-sidekiq-staging. EMAIL lane: the web app and the worker send mail through Amazon SES, which is configured with SPF, DKIM and DMARC for deliverability, on to delivery; failed sends are routed to CloudWatch Logs. OBSERVE lane: application and worker logs, along with failed email sends, land in CloudWatch Logs so issues can be found without SSH access.">
+                  <svg class="diagram" viewBox="0 0 780 430" role="img" aria-label="PetCare infrastructure across four lanes. RUNTIME lane: users reach the PetCare web app ECS Fargate service over TLS; a separate PetCare Sidekiq worker ECS Fargate service runs alongside it from the same image pattern; AWS Secrets Manager injects credentials into both task definitions at runtime; staging mirrors production as petcare-staging and petcare-sidekiq-staging. EMAIL lane: the web app and the worker send mail through Amazon SES, which is configured with SPF, DKIM and DMARC for deliverability, on to delivery; failed sends are routed to CloudWatch Logs. OBSERVE lane: application and worker logs, along with failed email sends, land in CloudWatch Logs so issues can be found without SSH access. DEPLOY lane: a push to GitHub triggers GitHub Actions, which builds the Docker image, pushes it to Amazon ECR, and updates the ECS Fargate service, which rolls the new task in with minimal downtime.">
                     <defs><marker id="mk-petcare" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
 
                     <!-- lane bands -->
@@ -141,11 +143,11 @@
 
                     <rect class="node-core" x="236" y="36" width="160" height="44" rx="10"/>
                     <text class="n-title" x="316" y="55" text-anchor="middle">petcare · app</text>
-                    <text class="n-sub" x="316" y="69" text-anchor="middle">ECS service</text>
+                    <text class="n-sub" x="316" y="69" text-anchor="middle">ECS Fargate service</text>
 
                     <rect class="node-core" x="236" y="90" width="160" height="44" rx="10"/>
                     <text class="n-title" x="316" y="109" text-anchor="middle">petcare-sidekiq</text>
-                    <text class="n-sub" x="316" y="123" text-anchor="middle">ECS worker service</text>
+                    <text class="n-sub" x="316" y="123" text-anchor="middle">ECS Fargate worker</text>
 
                     <rect class="node" x="470" y="62" width="168" height="48" rx="10"/>
                     <text class="n-title" x="554" y="83" text-anchor="middle">Secrets Manager</text>
@@ -183,6 +185,26 @@
                     <path class="edge e-config" d="M236,120 L170,120 L170,300 L236,300" marker-end="url(#mk-petcare)"/>
                     <path class="edge e-alert" d="M380,214 L380,266" marker-end="url(#mk-petcare)"/>
                     <text class="e-label alert" x="390" y="240" text-anchor="start">failed sends surfaced</text>
+
+                    <!-- DEPLOY lane -->
+                    <rect class="lane-band" x="0" y="346" width="780" height="76"/>
+                    <text class="lane-label" x="12" y="364">DEPLOY</text>
+
+                    <rect class="node" x="96" y="362" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="171" y="381" text-anchor="middle">GitHub Actions</text>
+                    <text class="n-sub" x="171" y="395" text-anchor="middle">builds image</text>
+
+                    <rect class="node-core" x="300" y="362" width="130" height="44" rx="10"/>
+                    <text class="n-title" x="365" y="388" text-anchor="middle">Amazon ECR</text>
+
+                    <rect class="node-core" x="486" y="362" width="176" height="44" rx="10"/>
+                    <text class="n-title" x="574" y="381" text-anchor="middle">ECS Fargate</text>
+                    <text class="n-sub" x="574" y="395" text-anchor="middle">rolling update</text>
+
+                    <path class="edge e-config" d="M246,384 L300,384" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label" x="273" y="358" text-anchor="middle">pushes</text>
+                    <path class="edge e-config" d="M430,384 L486,384" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label" x="458" y="358" text-anchor="middle">updates service</text>
                   </svg>
                 </div>
                 <div class="legend">
@@ -191,7 +213,7 @@
                   <span class="lg"><span class="sw alert"></span>failed sends</span>
                 </div>
               </div>
-              <figcaption class="cs-figcaption">Web app and Sidekiq worker run as separate ECS services; SES handles deliverable mail; CloudWatch makes logs and failed sends visible.</figcaption>
+              <figcaption class="cs-figcaption">Web app and Sidekiq worker run as separate ECS Fargate services; SES handles deliverable mail; CloudWatch makes logs and failed sends visible; GitHub Actions builds to ECR and updates the ECS service.</figcaption>
             </figure>
           </section>
 
@@ -201,9 +223,16 @@
               <div class="cs-group">
                 <h3>Compute</h3>
                 <ul class="cs-list">
-                  <li>The <strong>web application</strong> runs as an ECS service (<code>petcare</code>).</li>
-                  <li>The <strong>Sidekiq background worker</strong> runs as a separate ECS service (<code>petcare-sidekiq</code>), built from the same image pattern.</li>
+                  <li>The <strong>web application</strong> runs as an ECS service (<code>petcare</code>) on <strong>AWS Fargate</strong>.</li>
+                  <li>The <strong>Sidekiq background worker</strong> runs as a separate ECS Fargate service (<code>petcare-sidekiq</code>), built from the same image pattern.</li>
                   <li>A <strong>staging environment</strong> mirrors production — <code>petcare-staging</code> and <code>petcare-sidekiq-staging</code>.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>CI/CD</h3>
+                <ul class="cs-list">
+                  <li><strong>GitHub Actions</strong> builds the Docker image on each push and pushes it to <strong>Amazon ECR</strong>.</li>
+                  <li>The same workflow then <strong>updates the ECS service</strong> to the new task definition, and ECS rolls the new task in with <strong>minimal downtime</strong>.</li>
                 </ul>
               </div>
               <div class="cs-group">
@@ -232,13 +261,12 @@
 
           <section class="cs-section" id="deploy">
             <h2>Deploy flow</h2>
-            <!-- TODO(ameer): confirm CI tool, Fargate vs EC2 launch type, prod setup -->
             <ol class="cs-steps">
-              <li><strong>git push</strong> to the application repository.</li>
-              <li>The <strong>CI pipeline builds the container image</strong> and publishes it to the registry.</li>
-              <li>The pipeline <strong>updates the ECS services</strong> — web app and Sidekiq worker — with the new task definition, on staging first.</li>
-              <li><strong>Validate on staging</strong> (<code>petcare-staging</code> / <code>petcare-sidekiq-staging</code>).</li>
-              <li><strong>Promote to production</strong>; ECS rolls out the new tasks for both services.</li>
+              <li><strong>Push to GitHub</strong> on the application repository.</li>
+              <li><strong>GitHub Actions builds the Docker image</strong> for the web app and Sidekiq worker.</li>
+              <li>The workflow <strong>pushes the image to Amazon ECR</strong>.</li>
+              <li>It then <strong>updates the ECS (Fargate) service</strong> with the new task definition.</li>
+              <li><strong>ECS rolls the new task in with minimal downtime</strong>, keeping staging (<code>petcare-staging</code> / <code>petcare-sidekiq-staging</code>) ahead of production.</li>
             </ol>
           </section>
 
@@ -280,9 +308,11 @@
 
           <section class="cs-section" id="next">
             <h2>What's next</h2>
-            <!-- TODO(ameer): PetCare pending items -->
             <ul class="cs-list">
-              <li>Nothing over-claimed here — the setup is live in production, and hardening and observability stay an iterative effort.</li>
+              <li>Stand up a dedicated <strong>production environment</strong> alongside the existing staging environment, so the two no longer share footprint.</li>
+              <li>Add <strong>CloudWatch alarms</strong> on failed email sends, turning the existing log visibility into proactive alerting.</li>
+              <li>Move <strong>SES out of the sandbox</strong> so sending is no longer limited to verified recipients.</li>
+              <li>Autoscale the ECS Fargate services on CPU and memory so capacity follows demand.</li>
             </ul>
           </section>
 
@@ -290,7 +320,9 @@
             <h2>Stack</h2>
             <div class="tags">
               <span class="tag">Docker</span>
-              <span class="tag">Amazon ECS</span>
+              <span class="tag">ECS Fargate</span>
+              <span class="tag">GitHub Actions</span>
+              <span class="tag">Amazon ECR</span>
               <span class="tag">Sidekiq</span>
               <span class="tag">AWS Secrets Manager</span>
               <span class="tag">Amazon SES</span>

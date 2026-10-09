@@ -102,7 +102,6 @@
             <li><a href="#built">What I built</a></li>
             <li><a href="#deploy">Deploy flow</a></li>
             <li><a href="#security">Security decisions</a></li>
-            <li><a href="#challenges">Challenges &amp; fixes</a></li>
             <li><a href="#next">What's next</a></li>
             <li><a href="#stack">Stack</a></li>
           </ol>
@@ -154,8 +153,9 @@
                     <text class="n-title" x="242" y="145" text-anchor="middle">ALB</text>
                     <text class="n-sub" x="242" y="158" text-anchor="middle">public subnet</text>
                     <rect class="node-core" x="318" y="124" width="150" height="44" rx="10"/>
-                    <text class="n-title" x="393" y="145" text-anchor="middle">ECS Fargate</text>
-                    <text class="n-sub" x="393" y="158" text-anchor="middle">careintake-app</text>
+                    <text class="n-title" x="393" y="141" text-anchor="middle">ECS Fargate</text>
+                    <text class="n-sub" x="393" y="153" text-anchor="middle">careintake-app</text>
+                    <text class="n-sub" x="393" y="164" text-anchor="middle">2 vCPU · 4 GB</text>
                     <rect class="node" x="492" y="124" width="150" height="44" rx="10"/>
                     <text class="n-title" x="567" y="145" text-anchor="middle">RDS PostgreSQL</text>
                     <text class="n-sub" x="567" y="158" text-anchor="middle">private subnet</text>
@@ -213,9 +213,10 @@
                   <li>ECS Fargate running the CareIntake app behind the ALB, in private subnets — same blueprint as Sentinel.</li>
                   <li><strong>AI integration (the distinctive part):</strong> the app service calls <strong>Amazon Rekognition</strong> to analyze uploaded photos — wheelchair, mobility-equipment and patient photos — during intake.</li>
                   <li>It also calls <strong>an Anthropic Claude model on Amazon Bedrock</strong> to read the intake form data and produce a summary, so reviewers get a condensed view of each submission.</li>
+                  <li>The ECS Fargate app service runs at <strong>2 vCPU / 4 GB memory</strong> per task.</li>
                   <!-- TODO(ameer): exact Claude version -->
                   <!-- TODO(ameer): are photos stored in S3 first? -->
-                  <!-- TODO(ameer): service names / count, CPU/memory -->
+                  <!-- TODO(ameer): service names / count -->
                 </ul>
               </div>
               <div class="cs-group">
@@ -270,22 +271,13 @@
             </div>
           </section>
 
-          <section class="cs-section" id="challenges">
-            <h2>Challenges &amp; fixes</h2>
-            <div class="cs-dl">
-              <div class="cs-item">
-                <h3>Applying an existing blueprint cleanly to a new product</h3>
-                <p>The main engineering decision here was to treat the Sentinel infrastructure as a reusable blueprint rather than a one-off. The network, security-group chain and CI/CD pipeline came over as a known-good pattern, which let the effort concentrate on the new AI layer and its least-privilege permissions instead of re-deriving the foundation.</p>
-              </div>
-              <!-- TODO(ameer): 1-2 real CareIntake-specific challenges -->
-            </div>
-          </section>
+          <!-- TODO(ameer): add real CareIntake challenges, then restore the Challenges & fixes section + its TOC entry -->
 
           <section class="cs-section" id="next">
             <h2>What's next</h2>
             <ul class="cs-list">
-              <li>Document the exact Claude model version and the photo storage path for the intake flow.</li>
-              <li>Review whether a cost guardrail should wrap the AI calls, as on Sentinel.</li>
+              <li>Pin the exact Bedrock (Claude) model version in the task configuration, so model updates are deliberate and reviewable rather than implicit.</li>
+              <li>Add a cost guardrail around the Rekognition and Bedrock calls, as on Sentinel, to keep AI spend bounded.</li>
               <!-- TODO(ameer): any cost guardrail like Sentinel? -->
             </ul>
           </section>

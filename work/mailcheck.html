@@ -81,11 +81,13 @@
         <div class="tags">
           <span class="tag">EC2</span>
           <span class="tag">Auto Scaling</span>
+          <span class="tag">ALB</span>
           <span class="tag">CodeDeploy</span>
+          <span class="tag">S3</span>
           <span class="tag">Ansible</span>
           <span class="tag">Bitbucket</span>
           <span class="tag">Rails</span>
-          <span class="tag">PostgreSQL</span>
+          <span class="tag">RDS PostgreSQL</span>
         </div>
       </div>
     </section>
@@ -125,44 +127,64 @@
             <figure class="cs-figure">
               <div class="diagram-panel">
                 <div class="diagram-scroll">
-                  <svg class="diagram" viewBox="0 0 780 300" role="img" aria-label="MailCheck infrastructure. PROVISION lane: Ansible playbooks configure each EC2 instance, installing and configuring the Rails application runtime and PostgreSQL. DEPLOY lane: a git push triggers a Bitbucket pipeline that builds the release, which AWS CodeDeploy deploys onto an Auto Scaling Group of two or more EC2 instances; new instances launched by the group automatically receive the current revision, and releases are minimal-downtime.">
+                  <svg class="diagram" viewBox="0 0 780 366" role="img" aria-label="MailCheck infrastructure. TRAFFIC lane: the Internet reaches an internet-facing Application Load Balancer, which routes to an EC2 Auto Scaling Group of 2 to 10 instances running the Rails app; the app reads and writes an Amazon RDS for PostgreSQL database in a private subnet. DEPLOY lane: a push to Bitbucket triggers a pipeline that builds the release and uploads the revision bundle to Amazon S3, which triggers AWS CodeDeploy to roll the revision onto the instances in the Auto Scaling Group with minimal downtime. PROVISION lane: Ansible playbooks provision the EC2 Rails runtime; non-production uses a self-managed PostgreSQL on EC2 while production uses RDS.">
                     <defs><marker id="mk-mailcheck" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
 
                     <rect class="lane-band" x="0" y="8" width="780" height="104"/>
-                    <rect class="lane-band" x="0" y="180" width="780" height="112"/>
-                    <text class="lane-label" x="10" y="62">PROVISION</text>
-                    <text class="lane-label" x="10" y="240">DEPLOY</text>
+                    <rect class="lane-band" x="0" y="232" width="780" height="126"/>
+                    <text class="lane-label" x="10" y="64">TRAFFIC</text>
+                    <text class="lane-label" x="10" y="176">DEPLOY</text>
+                    <text class="lane-label" x="10" y="300">PROVISION</text>
 
-                    <!-- PROVISION -->
-                    <rect class="node" x="80" y="42" width="150" height="40" rx="10"/>
-                    <text class="n-title" x="155" y="66" text-anchor="middle">Ansible playbooks</text>
-                    <rect class="node" x="360" y="24" width="170" height="38" rx="10"/>
-                    <text class="n-title" x="445" y="47" text-anchor="middle">EC2 · Rails runtime</text>
-                    <rect class="node" x="360" y="74" width="170" height="38" rx="10"/>
-                    <text class="n-title" x="445" y="97" text-anchor="middle">PostgreSQL</text>
-                    <path class="edge e-config" d="M230,62 L300,62 L300,43 L360,43" marker-end="url(#mk-mailcheck)"/>
-                    <path class="edge e-config" d="M230,62 L300,62 L300,93 L360,93" marker-end="url(#mk-mailcheck)"/>
-                    <text class="e-label" x="300" y="128" text-anchor="middle">app runtime + config</text>
+                    <!-- TRAFFIC -->
+                    <rect class="node" x="40" y="40" width="88" height="40" rx="10"/>
+                    <text class="n-title" x="84" y="64" text-anchor="middle">Internet</text>
+                    <rect class="node-core" x="158" y="40" width="104" height="40" rx="10"/>
+                    <text class="n-title" x="210" y="58" text-anchor="middle">ALB</text>
+                    <text class="n-sub" x="210" y="72" text-anchor="middle">internet-facing</text>
+
+                    <rect class="node" x="300" y="26" width="196" height="76" rx="10" stroke-dasharray="4 4"/>
+                    <text class="n-sub" x="312" y="40" text-anchor="start">ASG · 2–10 EC2</text>
+                    <rect class="node-core" x="316" y="48" width="164" height="22" rx="6"/>
+                    <text class="n-title" x="398" y="63" text-anchor="middle">EC2 · Rails</text>
+                    <rect class="node-core" x="316" y="74" width="164" height="22" rx="6"/>
+                    <text class="n-title" x="398" y="89" text-anchor="middle">EC2 · Rails</text>
+
+                    <rect class="node-core" x="546" y="40" width="150" height="40" rx="10"/>
+                    <text class="n-title" x="621" y="58" text-anchor="middle">RDS PostgreSQL</text>
+                    <text class="n-sub" x="621" y="72" text-anchor="middle">private subnet</text>
+
+                    <path class="edge e-traffic" d="M128,60 L158,60" marker-end="url(#mk-mailcheck)"/>
+                    <path class="edge e-traffic" d="M262,60 L300,62" marker-end="url(#mk-mailcheck)"/>
+                    <path class="edge e-traffic" d="M496,64 L546,60" marker-end="url(#mk-mailcheck)"/>
 
                     <!-- DEPLOY -->
-                    <rect class="node" x="46" y="214" width="96" height="44" rx="10"/>
-                    <text class="n-title" x="94" y="240" text-anchor="middle">git push</text>
-                    <rect class="node" x="172" y="214" width="140" height="44" rx="10"/>
-                    <text class="n-title" x="242" y="240" text-anchor="middle">Bitbucket pipeline</text>
-                    <rect class="node" x="342" y="214" width="140" height="44" rx="10"/>
-                    <text class="n-title" x="412" y="240" text-anchor="middle">AWS CodeDeploy</text>
+                    <rect class="node" x="40" y="150" width="86" height="40" rx="10"/>
+                    <text class="n-title" x="83" y="174" text-anchor="middle">git push</text>
+                    <rect class="node" x="146" y="150" width="140" height="40" rx="10"/>
+                    <text class="n-title" x="216" y="174" text-anchor="middle">Bitbucket pipeline</text>
+                    <rect class="node" x="306" y="150" width="104" height="40" rx="10"/>
+                    <text class="n-title" x="358" y="168" text-anchor="middle">S3</text>
+                    <text class="n-sub" x="358" y="182" text-anchor="middle">revision bundle</text>
+                    <rect class="node" x="430" y="150" width="140" height="40" rx="10"/>
+                    <text class="n-title" x="500" y="174" text-anchor="middle">AWS CodeDeploy</text>
 
-                    <rect class="node" x="512" y="192" width="250" height="96" rx="10" stroke-dasharray="4 4"/>
-                    <text class="n-sub" x="528" y="208" text-anchor="start">Auto Scaling Group</text>
-                    <rect class="node-core" x="532" y="216" width="210" height="24" rx="6"/>
-                    <text class="n-title" x="637" y="232" text-anchor="middle">EC2 instance</text>
-                    <rect class="node-core" x="532" y="246" width="210" height="24" rx="6"/>
-                    <text class="n-title" x="637" y="262" text-anchor="middle">EC2 instance</text>
+                    <path class="edge e-deploy" d="M126,170 L146,170" marker-end="url(#mk-mailcheck)"/>
+                    <path class="edge e-deploy" d="M286,170 L306,170" marker-end="url(#mk-mailcheck)"/>
+                    <path class="edge e-deploy" d="M410,170 L430,170" marker-end="url(#mk-mailcheck)"/>
+                    <path class="edge e-deploy" d="M500,150 L500,120 L452,120 L452,102" marker-end="url(#mk-mailcheck)"/>
+                    <text class="e-label" x="470" y="138" text-anchor="middle">deploy · minimal-downtime</text>
 
-                    <path class="edge e-deploy" d="M142,236 L172,236" marker-end="url(#mk-mailcheck)"/>
-                    <path class="edge e-deploy" d="M312,236 L342,236" marker-end="url(#mk-mailcheck)"/>
-                    <path class="edge e-deploy" d="M482,236 L512,236" marker-end="url(#mk-mailcheck)"/>
-                    <text class="e-label" x="282" y="280" text-anchor="middle">new instances get the current revision automatically · minimal-downtime</text>
+                    <!-- PROVISION -->
+                    <rect class="node" x="40" y="268" width="150" height="40" rx="10"/>
+                    <text class="n-title" x="115" y="292" text-anchor="middle">Ansible playbooks</text>
+                    <rect class="node" x="250" y="250" width="200" height="36" rx="10"/>
+                    <text class="n-title" x="350" y="272" text-anchor="middle">EC2 · Rails runtime</text>
+                    <rect class="node" x="250" y="294" width="300" height="36" rx="10"/>
+                    <text class="n-title" x="400" y="316" text-anchor="middle">PostgreSQL · non-prod (self-managed)</text>
+                    <path class="edge e-config" d="M190,284 L220,284 L220,268 L250,268" marker-end="url(#mk-mailcheck)"/>
+                    <path class="edge e-config" d="M190,288 L220,288 L220,312 L250,312" marker-end="url(#mk-mailcheck)"/>
+                    <text class="e-label" x="340" y="350" text-anchor="middle">production database is RDS (shown above); non-prod is self-managed on EC2</text>
                   </svg>
                 </div>
                 <div class="legend">
@@ -172,9 +194,8 @@
                   <span class="lg"><span class="sw alert"></span>alerts / guardrail</span>
                 </div>
               </div>
-              <figcaption class="cs-figcaption">Ansible provisions the Rails + PostgreSQL instances; Bitbucket builds a release that CodeDeploy rolls onto the Auto Scaling Group.</figcaption>
+              <figcaption class="cs-figcaption">Internet traffic reaches the Rails app through an internet-facing ALB and an EC2 Auto Scaling Group (2–10 instances) backed by Amazon RDS; Bitbucket builds a revision to S3 that CodeDeploy rolls onto the group.</figcaption>
             </figure>
-            <!-- TODO(ameer): show the ALB in the diagram (its routing + health checks are now covered in Challenges) -->
           </section>
 
           <section class="cs-section" id="built">
@@ -183,9 +204,10 @@
               <div class="cs-group">
                 <h3>Compute</h3>
                 <ul class="cs-list">
-                  <li>An EC2 Auto Scaling Group running the Rails application across two or more instances, so capacity can grow and shrink without manual server setup.</li>
+                  <li>An EC2 Auto Scaling Group running the Rails application, with a <strong>minimum of 2 instances scaling out to a maximum of 10</strong> based on load.</li>
+                  <li>A minimum of two instances means one unhealthy instance never takes the service down — the group replaces it while the others keep serving.</li>
                   <li>Every instance in the group is interchangeable: a newly launched instance comes up configured and running the current release, with no hand steps.</li>
-                  <!-- TODO(ameer): ASG min/max + scaling trigger -->
+                  <!-- TODO(ameer): scaling metric -->
                 </ul>
               </div>
               <div class="cs-group">
@@ -198,17 +220,17 @@
               <div class="cs-group">
                 <h3>CI/CD</h3>
                 <ul class="cs-list">
-                  <li>A Bitbucket pipeline that builds the release on every push to the deploy branch.</li>
-                  <li>AWS CodeDeploy as the single path to production, rolling each release onto the Auto Scaling Group with minimal downtime.</li>
-                  <!-- TODO(ameer): artifact flow - Bitbucket build -> S3 -> CodeDeploy? -->
+                  <li>A Bitbucket pipeline that builds the release on every push to the deploy branch and uploads the revision bundle to Amazon S3.</li>
+                  <li>AWS CodeDeploy picks the revision up from S3 and rolls it onto the EC2 instances in the Auto Scaling Group — the single path to production, with minimal downtime.</li>
                   <!-- TODO(ameer): CodeDeploy deployment config (OneAtATime / HalfAtATime / AllAtOnce) -->
                 </ul>
               </div>
               <div class="cs-group">
                 <h3>Data</h3>
                 <ul class="cs-list">
-                  <li>PostgreSQL as the application database, provisioned alongside the app by Ansible.</li>
-                  <!-- TODO(ameer): Postgres on RDS or self-managed? -->
+                  <li>Production runs on <strong>Amazon RDS for PostgreSQL</strong> in a private subnet, so the managed database is isolated from the internet.</li>
+                  <li>Non-production uses a self-managed PostgreSQL on EC2, provisioned by the same Ansible playbooks — kept simple where managed durability isn't needed.</li>
+                  <!-- TODO(ameer): RDS Multi-AZ? backups? -->
                 </ul>
               </div>
             </div>
@@ -218,11 +240,10 @@
             <h2>Deploy flow</h2>
             <ol class="cs-steps">
               <li><strong>git push</strong> — a developer pushes to the deploy branch.</li>
-              <li><strong>Bitbucket pipeline builds</strong> — the pipeline runs and produces the release to be deployed.</li>
-              <li><strong>CodeDeploy deploys to the Auto Scaling Group</strong> — AWS CodeDeploy rolls the new revision out across the instances in the group, with minimal downtime.</li>
+              <li><strong>Bitbucket pipeline builds</strong> — the pipeline runs, builds the release, and uploads the revision bundle to Amazon S3.</li>
+              <li><strong>CodeDeploy pulls from S3</strong> — AWS CodeDeploy takes the revision from S3 and deploys it onto the EC2 instances in the Auto Scaling Group, with minimal downtime.</li>
               <li><strong>Instances converge on the current revision</strong> — running instances take the new release, and any instance the group launches later comes up on the current revision automatically.</li>
             </ol>
-            <!-- TODO(ameer): artifact flow - Bitbucket build -> S3 -> CodeDeploy? -->
           </section>
 
           <section class="cs-section" id="security">
@@ -239,6 +260,10 @@
               <div class="cs-item">
                 <h3>Scaling preserves the current release</h3>
                 <p>Instances launched by the Auto Scaling Group pick up the current revision automatically, so scaling out never quietly serves a stale version of the app.</p>
+              </div>
+              <div class="cs-item">
+                <h3>Production data stays private</h3>
+                <p>The production database runs on Amazon RDS for PostgreSQL in a private subnet, reachable only from the application instances and never directly from the internet.</p>
               </div>
             </div>
           </section>
@@ -271,9 +296,9 @@
           <section class="cs-section" id="next">
             <h2>What's next</h2>
             <ul class="cs-list">
-              <li>Document the CodeDeploy deployment configuration — batch size and rollout order — in full, so the release path is written down end to end.</li>
-              <li>Pin down where PostgreSQL lives (managed RDS vs self-managed) and add the ALB to the architecture diagram.</li>
-              <li>Weigh this EC2 / CodeDeploy stack against the containerised ECS Fargate approach used on the other services — see <a href="/work/ec2-vs-ecs.html">EC2 vs ECS</a>.</li>
+              <li>Evaluate RDS Multi-AZ and automated backups for the production database, so a database failure or data-loss event is covered.</li>
+              <li>Move non-production onto managed RDS as well, retiring the self-managed PostgreSQL on EC2 so both environments match.</li>
+              <li>Add CloudWatch alarms on instance health and failed deployments, and revisit the Auto Scaling policy as traffic grows.</li>
             </ul>
           </section>
 
@@ -282,11 +307,13 @@
             <div class="tags">
               <span class="tag">EC2</span>
               <span class="tag">Auto Scaling Group</span>
+              <span class="tag">Application Load Balancer</span>
               <span class="tag">AWS CodeDeploy</span>
+              <span class="tag">Amazon S3</span>
               <span class="tag">Ansible</span>
               <span class="tag">Bitbucket Pipelines</span>
               <span class="tag">Rails</span>
-              <span class="tag">PostgreSQL</span>
+              <span class="tag">Amazon RDS (PostgreSQL)</span>
             </div>
           </section>
 
