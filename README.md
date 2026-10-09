@@ -4,7 +4,7 @@ Personal portfolio of **Muhammad Ameer Hamza**, DevOps Engineer (AWS). A single-
 dependency-free static site describing production infrastructure work, lab builds,
 experience and stack.
 
-🌐 **Live:** [nexusameer.me](https://nexusameer.me)
+🌐 **Live:** [nexusameer.me](https://ameernexus.tech)
 
 ## Stack
 
