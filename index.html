@@ -14,14 +14,16 @@
   <meta property="og:title" content="Muhammad Ameer Hamza — DevOps Engineer (AWS)" />
   <meta property="og:description" content="AWS Certified CloudOps Engineer. Multi-account AWS governance with Terraform, containerized workloads on ECS, and org-wide CI/CD." />
   <meta property="og:url" content="https://ameernexus.tech/" />
-  <meta property="og:image" content="https://ameernexus.tech/images/ameer.webp" />
+  <meta property="og:image" content="https://ameernexus.tech/images/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Muhammad Ameer Hamza — DevOps Engineer (AWS)" />
   <meta name="twitter:description" content="AWS Certified CloudOps Engineer. Multi-account AWS governance with Terraform, containerized workloads on ECS, and org-wide CI/CD." />
-  <meta name="twitter:image" content="https://ameernexus.tech/images/ameer.webp" />
+  <meta name="twitter:image" content="https://ameernexus.tech/images/og.png" />
 
   <link rel="icon" href="images/favicon.ico" sizes="any" />
   <link rel="icon" href="images/favicon.webp" type="image/webp" />
@@ -95,6 +97,7 @@
       <a class="brand" href="#top">ameer<span class="dot">.</span>hamza</a>
       <nav class="nav-links" aria-label="Primary">
         <a href="#work">Work</a>
+        <a href="#case-studies">Case studies</a>
         <a href="#experience">Experience</a>
         <a href="#stack">Stack</a>
         <a href="#contact">Contact</a>
@@ -151,19 +154,19 @@
       <div class="wrap">
         <ul class="stats">
           <li class="stat reveal">
-            <div class="num" data-count="25"><span class="val">0</span></div>
+            <div class="num" data-count="25"><span class="val">25</span></div>
             <div class="cap">AWS accounts governed with Terraform + AWS Organizations</div>
           </li>
           <li class="stat reveal">
-            <div class="num" data-count="5"><span class="val">0</span><span class="suffix">+</span></div>
+            <div class="num" data-count="5"><span class="val">5</span><span class="suffix">+</span></div>
             <div class="cap">Production services containerized on ECS</div>
           </li>
           <li class="stat reveal">
-            <div class="num" data-count="100"><span class="val">0</span><span class="suffix">%</span></div>
+            <div class="num" data-count="100"><span class="val">100</span><span class="suffix">%</span></div>
             <div class="cap">All company repositories on a standardized CI/CD pipeline</div>
           </li>
           <li class="stat reveal">
-            <div class="num" data-count="40"><span class="suffix">~</span><span class="val">0</span><span class="suffix">%</span></div>
+            <div class="num" data-count="40"><span class="suffix">~</span><span class="val">40</span><span class="suffix">%</span></div>
             <div class="cap">Faster DB queries (Django era)</div>
           </li>
         </ul>
@@ -177,8 +180,7 @@
         <h2 class="section-title">Featured projects</h2>
         <p class="section-intro">
           Production infrastructure built at Clustox. Each card shows the context and the
-          architecture; open <em>How it works</em> for the numbered walkthrough that matches
-          the diagram.
+          architecture; four of these are written up as full case studies below.
         </p>
 
         <div class="projects-grid">
@@ -271,6 +273,12 @@
             <div class="project-lower">
               <div class="tags">
                 <span class="tag">Docker</span><span class="tag">ECS</span><span class="tag">ECR</span><span class="tag">ALB</span><span class="tag">Secrets Manager</span><span class="tag">GitHub Actions</span><span class="tag">Amplify</span>
+              </div>
+              <div class="cs-links">
+                <span class="cs-links-label">Case studies:</span>
+                <a href="work/sentinel.html">Sentinel</a> ·
+                <a href="work/careintake.html">CareIntake</a> ·
+                <a href="work/petcare.html">PetCare</a>
               </div>
             </div>
           </article>
@@ -565,6 +573,9 @@
               <div class="tags">
                 <span class="tag">CodeDeploy</span><span class="tag">Auto Scaling</span><span class="tag">EC2</span><span class="tag">Ansible</span><span class="tag">Rails</span><span class="tag">PostgreSQL</span>
               </div>
+              <div class="cs-links">
+                <a href="work/mailcheck.html">Read case study →</a>
+              </div>
             </div>
           </article>
 
@@ -572,10 +583,73 @@
       </div>
     </section>
 
+    <!-- ===================== case studies ===================== -->
+    <section class="section" id="case-studies" style="padding-top:0">
+      <div class="wrap">
+        <span class="eyebrow">// 02 — case studies</span>
+        <h2 class="section-title">Case studies</h2>
+        <p class="section-intro">
+          Deep dives into four production platforms I built at Clustox — the AWS
+          infrastructure, security decisions and CI/CD behind each. The application code was
+          written by the dev teams; the infrastructure, pipelines and deployments are mine.
+        </p>
+
+        <div class="cs-cards">
+          <a class="card cs-card reveal" href="work/sentinel.html">
+            <div class="cs-card-head">
+              <h3>Sentinel</h3>
+              <span class="pill"><span class="pdot" aria-hidden="true"></span>live</span>
+            </div>
+            <p class="cs-card-desc">Video-surveillance compliance platform on ECS Fargate, with an OIDC-based deploy pipeline and an automated Budget guardrail on Rekognition.</p>
+            <div class="tags"><span class="tag">ECS Fargate</span><span class="tag">Rekognition</span><span class="tag">OIDC</span><span class="tag">RDS</span></div>
+            <span class="cs-readmore">Read case study <svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+          </a>
+
+          <a class="card cs-card reveal" href="work/careintake.html">
+            <div class="cs-card-head">
+              <h3>CareIntake</h3>
+              <span class="pill"><span class="pdot" aria-hidden="true"></span>live</span>
+            </div>
+            <p class="cs-card-desc">A reusable ECS blueprint applied to a second product — AI-assisted mobility-equipment intake using Amazon Rekognition and Amazon Bedrock.</p>
+            <div class="tags"><span class="tag">ECS Fargate</span><span class="tag">Rekognition</span><span class="tag">Bedrock</span><span class="tag">IAM</span></div>
+            <span class="cs-readmore">Read case study <svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+          </a>
+
+          <a class="card cs-card reveal" href="work/petcare.html">
+            <div class="cs-card-head">
+              <h3>PetCare</h3>
+              <span class="pill"><span class="pdot" aria-hidden="true"></span>live</span>
+            </div>
+            <p class="cs-card-desc">Pet-health platform on ECS with a Sidekiq worker service, Secrets Manager, and SES email deliverability (SPF/DKIM/DMARC) surfaced in CloudWatch.</p>
+            <div class="tags"><span class="tag">ECS</span><span class="tag">Secrets Manager</span><span class="tag">SES</span><span class="tag">CloudWatch</span></div>
+            <span class="cs-readmore">Read case study <svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+          </a>
+
+          <a class="card cs-card reveal" href="work/mailcheck.html">
+            <div class="cs-card-head">
+              <h3>MailCheck</h3>
+              <span class="pill"><span class="pdot" aria-hidden="true"></span>live</span>
+            </div>
+            <p class="cs-card-desc">Email-verification SaaS on an EC2 Auto Scaling Group — Ansible-provisioned, deployed with Bitbucket → AWS CodeDeploy for minimal-downtime releases.</p>
+            <div class="tags"><span class="tag">EC2 ASG</span><span class="tag">CodeDeploy</span><span class="tag">Ansible</span><span class="tag">Rails</span></div>
+            <span class="cs-readmore">Read case study <svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+          </a>
+        </div>
+
+        <a class="card cs-compare-card reveal" href="work/ec2-vs-ecs.html" style="margin-top:var(--s3)">
+          <div>
+            <h3>EC2 + CodeDeploy vs ECS Fargate: how I choose</h3>
+            <p>When I reach for each pattern — a short decision guide drawn from these four projects.</p>
+          </div>
+          <span class="cs-readmore">Read <svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+        </a>
+      </div>
+    </section>
+
     <!-- ===================== lab builds ===================== -->
     <section class="section" id="labs" style="padding-top:0">
       <div class="wrap">
-        <span class="eyebrow">// 02 — labs</span>
+        <span class="eyebrow">// 03 — labs</span>
         <h2 class="section-title">Lab &amp; open-source builds</h2>
         <span class="lab-note">Built during training — not production</span>
         <div class="lab-grid">
@@ -619,7 +693,7 @@
     <!-- ===================== experience ===================== -->
     <section class="section" id="experience" style="padding-top:0">
       <div class="wrap">
-        <span class="eyebrow">// 03 — experience</span>
+        <span class="eyebrow">// 04 — experience</span>
         <h2 class="section-title">Experience</h2>
         <div class="timeline reveal">
 
@@ -655,7 +729,7 @@
     <!-- ===================== stack ===================== -->
     <section class="section" id="stack" style="padding-top:0">
       <div class="wrap">
-        <span class="eyebrow">// 04 — stack</span>
+        <span class="eyebrow">// 05 — stack</span>
         <h2 class="section-title">Stack</h2>
         <p class="section-intro">Every tool mapped to where it lives between commit and production.</p>
         <p id="stack-hint" class="sr-only">Focus or hover a tool to highlight the projects that use it.</p>
@@ -751,19 +825,17 @@
     <!-- ===================== certifications ===================== -->
     <section class="section" id="certifications" style="padding-top:0">
       <div class="wrap">
-        <span class="eyebrow">// 05 — certifications</span>
+        <span class="eyebrow">// 06 — certifications</span>
         <h2 class="section-title">Certifications</h2>
         <div class="cert-grid">
-          <!-- TODO: replace href="#" with the Credly badge URL -->
-          <a class="card cert reveal" href="#" aria-label="AWS Certified CloudOps Engineer – Associate (Credly link to be added)">
+          <a class="card cert reveal" href="https://cp.certmetrics.com/amazon/en/public/verify/credential/e8094f83a9cb4d2b8dcb27989c8de240" target="_blank" rel="noopener" aria-label="Verify AWS Certified CloudOps Engineer – Associate credential">
             <span class="cert-badge"><svg class="ico" aria-hidden="true"><use href="#i-cert"/></svg></span>
             <div>
               <h3>AWS Certified CloudOps Engineer – Associate</h3>
               <p>Amazon Web Services</p>
             </div>
           </a>
-          <!-- TODO: replace href="#" with the Credly badge URL -->
-          <a class="card cert reveal" href="#" aria-label="AWS Certified Cloud Practitioner (Credly link to be added)">
+          <a class="card cert reveal" href="https://cp.certmetrics.com/amazon/en/public/verify/credential/840657132a8744c9be5a9eb0919d0dac" target="_blank" rel="noopener" aria-label="Verify AWS Certified Cloud Practitioner credential">
             <span class="cert-badge"><svg class="ico" aria-hidden="true"><use href="#i-cert"/></svg></span>
             <div>
               <h3>AWS Certified Cloud Practitioner</h3>
@@ -777,7 +849,7 @@
     <!-- ===================== contact ===================== -->
     <section class="section" id="contact" style="padding-top:0">
       <div class="wrap">
-        <span class="eyebrow">// 06 — contact</span>
+        <span class="eyebrow">// 07 — contact</span>
         <div class="card contact-card reveal">
           <span class="contact-photo">
             <img src="images/ameer.webp" alt="Muhammad Ameer Hamza" width="96" height="96" loading="lazy" />

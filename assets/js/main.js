@@ -55,6 +55,7 @@
     var target = parseFloat(el.getAttribute("data-count"));
     var decimals = (el.getAttribute("data-count").split(".")[1] || "").length;
     if (reduced) { valEl.textContent = target.toFixed(decimals); return; }
+    valEl.textContent = "0";  /* real value sits in the HTML for no-JS; reset to 0 only when we animate */
     var dur = 1100, start = null;
     function step(ts) {
       if (!start) start = ts;

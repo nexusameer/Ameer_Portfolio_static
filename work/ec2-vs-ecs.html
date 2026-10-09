@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EC2 + CodeDeploy vs ECS Fargate: how I choose · Muhammad Ameer Hamza</title>
+  <meta name="description" content="A DevOps engineer's decision guide: EC2 + CodeDeploy + ASG + Ansible (MailCheck) versus ECS Fargate (Sentinel, CareIntake, PetCare), with a comparison table and rules of thumb." />
+  <meta name="author" content="Muhammad Ameer Hamza" />
+  <link rel="canonical" href="https://ameernexus.tech/work/ec2-vs-ecs.html" />
+  <meta name="theme-color" content="#0A0D12" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="EC2 + CodeDeploy vs ECS Fargate: how I choose · Muhammad Ameer Hamza" />
+  <meta property="og:description" content="A DevOps engineer's decision guide: EC2 + CodeDeploy + ASG + Ansible (MailCheck) versus ECS Fargate (Sentinel, CareIntake, PetCare), with a comparison table and rules of thumb." />
+  <meta property="og:url" content="https://ameernexus.tech/work/ec2-vs-ecs.html" />
+  <meta property="og:image" content="https://ameernexus.tech/images/og.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="EC2 + CodeDeploy vs ECS Fargate: how I choose · Muhammad Ameer Hamza" />
+  <meta name="twitter:description" content="A DevOps engineer's decision guide: EC2 + CodeDeploy + ASG + Ansible (MailCheck) versus ECS Fargate (Sentinel, CareIntake, PetCare), with a comparison table and rules of thumb." />
+  <meta name="twitter:image" content="https://ameernexus.tech/images/og.png" />
+
+  <link rel="icon" href="../images/favicon.ico" sizes="any" />
+  <link rel="icon" href="../images/favicon.webp" type="image/webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </noscript>
+
+  <link rel="stylesheet" href="../assets/css/main.css" />
+
+  <!-- Tiny scoped table styling: tokens only, both-theme safe. Not added to main.css. -->
+  <style>
+    .cmp-wrap { overflow-x: auto; margin: 0 0 var(--s3); border: 1px solid var(--line); border-radius: var(--radius); }
+    table.cmp { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 14.5px; }
+    table.cmp th, table.cmp td { text-align: left; vertical-align: top; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    table.cmp thead th { background: var(--surface); color: var(--text); font-family: var(--font-mono); font-size: 13px; font-weight: 500; }
+    table.cmp tbody th { background: var(--surface); color: var(--muted); font-weight: 600; white-space: nowrap; width: 1%; }
+    table.cmp td { color: var(--text); line-height: 1.5; }
+    table.cmp tbody tr:last-child th, table.cmp tbody tr:last-child td { border-bottom: 0; }
+    table.cmp thead th:first-child { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 5.5h18v13H3zM3.5 6l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/#top">ameer<span class="dot">.</span>hamza</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#work">Work</a>
+        <a href="/#case-studies">Case studies</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#stack">Stack</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary nav-cta" href="/#contact">Get in touch</a>
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="cs-top">
+      <div class="wrap">
+        <a class="cs-back" href="/#case-studies"><svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg> Back to work</a>
+        <span class="eyebrow">// comparison</span>
+        <h1 class="cs-title">EC2 + CodeDeploy vs ECS Fargate: how I choose</h1>
+        <p class="cs-oneliner">When I reach for EC2 + CodeDeploy on an Auto Scaling Group, and when I reach for ECS Fargate — based on real projects.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="cs-main">
+        <section class="cs-section" id="intro">
+          <!-- REVIEW(ameer): check wording matches your view -->
+          <p class="lead">Both of these are patterns I run in production, so this isn't about which one is "modern". EC2 + CodeDeploy on an Auto Scaling Group and ECS Fargate each win in different places, and the deciding factor is usually ownership and fit — how much of the host I want to manage — not fashion. Here's where I land, and why.</p>
+        </section>
+
+        <section class="cs-section" id="table">
+          <h2>Side by side</h2>
+          <div class="cmp-wrap">
+            <table class="cmp">
+              <thead>
+                <tr>
+                  <th scope="col">&nbsp;</th>
+                  <th scope="col">EC2 + CodeDeploy (ASG)</th>
+                  <th scope="col">ECS Fargate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Deploy unit</th>
+                  <td>An app revision pushed onto the EC2 instances in the Auto Scaling Group; CodeDeploy runs lifecycle hooks on each host. MailCheck ships a Rails bundle this way.</td>
+                  <td>A container image referenced by a task definition, run as a service; each deploy launches new tasks from a new image tag.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Scaling</th>
+                  <td>The Auto Scaling Group adds or removes EC2 instances; you also size the app processes that run on each host.</td>
+                  <td>Service desired-count and target tracking scale the number of tasks; AWS manages the underlying capacity.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Patching / OS ownership</th>
+                  <td>I own the OS — AMI, packages and patching. MailCheck's hosts are provisioned with Ansible so the baseline stays repeatable.</td>
+                  <td>No OS to patch. AWS manages the host; I own only what's inside the container image.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cost model</th>
+                  <td>Pay for the running instances whether busy or idle — a good fit when load is steady and the box stays well used.</td>
+                  <td>Pay per task for the vCPU and memory it requests, per second — a good fit for spiky or low-baseline load, with no idle host to amortise.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Rollback</th>
+                  <td>CodeDeploy supports automatic rollback on failed health checks, returning to the last good revision.</td>
+                  <td>ECS keeps the previous task set running until the new one is healthy, then shifts over; a failed deploy stays on the old tasks.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Secrets</th>
+                  <td>Injected at deploy or boot rather than baked into the repo or the AMI.</td>
+                  <td>Secrets Manager entries referenced by the task definition and injected at task start (Sentinel, CareIntake, PetCare).</td>
+                </tr>
+                <tr>
+                  <th scope="row">Logs</th>
+                  <td>App and CodeDeploy agent logs sit on the host; ship them to CloudWatch with an agent when you want them centralised.</td>
+                  <td>The awslogs driver streams container stdout/stderr straight to CloudWatch Logs.</td>
+                </tr>
+                <tr>
+                  <th scope="row">When I'd pick it</th>
+                  <td>A single long-lived app with steady load where I want host control and a familiar Bitbucket → CodeDeploy flow (MailCheck).</td>
+                  <td>New services where I don't want to own servers — Bitbucket OIDC → ECR → ECS, RDS in private subnets, Secrets Manager (Sentinel, CareIntake, PetCare).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="cs-section" id="rule">
+          <h2>My rule of thumb</h2>
+          <ul class="cs-list">
+            <!-- REVIEW(ameer): check wording matches your view -->
+            <li>Reach for <strong>ECS Fargate by default</strong> on greenfield services — less to own, and the OIDC → ECR → ECS path is clean (Sentinel, CareIntake, PetCare).</li>
+            <!-- REVIEW(ameer): check wording matches your view -->
+            <li>Stay on <strong>EC2 + CodeDeploy</strong> when there's an existing host-shaped app, steady load, or something the OS needs to do that a container makes awkward (MailCheck).</li>
+            <!-- REVIEW(ameer): check wording matches your view -->
+            <li>Don't migrate a working EC2 + ASG app to Fargate just to be on containers — move when host ownership is actually costing you time.</li>
+            <!-- REVIEW(ameer): check wording matches your view -->
+            <li>Whichever I pick, deploys stay <strong>minimal-downtime</strong> by design: CodeDeploy health checks on one side, ECS healthy-before-shift on the other.</li>
+          </ul>
+        </section>
+
+        <div class="cs-cta">
+          <h2>Hiring for DevOps / Cloud roles? Get in touch.</h2>
+          <a class="btn btn-primary" href="/#contact"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> Get in touch</a>
+          <div class="cs-others">
+            <span>More case studies:</span>
+            <a href="/work/sentinel.html">Sentinel</a>
+            <a href="/work/careintake.html">CareIntake</a>
+            <a href="/work/petcare.html">PetCare</a>
+            <a href="/work/mailcheck.html">MailCheck</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© 2026 Muhammad Ameer Hamza · built as a static site, deployed via CI</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

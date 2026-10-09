@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CareIntake — Case Study · Muhammad Ameer Hamza</title>
+  <meta name="description" content="A reusable AWS ECS blueprint applied to a second product — CareIntake, an AI-assisted mobility-equipment intake platform using Amazon Rekognition and Amazon Bedrock." />
+  <meta name="author" content="Muhammad Ameer Hamza" />
+  <link rel="canonical" href="https://ameernexus.tech/work/careintake.html" />
+  <meta name="theme-color" content="#0A0D12" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="CareIntake — Case Study · Muhammad Ameer Hamza" />
+  <meta property="og:description" content="A reusable AWS ECS blueprint applied to a second product — CareIntake, an AI-assisted mobility-equipment intake platform using Amazon Rekognition and Amazon Bedrock." />
+  <meta property="og:url" content="https://ameernexus.tech/work/careintake.html" />
+  <meta property="og:image" content="https://ameernexus.tech/images/og.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CareIntake — Case Study · Muhammad Ameer Hamza" />
+  <meta name="twitter:description" content="A reusable AWS ECS blueprint applied to a second product — CareIntake, an AI-assisted mobility-equipment intake platform using Amazon Rekognition and Amazon Bedrock." />
+  <meta name="twitter:image" content="https://ameernexus.tech/images/og.png" />
+
+  <link rel="icon" href="../images/favicon.ico" sizes="any" />
+  <link rel="icon" href="../images/favicon.webp" type="image/webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </noscript>
+
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 5.5h18v13H3zM3.5 6l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/#top">ameer<span class="dot">.</span>hamza</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#work">Work</a>
+        <a href="/#case-studies">Case studies</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#stack">Stack</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary nav-cta" href="/#contact">Get in touch</a>
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="cs-top">
+      <div class="wrap">
+        <a class="cs-back" href="/#case-studies"><svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg> Back to work</a>
+        <span class="eyebrow">// case study</span>
+        <h1 class="cs-title">CareIntake</h1>
+        <p class="cs-oneliner">AI-assisted mobility-equipment intake platform.</p>
+        <div class="cs-meta">
+          <span class="status-pill"><span class="status-dot" aria-hidden="true"></span> status: live in production</span>
+        </div>
+        <p class="cs-role"><strong>My role:</strong> I designed and built the AWS infrastructure, CI/CD and deployments. The application code was written by the dev teams.</p>
+        <div class="tags">
+          <span class="tag">AWS</span>
+          <span class="tag">ECS Fargate</span>
+          <span class="tag">ALB</span>
+          <span class="tag">RDS PostgreSQL</span>
+          <span class="tag">Amazon Rekognition</span>
+          <span class="tag">Amazon Bedrock</span>
+          <span class="tag">Bitbucket OIDC</span>
+          <span class="tag">ECR</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="cs-layout">
+        <aside class="cs-toc" aria-label="On this page">
+          <span class="cs-toc-label">On this page</span>
+          <ol>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#problem">The problem</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#built">What I built</a></li>
+            <li><a href="#deploy">Deploy flow</a></li>
+            <li><a href="#security">Security decisions</a></li>
+            <li><a href="#challenges">Challenges &amp; fixes</a></li>
+            <li><a href="#next">What's next</a></li>
+            <li><a href="#stack">Stack</a></li>
+          </ol>
+        </aside>
+
+        <div class="cs-main">
+          <section class="cs-section" id="context">
+            <h2>Context</h2>
+            <p class="lead">CareIntake is an AI-assisted intake platform for mobility equipment — wheelchairs and related mobility aids. Staff upload patient and equipment photos and complete an intake form; the platform uses AWS AI services to analyze the photos and summarize the submitted form so the record is easier to review.</p>
+          </section>
+
+          <section class="cs-section" id="problem">
+            <h2>The problem</h2>
+            <p>CareIntake was a second product that needed the same kind of cloud foundation I had already built for <a href="/work/sentinel.html">Sentinel</a>: a private, container-based platform on AWS with an automated deploy pipeline. Rather than design the network and delivery from scratch, I treated the Sentinel setup as a reusable ECS blueprint and applied it to CareIntake — then added the piece that makes this product different: an AI layer for the intake flow.</p>
+            <p>Reusing a proven pattern meant the infrastructure and CI/CD were predictable from day one, so the new work could focus on the Rekognition and Bedrock integration and its permissions rather than on re-deriving a VPC and pipeline.</p>
+          </section>
+
+          <section class="cs-section" id="architecture">
+            <h2>Architecture</h2>
+            <figure class="cs-figure">
+              <div class="diagram-panel">
+                <div class="diagram-scroll">
+                  <svg class="diagram" viewBox="0 0 780 320" role="img" aria-label="CareIntake on the reusable ECS blueprint. DEPLOY lane: a git push triggers the Bitbucket pipeline, which exchanges an OIDC token for a scoped IAM role, builds and pushes an image to ECR, then updates the ECS service, which rolls the new task into the Fargate app service. TRAFFIC lane: the Internet reaches a public ALB, which forwards to the ECS Fargate app service in a private subnet, which reads and writes the RDS PostgreSQL database, also in a private subnet. CONFIG lane: the app service calls Amazon Rekognition to analyze uploaded photos and Amazon Bedrock to summarize the intake form data, each through a least-privilege task role.">
+                    <defs><marker id="mk-careintake" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+                    <!-- lane bands -->
+                    <rect class="lane-band" x="0" y="8" width="780" height="88"/>
+                    <rect class="lane-band" x="0" y="220" width="780" height="92"/>
+                    <text class="lane-label" x="10" y="55">DEPLOY</text>
+                    <text class="lane-label" x="10" y="151">TRAFFIC</text>
+                    <text class="lane-label" x="10" y="300">CONFIG</text>
+
+                    <!-- DEPLOY nodes -->
+                    <rect class="node" x="74" y="30" width="92" height="44" rx="10"/>
+                    <text class="n-title" x="120" y="56" text-anchor="middle">git push</text>
+                    <rect class="node" x="190" y="30" width="130" height="44" rx="10"/>
+                    <text class="n-title" x="255" y="51" text-anchor="middle">Bitbucket CI</text>
+                    <text class="n-sub" x="255" y="64" text-anchor="middle">OIDC → role</text>
+                    <rect class="node" x="344" y="30" width="92" height="44" rx="10"/>
+                    <text class="n-title" x="390" y="51" text-anchor="middle">ECR</text>
+                    <text class="n-sub" x="390" y="64" text-anchor="middle">push image</text>
+                    <rect class="node" x="460" y="30" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="535" y="51" text-anchor="middle">ECS service</text>
+                    <text class="n-sub" x="535" y="64" text-anchor="middle">update</text>
+
+                    <!-- TRAFFIC nodes -->
+                    <rect class="node" x="74" y="124" width="92" height="44" rx="10"/>
+                    <text class="n-title" x="120" y="150" text-anchor="middle">Internet</text>
+                    <rect class="node" x="190" y="124" width="104" height="44" rx="10"/>
+                    <text class="n-title" x="242" y="145" text-anchor="middle">ALB</text>
+                    <text class="n-sub" x="242" y="158" text-anchor="middle">public subnet</text>
+                    <rect class="node-core" x="318" y="124" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="393" y="145" text-anchor="middle">ECS Fargate</text>
+                    <text class="n-sub" x="393" y="158" text-anchor="middle">careintake-app</text>
+                    <rect class="node" x="492" y="124" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="567" y="145" text-anchor="middle">RDS PostgreSQL</text>
+                    <text class="n-sub" x="567" y="158" text-anchor="middle">private subnet</text>
+
+                    <!-- CONFIG nodes -->
+                    <rect class="node" x="318" y="244" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="393" y="265" text-anchor="middle">Rekognition</text>
+                    <text class="n-sub" x="393" y="278" text-anchor="middle">photo analysis</text>
+                    <rect class="node" x="492" y="244" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="567" y="265" text-anchor="middle">Bedrock</text>
+                    <text class="n-sub" x="567" y="278" text-anchor="middle">form summary</text>
+
+                    <!-- DEPLOY edges -->
+                    <path class="edge e-deploy" d="M166,52 L190,52" marker-end="url(#mk-careintake)"/>
+                    <path class="edge e-deploy" d="M320,52 L344,52" marker-end="url(#mk-careintake)"/>
+                    <path class="edge e-deploy" d="M436,52 L460,52" marker-end="url(#mk-careintake)"/>
+                    <!-- rollout to app service -->
+                    <path class="edge e-deploy" d="M535,74 L535,100 L393,100 L393,124" marker-end="url(#mk-careintake)"/>
+
+                    <!-- TRAFFIC edges -->
+                    <path class="edge e-traffic" d="M166,146 L190,146" marker-end="url(#mk-careintake)"/>
+                    <path class="edge e-traffic" d="M294,146 L318,146" marker-end="url(#mk-careintake)"/>
+                    <path class="edge e-traffic" d="M468,146 L492,146" marker-end="url(#mk-careintake)"/>
+
+                    <!-- CONFIG edges (app calls AI services) -->
+                    <path class="edge e-config" d="M393,168 L393,244" marker-end="url(#mk-careintake)"/>
+                    <text class="e-label" x="393" y="210" text-anchor="middle">analyze photos</text>
+                    <path class="edge e-config" d="M430,168 L430,206 L567,206 L567,244" marker-end="url(#mk-careintake)"/>
+                    <text class="e-label" x="500" y="200" text-anchor="middle">summarize intake</text>
+                  </svg>
+                </div>
+                <div class="legend">
+                  <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                  <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                  <span class="lg"><span class="sw config"></span>config / AI calls</span>
+                </div>
+              </div>
+              <figcaption class="cs-figcaption">The same ECS spine as Sentinel — ALB to Fargate to RDS, with a Bitbucket OIDC deploy lane — extended with a Rekognition and Bedrock AI layer on the app side.</figcaption>
+            </figure>
+          </section>
+
+          <section class="cs-section" id="built">
+            <h2>What I built</h2>
+            <div class="cs-groups">
+              <div class="cs-group">
+                <h3>Network</h3>
+                <ul class="cs-list">
+                  <li>Same blueprint as <a href="/work/sentinel.html">Sentinel</a>: a VPC with public and private subnets, the ALB in public subnets and all compute and data in private subnets.</li>
+                  <li>The security-group chain (Internet → ALB → app → database) follows the same pattern — see the <a href="/work/sentinel.html#security">Sentinel write-up</a> for the full chain rather than repeating it here.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Compute</h3>
+                <ul class="cs-list">
+                  <li>ECS Fargate running the CareIntake app behind the ALB, in private subnets — same blueprint as Sentinel.</li>
+                  <li><strong>AI integration (the distinctive part):</strong> the app service calls <strong>Amazon Rekognition</strong> to analyze uploaded photos — wheelchair, mobility-equipment and patient photos — during intake.</li>
+                  <li>It also calls <strong>Amazon Bedrock</strong> to read the intake form data and produce a summary, so reviewers get a condensed view of each submission.</li>
+                  <!-- TODO(ameer): Bedrock model used -->
+                  <!-- TODO(ameer): are photos stored in S3 first? -->
+                  <!-- TODO(ameer): service names / count, CPU/memory -->
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Data</h3>
+                <ul class="cs-list">
+                  <li>RDS PostgreSQL in private subnets, reachable only from the app's security group — same blueprint as Sentinel.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>CI/CD</h3>
+                <ul class="cs-list">
+                  <li>Bitbucket pipeline using OIDC to assume a scoped IAM role, build and push to ECR, and update the ECS service — the same deploy lane as <a href="/work/sentinel.html#deploy">Sentinel</a>.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Security</h3>
+                <ul class="cs-list">
+                  <li><strong>Least-privilege task role:</strong> the ECS task role is granted only the specific Rekognition and Bedrock actions the app needs to call — nothing broader.</li>
+                  <li>Private subnets for the app and database; the ALB is the only public entry point — same blueprint as Sentinel.</li>
+                  <li>Bitbucket authenticates to AWS via OIDC, so no long-lived pipeline credentials are stored.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="deploy">
+            <h2>Deploy flow</h2>
+            <ol class="cs-steps">
+              <li><strong>git push</strong> to the CareIntake repository triggers the Bitbucket pipeline.</li>
+              <li>The pipeline exchanges an <strong>OIDC token for a scoped IAM role</strong> — no stored AWS keys.</li>
+              <li>It builds the container image and <strong>pushes it to ECR</strong>.</li>
+              <li>It updates the <strong>ECS service</strong>, which rolls the new task into the Fargate app with minimal-downtime.</li>
+            </ol>
+            <p>This is the same commit-to-live chain as <a href="/work/sentinel.html#deploy">Sentinel</a>, reused unchanged.</p>
+          </section>
+
+          <section class="cs-section" id="security">
+            <h2>Security decisions</h2>
+            <div class="cs-dl">
+              <div class="cs-item">
+                <h3>Scope the task role to only the AI actions used</h3>
+                <p>The app calls Rekognition and Bedrock, so the ECS task role grants only those specific actions — not blanket AI access. This keeps the AI layer's blast radius tight even though it is the newest and least-proven part of the system.</p>
+              </div>
+              <div class="cs-item">
+                <h3>Keep compute and data in private subnets</h3>
+                <p>The app service and RDS run in private subnets with the ALB as the only public entry point — the same posture as Sentinel, carried over deliberately rather than relaxed for a new product.</p>
+              </div>
+              <div class="cs-item">
+                <h3>OIDC instead of stored pipeline keys</h3>
+                <p>Bitbucket assumes a scoped role via OIDC for every deploy, so there are no long-lived AWS credentials sitting in the CI configuration.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="challenges">
+            <h2>Challenges &amp; fixes</h2>
+            <div class="cs-dl">
+              <div class="cs-item">
+                <h3>Applying an existing blueprint cleanly to a new product</h3>
+                <p>The main engineering decision here was to treat the Sentinel infrastructure as a reusable blueprint rather than a one-off. The network, security-group chain and CI/CD pipeline came over as a known-good pattern, which let the effort concentrate on the new AI layer and its least-privilege permissions instead of re-deriving the foundation.</p>
+              </div>
+              <!-- TODO(ameer): 1-2 real CareIntake-specific challenges -->
+            </div>
+          </section>
+
+          <section class="cs-section" id="next">
+            <h2>What's next</h2>
+            <ul class="cs-list">
+              <li>Document the exact Bedrock model and the photo storage path for the intake flow.</li>
+              <li>Review whether a cost guardrail should wrap the AI calls, as on Sentinel.</li>
+              <!-- TODO(ameer): any cost guardrail like Sentinel? -->
+            </ul>
+          </section>
+
+          <section class="cs-section" id="stack">
+            <h2>Stack</h2>
+            <div class="tags">
+              <span class="tag">AWS VPC</span>
+              <span class="tag">ECS Fargate</span>
+              <span class="tag">ALB</span>
+              <span class="tag">RDS PostgreSQL</span>
+              <span class="tag">Amazon Rekognition</span>
+              <span class="tag">Amazon Bedrock</span>
+              <span class="tag">ECR</span>
+              <span class="tag">Bitbucket Pipelines</span>
+              <span class="tag">OIDC</span>
+              <span class="tag">IAM</span>
+            </div>
+          </section>
+
+          <div class="cs-cta">
+            <h2>Hiring for DevOps / Cloud roles? Get in touch.</h2>
+            <a class="btn btn-primary" href="/#contact"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> Get in touch</a>
+            <div class="cs-others">
+              <span>More case studies:</span>
+              <a href="/work/sentinel.html">Sentinel</a>
+              <a href="/work/petcare.html">PetCare</a>
+              <a href="/work/mailcheck.html">MailCheck</a>
+              <a href="/work/ec2-vs-ecs.html">EC2 vs ECS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© 2026 Muhammad Ameer Hamza · built as a static site, deployed via CI</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

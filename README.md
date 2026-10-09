@@ -4,7 +4,7 @@ Personal portfolio of **Muhammad Ameer Hamza**, DevOps Engineer (AWS). A single-
 dependency-free static site describing production infrastructure work, lab builds,
 experience and stack.
 
-🌐 **Live:** [nexusameer.me](https://ameernexus.tech)
+🌐 **Live:** [ameernexus.tech](https://ameernexus.tech)
 
 ## Stack
 
@@ -25,10 +25,18 @@ No Bootstrap, jQuery, carousels, or animation libraries.
 ## Structure
 
 ```
-index.html            # the whole page
+index.html            # the homepage
+work/                  # standalone case-study pages
+  sentinel.html        #   video-surveillance compliance platform (ECS)
+  careintake.html      #   AI-assisted intake platform (ECS + Rekognition/Bedrock)
+  petcare.html         #   pet-health platform (ECS + Sidekiq, SES)
+  mailcheck.html       #   email-verification SaaS (EC2 ASG + CodeDeploy)
+  ec2-vs-ecs.html      #   EC2 + CodeDeploy vs ECS Fargate comparison
 assets/css/main.css    # styles + theme tokens
 assets/js/main.js      # behaviour
-images/                # profile photo (WebP) + favicons
+images/                # profile photo (WebP), favicons, og.png (social card)
+sitemap.xml            # home + 5 work pages
+robots.txt             # points crawlers at the sitemap
 CNAME                  # custom domain
 .github/workflows/     # deployment (do not edit by hand)
 ```

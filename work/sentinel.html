@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sentinel — Case Study · Muhammad Ameer Hamza</title>
+  <meta name="description" content="How I designed the AWS infrastructure, security-group chain and OIDC CI/CD for Sentinel, a video-surveillance compliance platform on ECS Fargate — including a Budget-action cost guardrail on Amazon Rekognition." />
+  <meta name="author" content="Muhammad Ameer Hamza" />
+  <link rel="canonical" href="https://ameernexus.tech/work/sentinel.html" />
+  <meta name="theme-color" content="#0A0D12" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Sentinel — Case Study · Muhammad Ameer Hamza" />
+  <meta property="og:description" content="How I designed the AWS infrastructure, security-group chain and OIDC CI/CD for Sentinel, a video-surveillance compliance platform on ECS Fargate — including a Budget-action cost guardrail on Amazon Rekognition." />
+  <meta property="og:url" content="https://ameernexus.tech/work/sentinel.html" />
+  <meta property="og:image" content="https://ameernexus.tech/images/og.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sentinel — Case Study · Muhammad Ameer Hamza" />
+  <meta name="twitter:description" content="How I designed the AWS infrastructure, security-group chain and OIDC CI/CD for Sentinel, a video-surveillance compliance platform on ECS Fargate — including a Budget-action cost guardrail on Amazon Rekognition." />
+  <meta name="twitter:image" content="https://ameernexus.tech/images/og.png" />
+
+  <link rel="icon" href="../images/favicon.ico" sizes="any" />
+  <link rel="icon" href="../images/favicon.webp" type="image/webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </noscript>
+
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 5.5h18v13H3zM3.5 6l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/#top">ameer<span class="dot">.</span>hamza</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#work">Work</a>
+        <a href="/#case-studies">Case studies</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#stack">Stack</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary nav-cta" href="/#contact">Get in touch</a>
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="cs-top">
+      <div class="wrap">
+        <a class="cs-back" href="/#case-studies"><svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg> Back to work</a>
+        <span class="eyebrow">// case study</span>
+        <h1 class="cs-title">Sentinel</h1>
+        <p class="cs-oneliner">Video-surveillance compliance platform.</p>
+        <div class="cs-meta">
+          <span class="status-pill"><span class="status-dot" aria-hidden="true"></span> status: live in production</span>
+        </div>
+        <p class="cs-role"><strong>My role:</strong> I designed and built the AWS infrastructure, CI/CD and deployments. The application code was written by the dev teams.</p>
+        <div class="tags">
+          <span class="tag">AWS</span>
+          <span class="tag">ECS Fargate</span>
+          <span class="tag">Amazon Rekognition</span>
+          <span class="tag">RDS PostgreSQL</span>
+          <span class="tag">Bitbucket OIDC</span>
+          <span class="tag">AWS Budgets</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="cs-layout">
+        <aside class="cs-toc" aria-label="On this page">
+          <span class="cs-toc-label">On this page</span>
+          <ol>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#problem">The problem</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#built">What I built</a></li>
+            <li><a href="#deploy">Deploy flow</a></li>
+            <li><a href="#security">Security decisions</a></li>
+            <li><a href="#challenges">Challenges &amp; fixes</a></li>
+            <li><a href="#next">What's next</a></li>
+            <li><a href="#stack">Stack</a></li>
+          </ol>
+        </aside>
+
+        <div class="cs-main">
+          <section class="cs-section" id="context">
+            <h2>Context</h2>
+            <p class="lead">Sentinel is a video-surveillance compliance platform. It ingests live camera streams and runs computer-vision checks on them — people and object detection, face detection, protective-equipment (PPE) compliance and content moderation — so that sites can be monitored against safety and compliance rules.</p>
+            <p>The product is a web application with a dashboard for operators plus a separate service that does the frame-by-frame vision work. My job was the AWS side: the network, the containers, the database, the delivery pipeline and the security and cost controls around it.</p>
+          </section>
+
+          <section class="cs-section" id="problem">
+            <h2>The problem</h2>
+            <p>The application needed a home on AWS that could run two very different workloads side by side — a user-facing Rails and React app, and an internal Python vision service — while keeping each one locked down to exactly what it needs.</p>
+            <p>A few things made the infrastructure interesting. The vision service calls a managed computer-vision API once per video frame, so an unbounded stream could quietly run up a large bill. The database had to stay completely private. Deploys had to happen from CI without any long-lived AWS keys sitting in a pipeline. And the vision service must never be reachable from the internet — only the API should be able to talk to it.</p>
+          </section>
+
+          <section class="cs-section" id="architecture">
+            <h2>Architecture</h2>
+            <figure class="cs-figure">
+              <div class="diagram-panel">
+                <div class="diagram-scroll">
+                  <svg class="diagram" viewBox="0 0 780 440" role="img" aria-label="Sentinel on AWS in us-east-1, shown as three lanes. TRAFFIC lane: the internet enters through an Internet Gateway to an internet-facing ALB in the public subnets across two availability zones, which forwards to the sentinel-api Fargate service in the private-1 subnet; sentinel-api and the internal sentinel-ai-service talk to each other over ECS Service Connect, and sentinel-api reaches the private RDS PostgreSQL database on port 5432, where the database sits in a subnet group spanning both zones. The ai-service has no load balancer and is internal only. DEPLOY lane: Bitbucket Pipelines exchanges a short-lived OIDC token for a scoped IAM role with no static keys, pushes two images to two ECR repositories, then registers a new task definition and updates the ECS services. GUARDRAIL lane: cameras stream over RTSP into the ai-service, which uses ffmpeg to produce MJPEG frames and calls Amazon Rekognition per frame for labels, faces, PPE and moderation; the private subnet reaches AWS through a single NAT Gateway in zone A for egress; and an AWS Budget scoped to Rekognition at ten dollars a month raises an alert at eighty percent and triggers a Budget Action that attaches a deny policy to stop Rekognition calls if the budget is breached.">
+                    <defs><marker id="mk-sentinel" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+
+                    <!-- lane bands -->
+                    <rect class="lane-band" x="0" y="8" width="780" height="150"/>
+                    <rect class="lane-band" x="0" y="166" width="780" height="96"/>
+                    <rect class="lane-band" x="0" y="270" width="780" height="162"/>
+                    <text class="lane-label" x="10" y="92">TRAFFIC</text>
+                    <text class="lane-label" x="10" y="216">DEPLOY</text>
+                    <text class="lane-label" x="10" y="392">GUARDRAIL</text>
+
+                    <!-- TRAFFIC nodes -->
+                    <rect class="node" x="66" y="40" width="78" height="44" rx="10"/>
+                    <text class="n-title" x="105" y="66" text-anchor="middle">Internet</text>
+                    <rect class="node" x="160" y="40" width="70" height="44" rx="10"/>
+                    <text class="n-title" x="195" y="66" text-anchor="middle">IGW</text>
+                    <rect class="node" x="246" y="40" width="128" height="44" rx="10"/>
+                    <text class="n-title" x="310" y="59" text-anchor="middle">ALB</text>
+                    <text class="n-sub" x="310" y="72" text-anchor="middle">public subnets · 2 AZ</text>
+                    <rect class="node-core" x="388" y="40" width="148" height="44" rx="10"/>
+                    <text class="n-title" x="462" y="59" text-anchor="middle">sentinel-api</text>
+                    <text class="n-sub" x="462" y="72" text-anchor="middle">Fargate · private-1</text>
+                    <rect class="node" x="556" y="40" width="158" height="44" rx="10"/>
+                    <text class="n-title" x="635" y="59" text-anchor="middle">sentinel-ai-service</text>
+                    <text class="n-sub" x="635" y="72" text-anchor="middle">internal · private-1</text>
+
+                    <rect class="node" x="388" y="112" width="148" height="44" rx="10"/>
+                    <text class="n-title" x="462" y="131" text-anchor="middle">RDS PostgreSQL</text>
+                    <text class="n-sub" x="462" y="144" text-anchor="middle">private subnet group</text>
+
+                    <!-- TRAFFIC edges -->
+                    <path class="edge e-traffic" d="M144,62 L160,62" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-traffic" d="M230,62 L246,62" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-traffic" d="M374,62 L388,62" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-traffic" d="M536,55 L556,55" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-traffic" d="M556,69 L536,69" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label" x="546" y="36" text-anchor="middle">Service Connect</text>
+                    <path class="edge e-traffic" d="M462,84 L462,112" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label" x="476" y="102" text-anchor="start">5432</text>
+
+                    <!-- DEPLOY nodes -->
+                    <rect class="node" x="66" y="196" width="128" height="44" rx="10"/>
+                    <text class="n-title" x="130" y="215" text-anchor="middle">Bitbucket</text>
+                    <text class="n-sub" x="130" y="228" text-anchor="middle">Pipelines</text>
+                    <rect class="node" x="210" y="196" width="140" height="44" rx="10"/>
+                    <text class="n-title" x="280" y="215" text-anchor="middle">OIDC → IAM role</text>
+                    <text class="n-sub" x="280" y="228" text-anchor="middle">no static keys</text>
+                    <rect class="node" x="366" y="196" width="130" height="44" rx="10"/>
+                    <text class="n-title" x="431" y="215" text-anchor="middle">ECR</text>
+                    <text class="n-sub" x="431" y="228" text-anchor="middle">2 repos</text>
+                    <rect class="node" x="512" y="196" width="180" height="44" rx="10"/>
+                    <text class="n-title" x="602" y="215" text-anchor="middle">ECS update services</text>
+                    <text class="n-sub" x="602" y="228" text-anchor="middle">RegisterTaskDef · UpdateService</text>
+
+                    <!-- DEPLOY edges -->
+                    <path class="edge e-deploy" d="M194,218 L210,218" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-deploy" d="M350,218 L366,218" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-deploy" d="M496,218 L512,218" marker-end="url(#mk-sentinel)"/>
+
+                    <!-- GUARDRAIL nodes -->
+                    <rect class="node" x="66" y="300" width="92" height="44" rx="10"/>
+                    <text class="n-title" x="112" y="319" text-anchor="middle">Cameras</text>
+                    <text class="n-sub" x="112" y="332" text-anchor="middle">RTSP stream</text>
+                    <rect class="node" x="174" y="300" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="249" y="319" text-anchor="middle">ai-service · ffmpeg</text>
+                    <text class="n-sub" x="249" y="332" text-anchor="middle">MJPEG frames</text>
+                    <rect class="node-core" x="340" y="300" width="170" height="44" rx="10"/>
+                    <text class="n-title" x="425" y="319" text-anchor="middle">Rekognition</text>
+                    <text class="n-sub" x="425" y="332" text-anchor="middle">labels · faces · PPE · moderation</text>
+
+                    <rect class="node" x="66" y="372" width="120" height="44" rx="10"/>
+                    <text class="n-title" x="126" y="391" text-anchor="middle">NAT Gateway</text>
+                    <text class="n-sub" x="126" y="404" text-anchor="middle">private-1 egress · AZ-a</text>
+                    <rect class="node" x="330" y="372" width="150" height="44" rx="10"/>
+                    <text class="n-title" x="405" y="391" text-anchor="middle">AWS Budget $10/mo</text>
+                    <text class="n-sub" x="405" y="404" text-anchor="middle">scope: Rekognition</text>
+                    <rect class="node" x="496" y="372" width="170" height="44" rx="10" stroke-dasharray="4 4"/>
+                    <text class="n-title" x="581" y="391" text-anchor="middle">Budget Action: deny</text>
+                    <text class="n-sub" x="581" y="404" text-anchor="middle">stops Rekognition calls</text>
+
+                    <!-- GUARDRAIL edges -->
+                    <path class="edge e-traffic" d="M158,322 L174,322" marker-end="url(#mk-sentinel)"/>
+                    <path class="edge e-config" d="M324,322 L340,322" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label" x="332" y="293" text-anchor="middle">per-frame calls</text>
+                    <path class="edge e-config" d="M240,344 L240,360 L126,360 L126,372" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label" x="196" y="356" text-anchor="middle">egress</text>
+                    <path class="edge e-config" d="M420,344 L420,372" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label" x="432" y="360" text-anchor="start">metered</text>
+                    <path class="edge e-alert" d="M480,394 L496,394" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label alert" x="488" y="368" text-anchor="middle">alert 80%</text>
+                    <path class="edge e-alert" d="M560,372 L560,352 L460,352 L460,344" marker-end="url(#mk-sentinel)"/>
+                    <text class="e-label alert" x="560" y="366" text-anchor="middle">deny on breach</text>
+                  </svg>
+                </div>
+                <div class="legend">
+                  <span class="lg"><span class="sw deploy"></span>deploy / build</span>
+                  <span class="lg"><span class="sw traffic"></span>live traffic</span>
+                  <span class="lg"><span class="sw config"></span>config / egress</span>
+                  <span class="lg"><span class="sw alert"></span>alerts / guardrail</span>
+                </div>
+              </div>
+              <figcaption class="cs-figcaption">Traffic in through the ALB to a public API and an internal AI service; CI deploys over OIDC; a Budget Action caps Rekognition spend.</figcaption>
+            </figure>
+          </section>
+
+          <section class="cs-section" id="built">
+            <h2>What I built</h2>
+            <div class="cs-groups">
+              <div class="cs-group">
+                <h3>Network</h3>
+                <ul class="cs-list">
+                  <li>A VPC (<code>10.0.0.0/16</code>) in <code>us-east-1</code> with four subnets across two availability zones: two public, two private.</li>
+                  <li>Public route table to the Internet Gateway; the ECS private subnet (private-1) routes to a single NAT Gateway, plus a local route and an S3 gateway endpoint.</li>
+                  <li>The RDS private subnet (private-2) has <strong>no internet route at all</strong> — only the local route and the S3 gateway endpoint.</li>
+                  <li>Cost-aware single-AZ compute: the ECS tasks and one NAT Gateway (with an Elastic IP) live in AZ-a. The second private subnet in AZ-b exists only to satisfy the RDS subnet-group two-AZ requirement.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Compute</h3>
+                <ul class="cs-list">
+                  <li>An ECS Fargate cluster (<code>sentinel-cluster</code>) running two services from shared task-execution and task roles.</li>
+                  <li><code>sentinel-api</code>: Rails 7.2 + React 18 at 0.5 vCPU / 1 GB, behind an internet-facing ALB with an IP target group.</li>
+                  <li><code>sentinel-ai-service</code>: Python 3.12 + FastAPI, <strong>internal only</strong> — no ALB and no target group — reached by the API over ECS Service Connect.</li>
+                  <li>Runtime configuration passed through the task definitions (<code>RAILS_ENV</code>, <code>DATABASE_URL</code>, <code>AI_SERVICE_URL</code>).</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Data</h3>
+                <ul class="cs-list">
+                  <li>RDS PostgreSQL on <code>db.t3.micro</code>, Single-AZ, in the private subnets.</li>
+                  <li>Reachable only from the ECS service on port 5432 — never from the internet.</li>
+                  <li>A two-AZ subnet group so the database can move to Multi-AZ later without re-wiring the network.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>CI/CD</h3>
+                <ul class="cs-list">
+                  <li>Bitbucket Pipelines builds both images and pushes them to two ECR repositories.</li>
+                  <li>Deploys run <code>RegisterTaskDefinition</code> then <code>UpdateService</code> against the two ECS services.</li>
+                  <li>Authentication uses a Bitbucket OIDC token exchanged for an IAM role — <strong>no long-lived AWS keys</strong> stored in the pipeline.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Security &amp; cost</h3>
+                <ul class="cs-list">
+                  <li>A least-privilege security-group chain: ALB SG (80/443 from the internet) → ECS SG (container ports from the ALB SG only, plus a self-referencing rule so the API can reach the AI service) → RDS SG (5432 from the ECS SG only).</li>
+                  <li>A scoped deploy role: <code>ecr:GetAuthorizationToken</code>, push to the two repos only, <code>ecs:UpdateService</code>/<code>DescribeServices</code> on the specific services, <code>ecs:RegisterTaskDefinition</code>, and <code>iam:PassRole</code> limited to the two task roles with a condition of <code>iam:PassedToService = ecs-tasks.amazonaws.com</code>.</li>
+                  <li>Rekognition access via a dedicated policy on the task role (<code>DetectLabels</code>, <code>DetectFaces</code>, <code>DetectProtectiveEquipment</code>, <code>DetectModerationLabels</code>).</li>
+                  <li>A cost guardrail: an AWS Budget of $10/month scoped to Rekognition, an alert at 80%, and a Budget Action that automatically attaches a deny policy to stop Rekognition calls if the budget is breached — so runaway per-frame API costs can't happen.</li>
+                  <li>Amazon SES for notification email, with <code>ses:SendEmail</code> / <code>ses:SendRawEmail</code> on the task role.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="deploy">
+            <h2>Deploy flow</h2>
+            <ol class="cs-steps">
+              <li><strong>git push</strong> to Bitbucket triggers the pipeline.</li>
+              <li>The pipeline <strong>exchanges an OIDC token for an IAM role</strong> — no stored AWS keys — and signs in to ECR.</li>
+              <li>It <strong>builds both images</strong> (the Rails + React API and the FastAPI AI service) and pushes them to the two ECR repositories.</li>
+              <li><strong>RegisterTaskDefinition</strong> creates a new revision for each service with the updated image.</li>
+              <li><strong>UpdateService</strong> rolls the new revision onto <code>sentinel-api</code> and <code>sentinel-ai-service</code> on Fargate.</li>
+              <li>The ALB health-checks the new API tasks before shifting traffic, so a bad revision replaces itself with <strong>minimal-downtime</strong>.</li>
+            </ol>
+          </section>
+
+          <section class="cs-section" id="security">
+            <h2>Security decisions</h2>
+            <div class="cs-dl">
+              <div class="cs-item">
+                <h3>A one-way security-group chain</h3>
+                <p>Each tier only accepts traffic from the tier in front of it: the internet reaches the ALB, the ALB reaches the ECS tasks, and only the ECS tasks reach the database. Nothing can skip a step.</p>
+              </div>
+              <div class="cs-item">
+                <h3>The AI service is internal, by design</h3>
+                <p>It has no load balancer and no target group. The API reaches it over ECS Service Connect through a self-referencing security-group rule, so the vision service is never exposed to the internet.</p>
+              </div>
+              <div class="cs-item">
+                <h3>No long-lived keys in CI</h3>
+                <p>Bitbucket authenticates with a short-lived OIDC token that is exchanged for an IAM role. There is nothing to leak from the pipeline, and the role itself is scoped to exactly the ECR and ECS actions a deploy needs.</p>
+              </div>
+              <div class="cs-item">
+                <h3>PassRole is pinned to ECS</h3>
+                <p>The deploy role can only pass the two task roles, and only to <code>ecs-tasks.amazonaws.com</code>. It cannot hand those roles to any other service.</p>
+              </div>
+              <div class="cs-item">
+                <h3>The database has no way out</h3>
+                <p>The RDS subnet has no internet route — only the local route and an S3 gateway endpoint — so the data tier cannot reach, or be reached from, the public internet.</p>
+              </div>
+              <div class="cs-item">
+                <h3>A hard ceiling on vision spend</h3>
+                <p>Because the AI service calls Rekognition once per frame, cost is the real risk. An AWS Budget scoped to Rekognition alerts at 80% and, if breached, a Budget Action attaches a deny policy that stops further Rekognition calls — the bill is capped automatically rather than discovered later.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="challenges">
+            <h2>Challenges &amp; fixes</h2>
+            <div class="cs-dl">
+              <div class="cs-item warn">
+                <h3>The AI image was too large</h3>
+                <p>The vision service needs ffmpeg, and the distro ffmpeg packages pulled in a lot of weight. I switched to a single static ffmpeg binary instead, which shrank the image noticeably. <!-- TODO(ameer): before/after image size --></p>
+              </div>
+              <div class="cs-item warn">
+                <h3>Building OpenCV from source was slow</h3>
+                <p>Compiling <code>opencv-python-headless</code> from source would have kept builds fast only at the cost of a larger image, so I deferred it to keep both the build time and the image small for now.</p>
+              </div>
+              <div class="cs-item warn">
+                <h3>RTSP ingest was blocked at the client site</h3>
+                <p>The cameras stream over RTSP, and that path was blocked by a network limitation at the client site — not on AWS. The infrastructure was ready; the fix depended on the site's own network team.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="next">
+            <h2>What's next</h2>
+            <ul class="cs-list">
+              <li>Tighten the SES policy from <code>Resource: "*"</code> to the specific verified-identity ARNs.</li>
+              <li>Move SES out of the sandbox for production sending.</li>
+              <li>Go Multi-AZ for compute and NAT, and for RDS, once traffic justifies the second-NAT cost.</li>
+              <li>Add an HTTPS listener with an ACM certificate on the ALB. <!-- TODO(ameer): confirm whether HTTPS/ACM is already live; if yes move it to "What I built" --></li>
+            </ul>
+          </section>
+
+          <section class="cs-section" id="stack">
+            <h2>Stack</h2>
+            <div class="tags">
+              <span class="tag">AWS</span>
+              <span class="tag">VPC</span>
+              <span class="tag">NAT Gateway</span>
+              <span class="tag">S3 Gateway Endpoint</span>
+              <span class="tag">ECS Fargate</span>
+              <span class="tag">ECS Service Connect</span>
+              <span class="tag">ALB</span>
+              <span class="tag">ECR</span>
+              <span class="tag">RDS PostgreSQL</span>
+              <span class="tag">Amazon Rekognition</span>
+              <span class="tag">Amazon SES</span>
+              <span class="tag">AWS Budgets</span>
+              <span class="tag">IAM / OIDC</span>
+              <span class="tag">Bitbucket Pipelines</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Rails 7.2</span>
+              <span class="tag">React 18</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">ffmpeg</span>
+            </div>
+          </section>
+
+          <div class="cs-cta">
+            <h2>Hiring for DevOps / Cloud roles? Get in touch.</h2>
+            <a class="btn btn-primary" href="/#contact"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> Get in touch</a>
+            <div class="cs-others">
+              <span>More case studies:</span>
+              <a href="/work/careintake.html">CareIntake</a>
+              <a href="/work/petcare.html">PetCare</a>
+              <a href="/work/mailcheck.html">MailCheck</a>
+              <a href="/work/ec2-vs-ecs.html">EC2 vs ECS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© 2026 Muhammad Ameer Hamza · built as a static site, deployed via CI</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

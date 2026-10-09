@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PetCare — Case Study · Muhammad Ameer Hamza</title>
+  <meta name="description" content="AWS ECS infrastructure for PetCare, a pet-health platform — a web service plus a Sidekiq worker, Secrets Manager, SES email deliverability (SPF/DKIM/DMARC) and CloudWatch observability." />
+  <meta name="author" content="Muhammad Ameer Hamza" />
+  <link rel="canonical" href="https://ameernexus.tech/work/petcare.html" />
+  <meta name="theme-color" content="#0A0D12" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="PetCare — Case Study · Muhammad Ameer Hamza" />
+  <meta property="og:description" content="AWS ECS infrastructure for PetCare, a pet-health platform — a web service plus a Sidekiq worker, Secrets Manager, SES email deliverability (SPF/DKIM/DMARC) and CloudWatch observability." />
+  <meta property="og:url" content="https://ameernexus.tech/work/petcare.html" />
+  <meta property="og:image" content="https://ameernexus.tech/images/og.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PetCare — Case Study · Muhammad Ameer Hamza" />
+  <meta name="twitter:description" content="AWS ECS infrastructure for PetCare, a pet-health platform — a web service plus a Sidekiq worker, Secrets Manager, SES email deliverability (SPF/DKIM/DMARC) and CloudWatch observability." />
+  <meta name="twitter:image" content="https://ameernexus.tech/images/og.png" />
+
+  <link rel="icon" href="../images/favicon.ico" sizes="any" />
+  <link rel="icon" href="../images/favicon.webp" type="image/webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </noscript>
+
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 5.5h18v13H3zM3.5 6l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/#top">ameer<span class="dot">.</span>hamza</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#work">Work</a>
+        <a href="/#case-studies">Case studies</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#stack">Stack</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary nav-cta" href="/#contact">Get in touch</a>
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="cs-top">
+      <div class="wrap">
+        <a class="cs-back" href="/#case-studies"><svg class="ico" aria-hidden="true"><use href="#i-arrow-r"/></svg> Back to work</a>
+        <span class="eyebrow">// case study</span>
+        <h1 class="cs-title">PetCare</h1>
+        <p class="cs-oneliner">Pet-health platform.</p>
+        <div class="cs-meta">
+          <span class="status-pill"><span class="status-dot" aria-hidden="true"></span> status: live in production</span>
+        </div>
+        <p class="cs-role"><strong>My role:</strong> I designed and built the AWS infrastructure, CI/CD and deployments. The application code was written by the dev teams.</p>
+        <div class="tags">
+          <span class="tag">Amazon ECS</span>
+          <span class="tag">Sidekiq</span>
+          <span class="tag">Secrets Manager</span>
+          <span class="tag">Amazon SES</span>
+          <span class="tag">CloudWatch</span>
+          <span class="tag">TLS</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="cs-layout">
+        <aside class="cs-toc" aria-label="On this page">
+          <span class="cs-toc-label">On this page</span>
+          <ol>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#problem">The problem</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#built">What I built</a></li>
+            <li><a href="#deploy">Deploy flow</a></li>
+            <li><a href="#security">Security decisions</a></li>
+            <li><a href="#challenges">Challenges &amp; fixes</a></li>
+            <li><a href="#next">What's next</a></li>
+            <li><a href="#stack">Stack</a></li>
+          </ol>
+        </aside>
+
+        <div class="cs-main">
+          <section class="cs-section" id="context">
+            <h2>Context</h2>
+            <p class="lead">PetCare is a pet-health platform. It runs as a containerized web application backed by a separate background-worker service that handles asynchronous jobs such as outbound email.</p>
+          </section>
+
+          <section class="cs-section" id="problem">
+            <h2>The problem</h2>
+            <p>The platform needed somewhere reliable to run two separate workloads — the web app and its background worker — from the same image pattern, with credentials kept out of the image. Transactional email had to actually reach inboxes rather than spam folders, and when a send failed the team needed to see it without SSH-ing into a host. It also needed a staging environment that mirrored production so changes could be validated before they went live.</p>
+          </section>
+
+          <section class="cs-section" id="architecture">
+            <h2>Architecture</h2>
+            <figure class="cs-figure">
+              <div class="diagram-panel">
+                <div class="diagram-scroll">
+                  <svg class="diagram" viewBox="0 0 780 340" role="img" aria-label="PetCare infrastructure across three lanes. RUNTIME lane: users reach the PetCare web app ECS service over TLS; a separate PetCare Sidekiq worker ECS service runs alongside it from the same image pattern; AWS Secrets Manager injects credentials into both task definitions at runtime; staging mirrors production as petcare-staging and petcare-sidekiq-staging. EMAIL lane: the web app and the worker send mail through Amazon SES, which is configured with SPF, DKIM and DMARC for deliverability, on to delivery; failed sends are routed to CloudWatch Logs. OBSERVE lane: application and worker logs, along with failed email sends, land in CloudWatch Logs so issues can be found without SSH access.">
+                    <defs><marker id="mk-petcare" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9 Z"/></marker></defs>
+
+                    <!-- lane bands -->
+                    <rect class="lane-band" x="0" y="8" width="780" height="130"/>
+                    <rect class="lane-band" x="0" y="246" width="780" height="86"/>
+                    <text class="lane-label" x="12" y="26">RUNTIME</text>
+                    <text class="lane-label" x="12" y="164">EMAIL</text>
+                    <text class="lane-label" x="12" y="264">OBSERVE</text>
+
+                    <!-- staging note -->
+                    <text class="e-label" x="236" y="22">staging mirrors prod · petcare-staging / petcare-sidekiq-staging</text>
+
+                    <!-- RUNTIME nodes -->
+                    <rect class="node" x="70" y="58" width="86" height="44" rx="10"/>
+                    <text class="n-title" x="113" y="84" text-anchor="middle">Users</text>
+
+                    <rect class="node-core" x="236" y="36" width="160" height="44" rx="10"/>
+                    <text class="n-title" x="316" y="55" text-anchor="middle">petcare · app</text>
+                    <text class="n-sub" x="316" y="69" text-anchor="middle">ECS service</text>
+
+                    <rect class="node-core" x="236" y="90" width="160" height="44" rx="10"/>
+                    <text class="n-title" x="316" y="109" text-anchor="middle">petcare-sidekiq</text>
+                    <text class="n-sub" x="316" y="123" text-anchor="middle">ECS worker service</text>
+
+                    <rect class="node" x="470" y="62" width="168" height="48" rx="10"/>
+                    <text class="n-title" x="554" y="83" text-anchor="middle">Secrets Manager</text>
+                    <text class="n-sub" x="554" y="97" text-anchor="middle">credentials</text>
+
+                    <!-- RUNTIME edges -->
+                    <path class="edge e-traffic" d="M156,80 L196,80 L196,58 L236,58" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label" x="196" y="50" text-anchor="middle">TLS</text>
+                    <path class="edge e-config" d="M470,78 L432,78 L432,58 L396,58" marker-end="url(#mk-petcare)"/>
+                    <path class="edge e-config" d="M470,94 L432,94 L432,112 L396,112" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label" x="554" y="126" text-anchor="middle">injected into task defs</text>
+
+                    <!-- EMAIL nodes -->
+                    <rect class="node-core" x="236" y="166" width="176" height="48" rx="10"/>
+                    <text class="n-title" x="324" y="187" text-anchor="middle">Amazon SES</text>
+                    <text class="n-sub" x="324" y="201" text-anchor="middle">SPF · DKIM · DMARC</text>
+
+                    <rect class="node" x="470" y="168" width="140" height="44" rx="10"/>
+                    <text class="n-title" x="540" y="194" text-anchor="middle">delivery</text>
+
+                    <!-- EMAIL edges -->
+                    <path class="edge e-traffic" d="M236,58 L210,58 L210,190 L236,190" marker-end="url(#mk-petcare)"/>
+                    <path class="edge e-traffic" d="M316,134 L316,166" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label" x="300" y="152" text-anchor="end">sends mail</text>
+                    <path class="edge e-traffic" d="M412,190 L470,190" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label" x="441" y="182" text-anchor="middle">authenticated</text>
+
+                    <!-- OBSERVE nodes -->
+                    <rect class="node-core" x="236" y="266" width="212" height="48" rx="10"/>
+                    <text class="n-title" x="342" y="287" text-anchor="middle">CloudWatch Logs</text>
+                    <text class="n-sub" x="342" y="301" text-anchor="middle">app + worker + failed sends</text>
+
+                    <!-- OBSERVE edges -->
+                    <path class="edge e-config" d="M236,66 L185,66 L185,290 L236,290" marker-end="url(#mk-petcare)"/>
+                    <path class="edge e-config" d="M236,120 L170,120 L170,300 L236,300" marker-end="url(#mk-petcare)"/>
+                    <path class="edge e-alert" d="M380,214 L380,266" marker-end="url(#mk-petcare)"/>
+                    <text class="e-label alert" x="390" y="240" text-anchor="start">failed sends surfaced</text>
+                  </svg>
+                </div>
+                <div class="legend">
+                  <span class="lg"><span class="sw traffic"></span>live traffic / email</span>
+                  <span class="lg"><span class="sw config"></span>secrets / logs</span>
+                  <span class="lg"><span class="sw alert"></span>failed sends</span>
+                </div>
+              </div>
+              <figcaption class="cs-figcaption">Web app and Sidekiq worker run as separate ECS services; SES handles deliverable mail; CloudWatch makes logs and failed sends visible.</figcaption>
+            </figure>
+          </section>
+
+          <section class="cs-section" id="built">
+            <h2>What I built</h2>
+            <div class="cs-groups">
+              <div class="cs-group">
+                <h3>Compute</h3>
+                <ul class="cs-list">
+                  <li>The <strong>web application</strong> runs as an ECS service (<code>petcare</code>).</li>
+                  <li>The <strong>Sidekiq background worker</strong> runs as a separate ECS service (<code>petcare-sidekiq</code>), built from the same image pattern.</li>
+                  <li>A <strong>staging environment</strong> mirrors production — <code>petcare-staging</code> and <code>petcare-sidekiq-staging</code>.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Security</h3>
+                <ul class="cs-list">
+                  <li><strong>Secrets Manager</strong> holds credentials, injected into the task definitions at runtime rather than baked into the image.</li>
+                  <li><strong>TLS</strong> configured for the application.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Email</h3>
+                <ul class="cs-list">
+                  <li>Transactional email sent through <strong>Amazon SES</strong>.</li>
+                  <li><strong>SPF, DKIM and DMARC</strong> set up for deliverability so mail authenticates correctly.</li>
+                </ul>
+              </div>
+              <div class="cs-group">
+                <h3>Observability</h3>
+                <ul class="cs-list">
+                  <li>Application and worker logs stream to <strong>CloudWatch Logs</strong>.</li>
+                  <li><strong>Failed email sends</strong> are made visible in CloudWatch, so issues can be found without SSH-ing into any host.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="deploy">
+            <h2>Deploy flow</h2>
+            <!-- TODO(ameer): confirm CI tool, Fargate vs EC2 launch type, prod setup -->
+            <ol class="cs-steps">
+              <li><strong>git push</strong> to the application repository.</li>
+              <li>The <strong>CI pipeline builds the container image</strong> and publishes it to the registry.</li>
+              <li>The pipeline <strong>updates the ECS services</strong> — web app and Sidekiq worker — with the new task definition, on staging first.</li>
+              <li><strong>Validate on staging</strong> (<code>petcare-staging</code> / <code>petcare-sidekiq-staging</code>).</li>
+              <li><strong>Promote to production</strong>; ECS rolls out the new tasks for both services.</li>
+            </ol>
+          </section>
+
+          <section class="cs-section" id="security">
+            <h2>Security decisions</h2>
+            <div class="cs-dl">
+              <div class="cs-item">
+                <h3>Secrets in Secrets Manager, not the image</h3>
+                <p>Credentials are injected into the task definitions at runtime. The image stays free of secrets, and credentials can rotate without rebuilding it.</p>
+              </div>
+              <div class="cs-item">
+                <h3>TLS for the application</h3>
+                <p>Traffic to the app is served over TLS.</p>
+              </div>
+              <div class="cs-item">
+                <h3>Authenticated email with SPF, DKIM and DMARC</h3>
+                <p>Email sent through SES is signed and aligned so receiving servers can verify it — protecting deliverability and the sending domain's reputation.</p>
+              </div>
+              <div class="cs-item">
+                <h3>Staging mirrors production</h3>
+                <p>A separate staging environment (<code>petcare-staging</code>, <code>petcare-sidekiq-staging</code>) lets changes be validated before they reach production.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="challenges">
+            <h2>Challenges &amp; fixes</h2>
+            <div class="cs-dl">
+              <div class="cs-item warn">
+                <h3>Email landing reliably</h3>
+                <p>Set up SPF, DKIM and DMARC and aligned them so SES mail authenticates against the sending domain, keeping transactional email out of spam folders.</p>
+              </div>
+              <div class="cs-item warn">
+                <h3>Seeing failed sends without SSH</h3>
+                <p>Surfaced failed email sends in CloudWatch Logs, so delivery problems can be diagnosed from the logs instead of connecting into a running host.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="next">
+            <h2>What's next</h2>
+            <!-- TODO(ameer): PetCare pending items -->
+            <ul class="cs-list">
+              <li>Nothing over-claimed here — the setup is live in production, and hardening and observability stay an iterative effort.</li>
+            </ul>
+          </section>
+
+          <section class="cs-section" id="stack">
+            <h2>Stack</h2>
+            <div class="tags">
+              <span class="tag">Docker</span>
+              <span class="tag">Amazon ECS</span>
+              <span class="tag">Sidekiq</span>
+              <span class="tag">AWS Secrets Manager</span>
+              <span class="tag">Amazon SES</span>
+              <span class="tag">SPF / DKIM / DMARC</span>
+              <span class="tag">CloudWatch Logs</span>
+              <span class="tag">TLS</span>
+            </div>
+          </section>
+
+          <div class="cs-cta">
+            <h2>Hiring for DevOps / Cloud roles? Get in touch.</h2>
+            <a class="btn btn-primary" href="/#contact"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> Get in touch</a>
+            <div class="cs-others">
+              <span>More case studies:</span>
+              <a href="/work/sentinel.html">Sentinel</a>
+              <a href="/work/careintake.html">CareIntake</a>
+              <a href="/work/mailcheck.html">MailCheck</a>
+              <a href="/work/ec2-vs-ecs.html">EC2 vs ECS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© 2026 Muhammad Ameer Hamza · built as a static site, deployed via CI</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>
