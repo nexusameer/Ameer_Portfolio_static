@@ -992,3 +992,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 .cs-cta .btn { margin: 0 auto; }
 .cs-others { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); justify-content: center; margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); }
 .cs-others a { font-family: var(--font-mono); font-size: 13px; color: var(--accent-ink); }
+
+/* fix pass — prevent long inline code / tokens forcing mobile overflow */
+.cs-group { min-width: 0; }
+.cs-group code, .cs-body code, .cs-main code, .cs-section code { overflow-wrap: anywhere; word-break: break-word; }
+
+/* anchor offset so section titles clear the sticky header when jumped to */
+section[id], .cs-section[id] { scroll-margin-top: 88px; }
